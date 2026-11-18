@@ -9,8 +9,22 @@ jobs:
         with: { python-version: "3.12" }
       - uses: actions/setup-node@v4
         with: { node-version: "22" }
-      - run: sudo apt-get install -y libxml2-utils
-      - run: pip install -r server/requirements.txt pytest
-      - run: python3 tools/gen_grid.py && tools/validate.sh
-      - run: node tools/parity.mjs
-      - run: cd server && python -m pytest -q tests
+      - run: pip install -r server/requirements-dev.txt -r tools/requirements-validation.txt
+      - run: python3 tools/gen_grid.py && git diff --exit-code viewer/scenes
+      - run: npm test
+        env: { CHESS_TEST_PYTHON: python3 }
+  browser:
+    runs-on: ubuntu-latest
+    needs: gates
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm install --no-save playwright@1.63.0 && npx playwright install --with-deps chromium
+      - name: native smoke (replay 20 boards, wasm 4 boards, study)
+        run: |
+          set -e
+          for q in "?engine=replay&boards=20" "?engine=wasm&boards=4&depth=8&pool=2" "?engine=study"; do
+            QUERY="$q" WAIT_MS=12000 SMOKE_RECEIPT=/tmp/smoke.json CHROMIUM_EXECUTABLE_PATH=$(node -e "console.log(require('playwright').chromium.executablePath())") node tools/smoke.mjs
+            grep -q '"status": *"pass"' /tmp/smoke.json
+          done
