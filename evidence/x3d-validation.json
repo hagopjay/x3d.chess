@@ -1,0 +1,2246 @@
+{
+  "schema": "x3dchess.pinned-x3d-validation/1",
+  "created_utc": "2026-11-18T02:24:21.970931+00:00",
+  "status": "pass",
+  "input_cap_bytes": 8388608,
+  "instrument": {
+    "repository": "https://github.com/hagopjay/x3d_mcp",
+    "commit": "b5c9956917714747fe1d034c729612e99b0f09c9",
+    "origin_sha256": "e7587506b4b4e3455f358451e104ad8d8e31514e6f8e687bdb2b9be5b170c349",
+    "files_sha256": {
+      "LICENSE": "d44b2af6013aee7eed3775190b1d15f9594cd70bafc2ce87e393747222271649",
+      "src/validation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/validation/listvalues.py": "9b5ad661b0f12efedb0cde0c6b7c64cd1ffc5b70a667f7c2b48ebdd02d473cf4",
+      "src/validation/oversize.py": "8e80d694d7f63daf0ccf6fb149c7a71b7857f7642b8a1477eecf9760c946bd23",
+      "src/validation/profile.py": "fc716b832034d728892cabf9960a4de22e9a4d58bde1833af25f0eee71f8f5f6",
+      "src/validation/schemas/X3dUnifiedObjectModel-4.0.xml": "7e426a238656c21a4a444b989276494329da363625c36f0a719b15d89416bee3",
+      "src/validation/schemas/X3dUnifiedObjectModel-4.1.xml": "4fc10e8e15c0d6cf2a916e4f59b815b110104aa7ea734dc6afea9458095c792b",
+      "src/validation/schemas/x3d-4.0-Web3dExtensionsPrivate.xsd": "27657b812199aee0155be97d74cbd78181464f558013c18fb19fa4cf3a5d6b9e",
+      "src/validation/schemas/x3d-4.0-Web3dExtensionsPublic.xsd": "7a61432dcf1fef3bd568e555b9bb1d18c08fadc88ddb9a438bc001a9e048a169",
+      "src/validation/schemas/x3d-4.0.xsd": "0509fa5bd6016a0b9104ced3c91d6585c8073041f79b8c3f9758748d131b5192",
+      "src/validation/schemas/x3d-4.1-Web3dExtensionsPrivate.xsd": "784ee866095751eb9ca559837defdf3c1b9980ce66623aaa7635ced6a0d645d3",
+      "src/validation/schemas/x3d-4.1-Web3dExtensionsPublic.xsd": "8643f06321b8152e481f30c03c1c9f00efd61b6ea3806c5e752289092c3289a2",
+      "src/validation/schemas/x3d-4.1.xsd": "1a7935caa7e6a63de2b275968bdc48da2f34124a43acb7b293674c3d16646a85",
+      "src/validation/schemas/xmldsig-core-schema.xsd": "35cf8197da812c85e40d57891b35c94187569ed474a2dac813ce5090dafcd35c",
+      "src/validation/semantic.py": "8ede23abf7a6dfaf2a35c8ce8975c67f5c4d2ed3b1d715e9d0aaca363fc0d73f",
+      "src/validation/splat_arrays.py": "88692a03a68df7688e49cd73b5c2d4715c252d4fc6a350c9d11200d9c6c44160",
+      "src/validation/validate.py": "bbae82aa7ae930acf1e632bec18b785ab106cdf63757077304b4718377870959",
+      "src/x3d_utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/x3d_utils/x3duom.py": "51489acdbf6a6ee8f9f023aa21f5141d528e7afc235af8e4ab8467f8d3bc228c"
+    },
+    "adapter_sha256": "44c89939b001b258d1b05095c87b793adbda2d08f1554341e01d7bf7a092e780",
+    "invocation": [
+      "validation.validate.validate_xml(version=\"4.0\")",
+      "validation.semantic.semantic_diagnostics"
+    ],
+    "xsd_version": "4.0",
+    "semantic_vocabulary_version": "4.1",
+    "runtime": {
+      "python": "3.13.18",
+      "lxml": "6.1.3.0",
+      "libxml2": "2.14.6",
+      "jsonschema": "4.26.0"
+    },
+    "identity_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+  },
+  "instrument_problem": null,
+  "files": [
+    {
+      "path": "viewer/scenes/board.x3d",
+      "bytes": 10953,
+      "candidate_sha256": "b009867d05069dc5343945d337d53b2a976bcb607201fcca5fa9e27b43f409fc",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board' (Group) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Group",
+            "def_name": "board"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='evalbar' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "evalbar"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_e2' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_e2"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_a1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_a1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_a2' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_a2"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_a3' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_a3"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_a4' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_a4"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_a5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_a5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_a6' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_a6"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_a7' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_a7"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_a8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_a8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_b1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_b1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_b2' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_b2"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_b3' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_b3"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_b4' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_b4"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_b5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_b5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_b6' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_b6"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_b7' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_b7"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_b8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_b8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_c1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_c1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_c2' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_c2"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_c3' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_c3"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_c4' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_c4"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_c5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_c5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_c6' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_c6"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_c7' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_c7"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_c8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_c8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_d1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_d1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_d2' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_d2"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_d3' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_d3"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_d4' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_d4"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_d5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_d5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_d6' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_d6"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_d7' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_d7"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_d8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_d8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_e1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_e1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_e2' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_e2"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_e3' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_e3"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_e4' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_e4"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_e5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_e5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_e6' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_e6"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_e7' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_e7"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_e8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_e8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_f1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_f1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_f2' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_f2"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_f3' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_f3"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_f4' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_f4"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_f5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_f5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_f6' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_f6"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_f7' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_f7"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_f8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_f8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_g1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_g1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_g2' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_g2"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_g3' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_g3"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_g4' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_g4"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_g5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_g5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_g6' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_g6"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_g7' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_g7"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_g8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_g8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_h1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_h1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_h2' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_h2"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_h3' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_h3"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_h4' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_h4"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_h5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_h5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_h6' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_h6"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_h7' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_h7"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='sq_h8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "sq_h8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='vp_overview' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Viewpoint",
+            "def_name": "vp_overview"
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "viewer/scenes/grid.x3d",
+      "bytes": 12902,
+      "candidate_sha256": "e894fc96b15a1f84924c9db6d6e1fd92753e00b146fb059fb3d53d8eb2cc7faf",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='bg' (Background) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Background",
+            "def_name": "bg"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_0' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_0"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_1' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_10' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_10"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_11' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_11"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_12' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_12"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_13' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_13"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_14' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_14"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_15' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_15"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_16' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_16"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_17' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_17"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_18' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_18"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_19' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_19"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_2' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_2"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_3' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_3"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_4' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_4"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_5' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_6' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_6"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_7' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_7"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_8' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_9' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_9"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='nav' (NavigationInfo) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "NavigationInfo",
+            "def_name": "nav"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='touch' (TouchSensor) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "TouchSensor",
+            "def_name": "touch"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='vp_focus' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Viewpoint",
+            "def_name": "vp_focus"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='vp_overview' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Viewpoint",
+            "def_name": "vp_overview"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='vp_phase' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Viewpoint",
+            "def_name": "vp_phase"
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/castling-transit-transit-attacked.x3d",
+      "bytes": 21070,
+      "candidate_sha256": "a04df5648f8e88b497f512c2e0e7386da8cc63cd4e99e9e1d1f7c1fa186cfa69",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_a8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_a8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_e1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_e1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_f8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_f8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_h1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_h1"
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/castling-transit-transit-safe.x3d",
+      "bytes": 20855,
+      "candidate_sha256": "c8ad29fb7aecab5eb721890457ef53ebd2c94c92b49618fc201b3729c6fa3bca",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_a8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_a8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_b8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_b8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_e1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_e1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_h1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_h1"
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/en-passant-ray-rank-clear.x3d",
+      "bytes": 21637,
+      "candidate_sha256": "8c890fb66fc71584d0c0e58f85520dd838ca96a6ad253d495ead045afd77701a",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_a4' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_a4"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_a8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_a8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_f5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_f5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_g5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_g5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_h5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_h5"
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/en-passant-ray-rank-exposure.x3d",
+      "bytes": 21845,
+      "candidate_sha256": "d90da513bc5817a9c7d8e0a4075330ba72131b96e8c9934e7406135f15a2f4ac",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_a5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_a5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_a8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_a8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_f5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_f5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_g5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_g5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_h5' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_h5"
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/pin-paradox-pinned.x3d",
+      "bytes": 20837,
+      "candidate_sha256": "201bbbaf67a01f05496c1eb4d5fe1aa2084c21291c1dd23b8d734a409150ca2f",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_e1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_e1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_e7' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_e7"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_e8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_e8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_f4' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_f4"
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/pin-paradox-unpinned.x3d",
+      "bytes": 20619,
+      "candidate_sha256": "78ee42e528bb8db0b8f9fdd5ae19255fc0abeedce4fcb16f631d3f9c6ca39667",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_a1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_a1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_e7' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_e7"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_e8' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_e8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_f4' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_f4"
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/runtime-graph.x3d",
+      "bytes": 714,
+      "candidate_sha256": "19a4fca9ce2d44ed25ff24c6ef860154fbe76a76fb93829c4b9c85051d439dd1",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='graph' (Group) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Group",
+            "def_name": "graph"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='graphc' (Coordinate) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Coordinate",
+            "def_name": "graphc"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='graphline' (IndexedLineSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "IndexedLineSet",
+            "def_name": "graphline"
+          },
+          {
+            "level": "info",
+            "check": "no-viewpoint",
+            "message": "Scene has no Viewpoint node. The browser will use a default camera. Consider adding a Viewpoint for a defined initial view.",
+            "node_tag": "",
+            "def_name": ""
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/runtime-grid-01.x3d",
+      "bytes": 10503,
+      "candidate_sha256": "b61860927fe205267a31b539b28a1e021955fda87819aa37d18b321d4f6480be",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='bg' (Background) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Background",
+            "def_name": "bg"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_0' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_0"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='nav' (NavigationInfo) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "NavigationInfo",
+            "def_name": "nav"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='touch' (TouchSensor) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "TouchSensor",
+            "def_name": "touch"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='vp_focus' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Viewpoint",
+            "def_name": "vp_focus"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='vp_overview' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Viewpoint",
+            "def_name": "vp_overview"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='vp_phase' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Viewpoint",
+            "def_name": "vp_phase"
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/runtime-grid-20.x3d",
+      "bytes": 12653,
+      "candidate_sha256": "e3316532b05d131ed45317241ae3fdf1987858ca92b4dc3157c978b900ace4e0",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='bg' (Background) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Background",
+            "def_name": "bg"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_0' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_0"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_1' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_10' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_10"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_11' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_11"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_12' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_12"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_13' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_13"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_14' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_14"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_15' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_15"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_16' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_16"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_17' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_17"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_18' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_18"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_19' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_19"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_2' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_2"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_3' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_3"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_4' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_4"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_5' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_6' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_6"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_7' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_7"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_8' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_9' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_9"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='nav' (NavigationInfo) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "NavigationInfo",
+            "def_name": "nav"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='touch' (TouchSensor) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "TouchSensor",
+            "def_name": "touch"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='vp_focus' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Viewpoint",
+            "def_name": "vp_focus"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='vp_overview' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Viewpoint",
+            "def_name": "vp_overview"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='vp_phase' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Viewpoint",
+            "def_name": "vp_phase"
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/runtime-grid-64.x3d",
+      "bytes": 17659,
+      "candidate_sha256": "7fcc57e1ba426f2ba212f1d8dd78758e2cf8f0f1935b502bafe352474845ba08",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='bg' (Background) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Background",
+            "def_name": "bg"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_0' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_0"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_1' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_10' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_10"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_11' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_11"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_12' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_12"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_13' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_13"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_14' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_14"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_15' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_15"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_16' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_16"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_17' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_17"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_18' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_18"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_19' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_19"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_2' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_2"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_20' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_20"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_21' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_21"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_22' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_22"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_23' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_23"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_24' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_24"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_25' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_25"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_26' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_26"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_27' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_27"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_28' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_28"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_29' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_29"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_3' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_3"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_30' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_30"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_31' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_31"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_32' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_32"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_33' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_33"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_34' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_34"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_35' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_35"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_36' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_36"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_37' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_37"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_38' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_38"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_39' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_39"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_4' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_4"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_40' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_40"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_41' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_41"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_42' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_42"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_43' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_43"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_44' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_44"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_45' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_45"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_46' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_46"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_47' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_47"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_48' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_48"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_49' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_49"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_5' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_5"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_50' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_50"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_51' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_51"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_52' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_52"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_53' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_53"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_54' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_54"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_55' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_55"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_56' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_56"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_57' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_57"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_58' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_58"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_59' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_59"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_6' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_6"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_60' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_60"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_61' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_61"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_62' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_62"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_63' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_63"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_7' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_7"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_8' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_8"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='board_9' (ProtoInstance) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "ProtoInstance",
+            "def_name": "board_9"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='nav' (NavigationInfo) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "NavigationInfo",
+            "def_name": "nav"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='touch' (TouchSensor) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "TouchSensor",
+            "def_name": "touch"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='vp_focus' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Viewpoint",
+            "def_name": "vp_focus"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='vp_overview' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Viewpoint",
+            "def_name": "vp_overview"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='vp_phase' (Viewpoint) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Viewpoint",
+            "def_name": "vp_phase"
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/runtime-heatmap.x3d",
+      "bytes": 5247,
+      "candidate_sha256": "53d814fea1cc017854efd1fae46f710419c3d8f47b3e3b750e707431868bd2a9",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='heat' (Shape) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Shape",
+            "def_name": "heat"
+          },
+          {
+            "level": "info",
+            "check": "no-viewpoint",
+            "message": "Scene has no Viewpoint node. The browser will use a default camera. Consider adding a Viewpoint for a defined initial view.",
+            "node_tag": "",
+            "def_name": ""
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/runtime-move-fx.x3d",
+      "bytes": 1167,
+      "candidate_sha256": "00c672182e22f059c979a421a948499353a1b615ef7cfa27e8cbff51dbfd8f92",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "no-viewpoint",
+            "message": "Scene has no Viewpoint node. The browser will use a default camera. Consider adding a Viewpoint for a defined initial view.",
+            "node_tag": "",
+            "def_name": ""
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/runtime-particles.x3d",
+      "bytes": 728,
+      "candidate_sha256": "712e3709bc0c6dee9bd11cc05f55bf91ae995aa4e6684887b637c5f9fadb0eca",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "no-viewpoint",
+            "message": "Scene has no Viewpoint node. The browser will use a default camera. Consider adding a Viewpoint for a defined initial view.",
+            "node_tag": "",
+            "def_name": ""
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/runtime-phase-space.x3d",
+      "bytes": 2994,
+      "candidate_sha256": "47d5d782ab7b94e26cc03395aaefd07d79e2722db2265afd2639fcecb924fa83",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='ps_0' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "ps_0"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='ps_1' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "ps_1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='ps_2' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "ps_2"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='trail_0' (IndexedLineSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "IndexedLineSet",
+            "def_name": "trail_0"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='trail_1' (IndexedLineSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "IndexedLineSet",
+            "def_name": "trail_1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='trail_2' (IndexedLineSet) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "IndexedLineSet",
+            "def_name": "trail_2"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='trailc_0' (Coordinate) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Coordinate",
+            "def_name": "trailc_0"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='trailc_1' (Coordinate) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Coordinate",
+            "def_name": "trailc_1"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='trailc_2' (Coordinate) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Coordinate",
+            "def_name": "trailc_2"
+          },
+          {
+            "level": "info",
+            "check": "no-viewpoint",
+            "message": "Scene has no Viewpoint node. The browser will use a default camera. Consider adding a Viewpoint for a defined initial view.",
+            "node_tag": "",
+            "def_name": ""
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/runtime-pieces.x3d",
+      "bytes": 10516,
+      "candidate_sha256": "733c4816c15eb771ceebd71af2d2d6e493e55541b3452b10469d7a500979f1c3",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "no-viewpoint",
+            "message": "Scene has no Viewpoint node. The browser will use a default camera. Consider adding a Viewpoint for a defined initial view.",
+            "node_tag": "",
+            "def_name": ""
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/runtime-study-fx.x3d",
+      "bytes": 1155,
+      "candidate_sha256": "17ff35ebe660438736495c91baba2dd0fa2e013d099b07fb45ab429712dec0e1",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "no-viewpoint",
+            "message": "Scene has no Viewpoint node. The browser will use a default camera. Consider adding a Viewpoint for a defined initial view.",
+            "node_tag": "",
+            "def_name": ""
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    },
+    {
+      "path": "examples/x3d/underpromotion-promotion-choice.x3d",
+      "bytes": 20067,
+      "candidate_sha256": "47853592a7234d46cff0803601d332c05cb7062225c65e2742b1b34e6f344f35",
+      "status": "pass",
+      "xsd": {
+        "status": "pass",
+        "schema_version": "4.0",
+        "findings": [],
+        "notes": []
+      },
+      "semantic": {
+        "status": "pass",
+        "findings": [
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_a7' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_a7"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_c6' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_c6"
+          },
+          {
+            "level": "info",
+            "check": "unused-def",
+            "message": "DEF='piece_c7' (Transform) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+            "node_tag": "Transform",
+            "def_name": "piece_c7"
+          }
+        ]
+      },
+      "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+    }
+  ],
+  "controls": [
+    {
+      "id": "numeric_radius",
+      "expected_stage": "xsd",
+      "positive": {
+        "bytes": 421,
+        "candidate_sha256": "2653cff5db5f8dfc35c29b3b14ad48fd427a51b3b2d8d2d05978f07ff8bc959a",
+        "status": "pass",
+        "xsd": {
+          "status": "pass",
+          "schema_version": "4.0",
+          "findings": [],
+          "notes": []
+        },
+        "semantic": {
+          "status": "pass",
+          "findings": [
+            {
+              "level": "info",
+              "check": "shape-no-appearance",
+              "message": "Shape has no Appearance. The shape will render with a default white material.",
+              "node_tag": "Shape",
+              "def_name": ""
+            }
+          ]
+        },
+        "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+      },
+      "negative": {
+        "bytes": 426,
+        "candidate_sha256": "3f2b22c28b4fa8624ebb3c92d4ac0739e1e65ea4facfa8efdae084b524ed6ff2",
+        "status": "fail",
+        "xsd": {
+          "status": "fail",
+          "schema_version": "4.0",
+          "findings": [
+            "Line 1: Element 'Sphere', attribute 'radius': 'broken' is not a valid value of the local atomic type."
+          ],
+          "notes": []
+        },
+        "semantic": {
+          "status": "pass",
+          "findings": [
+            {
+              "level": "info",
+              "check": "shape-no-appearance",
+              "message": "Shape has no Appearance. The shape will render with a default white material.",
+              "node_tag": "Shape",
+              "def_name": ""
+            }
+          ]
+        },
+        "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+      },
+      "caught": true
+    },
+    {
+      "id": "missing_route_source",
+      "expected_stage": "semantic",
+      "positive": {
+        "bytes": 421,
+        "candidate_sha256": "2653cff5db5f8dfc35c29b3b14ad48fd427a51b3b2d8d2d05978f07ff8bc959a",
+        "status": "pass",
+        "xsd": {
+          "status": "pass",
+          "schema_version": "4.0",
+          "findings": [],
+          "notes": []
+        },
+        "semantic": {
+          "status": "pass",
+          "findings": [
+            {
+              "level": "info",
+              "check": "shape-no-appearance",
+              "message": "Shape has no Appearance. The shape will render with a default white material.",
+              "node_tag": "Shape",
+              "def_name": ""
+            }
+          ]
+        },
+        "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+      },
+      "negative": {
+        "bytes": 428,
+        "candidate_sha256": "ed497cbf00e025811c50c8a2ca4b4e5021b21f9b59fb255f262264ae517c70e8",
+        "status": "fail",
+        "xsd": {
+          "status": "pass",
+          "schema_version": "4.0",
+          "findings": [],
+          "notes": []
+        },
+        "semantic": {
+          "status": "fail",
+          "findings": [
+            {
+              "level": "info",
+              "check": "unused-def",
+              "message": "DEF='Clock' (TimeSensor) is defined but never USE'd and no ROUTE, IMPORT or EXPORT names it. This is fine if you reference it externally (Script, SAI).",
+              "node_tag": "TimeSensor",
+              "def_name": "Clock"
+            },
+            {
+              "level": "info",
+              "check": "shape-no-appearance",
+              "message": "Shape has no Appearance. The shape will render with a default white material.",
+              "node_tag": "Shape",
+              "def_name": ""
+            },
+            {
+              "level": "error",
+              "check": "route-missing-from-node",
+              "message": "ROUTE fromNode='MissingClock' not found. Available DEFs: Clock, Slide, Target.",
+              "node_tag": "",
+              "def_name": ""
+            }
+          ]
+        },
+        "instrument_sha256": "7ab63a8ef09667df515be4393603fc084c9be5454b963b3f8142bad3a4a6265b"
+      },
+      "caught": true
+    }
+  ],
+  "limitations": [
+    "Actual direct calls to pinned x3d_mcp functions; no network MCP transport or model call.",
+    "XSD 4.0 and the upstream default semantic vocabulary 4.1 are deliberately recorded separately.",
+    "The optional fixed X3D DOCTYPE is retained; arbitrary DTD/entity declarations are refused before upstream parsing.",
+    "Per-file XSD/implemented semantic checks do not establish chess rules, board/FEN fidelity, visible rendering or GPU performance.",
+    "Parameterized model fidelity and exported visual semantics require separate application controls.",
+    "This unsigned local report is not a formal Loom acceptance receipt or publisher authentication."
+  ],
+  "report_sha256": "8ebd9b8673f90b3735bf8eb73bb45900a9f1fcc43136bc66378bde4b30f01ffa"
+}

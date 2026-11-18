@@ -1,0 +1,853 @@
+{
+  "schema": "x3dchess.integration-ontology/1",
+  "title": "Chess Observatory vocabulary and integration work register",
+  "status": "vocabulary_hook",
+  "source_baseline": "dea017f6b4e13abdbbe11553aeac131a3d80704d",
+  "revision_scope": "Working-tree implementation accompanying this atlas; the final release receipt owns exact checked-byte identity.",
+  "scope": "Public project vocabulary, field bindings and proposed work. This JSON is not an OWL ontology, executed reasoner, complete event JSON Schema or certification profile.",
+  "namespace": "urn:x3dchess:ontology:",
+  "prefixes": {
+    "x3dc": "urn:x3dchess:ontology:",
+    "prov": "http://www.w3.org/ns/prov#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#"
+  },
+  "sources": [
+    {
+      "id": "fide-laws",
+      "url": "https://handbook.fide.com/chapter/e012023",
+      "use": "Rule context, especially attacked-square semantics and distinct claim/automatic draw rules; not evidence that local software passed."
+    },
+    {
+      "id": "stockfish-faq",
+      "url": "https://official-stockfish.github.io/docs/stockfish-wiki/Stockfish-FAQ.html",
+      "use": "Search score interpretation; an engine score is not a generic win probability."
+    },
+    {
+      "id": "xite-browser",
+      "url": "https://create3000.github.io/x_ite/reference/browser-services/",
+      "use": "Browser/scene API contracts; native execution needs its own receipt."
+    },
+    {
+      "id": "xite-shape",
+      "url": "https://create3000.github.io/x_ite/components/shape/shape/",
+      "use": "Shape.pointerEvents is an X_ITE extension; portable projection records its removal."
+    },
+    {
+      "id": "prov-o",
+      "url": "https://www.w3.org/TR/prov-o/",
+      "use": "Entity/activity provenance hooks and domain/range discipline."
+    },
+    {
+      "id": "skos",
+      "url": "https://www.w3.org/TR/skos-reference/",
+      "use": "Concept scheme hooks for classification; a taxonomy does not prove domain truth."
+    }
+  ],
+  "classes": [
+    {
+      "id": "x3dc:GameEpisode",
+      "maps_to": "prov:Entity",
+      "definition": "A particular game lifetime, locally identified by game_id and generation, with its history scope."
+    },
+    {
+      "id": "x3dc:PositionRecord",
+      "maps_to": "prov:Entity",
+      "definition": "Serialized occupancy, turn, rights and counters at a stated episode/ply; FEN alone does not preserve repetition history."
+    },
+    {
+      "id": "x3dc:ScoreObservation",
+      "maps_to": "prov:Entity",
+      "definition": "A typed score and bound referring to the actual searched or heuristically scored position."
+    },
+    {
+      "id": "x3dc:RuleWitness",
+      "maps_to": "prov:Entity",
+      "definition": "A scoped rule check, such as an attack query, legal-move set, pin ray or tested move transition; exactness is limited to its declared rule question."
+    },
+    {
+      "id": "x3dc:AnalysisObservation",
+      "maps_to": "prov:Entity",
+      "definition": "A geometric candidate, feature vector, swing record or adjudication with declared semantics and subject."
+    },
+    {
+      "id": "x3dc:VisualProjection",
+      "maps_to": "prov:Entity",
+      "definition": "An X3D document, live scene state or raster figure with declared source, mapping, camera and losses."
+    },
+    {
+      "id": "x3dc:Artifact",
+      "maps_to": "prov:Entity",
+      "definition": "A particular byte sequence, identified by digest algorithm and digest, distinct from a filename or its meaning."
+    },
+    {
+      "id": "x3dc:EngineBuild",
+      "maps_to": "prov:Entity",
+      "definition": "Engine executable or JS/WASM identities and available build metadata, separate from search options and outcomes."
+    },
+    {
+      "id": "x3dc:StudyCase",
+      "maps_to": "prov:Entity",
+      "definition": "A curated question with input variants, rule witnesses, probes and a bounded explanation."
+    },
+    {
+      "id": "x3dc:EvidenceRecord",
+      "maps_to": "prov:Entity",
+      "definition": "A report of subject, instrument, scope, acceptance facet and result; distinct from the run that generated it."
+    },
+    {
+      "id": "x3dc:MoveTransition",
+      "maps_to": "prov:Activity",
+      "definition": "An attempted or accepted move from one identified position to another, with complete occupancy changes."
+    },
+    {
+      "id": "x3dc:EngineSearch",
+      "maps_to": "prov:Activity",
+      "definition": "A particular search using an engine build, options, position/history and budget."
+    },
+    {
+      "id": "x3dc:VerificationRun",
+      "maps_to": "prov:Activity",
+      "definition": "An actual execution of a named instrument against identified input bytes or state."
+    },
+    {
+      "id": "x3dc:RenderRun",
+      "maps_to": "prov:Activity",
+      "definition": "An actual rendering execution, including consumer/runtime, appearance changes, view and workload."
+    },
+    {
+      "id": "x3dc:Category",
+      "maps_to": "skos:Concept",
+      "definition": "A classification term. Classification is independent of implementation or evidence status."
+    },
+    {
+      "id": "x3dc:WorkItem",
+      "maps_to": "prov:Entity",
+      "definition": "A bounded proposal with owner domains, dependencies and acceptance evidence; not a current capability."
+    }
+  ],
+  "relations": [
+    {
+      "id": "x3dc:subjectPosition",
+      "domain": [
+        "x3dc:ScoreObservation",
+        "x3dc:RuleWitness",
+        "x3dc:AnalysisObservation",
+        "x3dc:VisualProjection"
+      ],
+      "range": "x3dc:PositionRecord",
+      "meaning": "The exact position addressed, including history scope where relevant."
+    },
+    {
+      "id": "x3dc:episode",
+      "domain": [
+        "x3dc:PositionRecord",
+        "x3dc:MoveTransition"
+      ],
+      "range": "x3dc:GameEpisode",
+      "meaning": "Binds state to one lifetime; a reused board ID is insufficient."
+    },
+    {
+      "id": "x3dc:acceptanceFacet",
+      "domain": [
+        "x3dc:EvidenceRecord",
+        "x3dc:WorkItem"
+      ],
+      "range": "x3dc:Category",
+      "meaning": "The property tested, not a global quality score."
+    },
+    {
+      "id": "x3dc:reproducesEvidence",
+      "domain": [
+        "x3dc:EvidenceRecord"
+      ],
+      "range": "x3dc:EvidenceRecord",
+      "meaning": "A record explicitly identifies an earlier record and comparable scope. It does not imply equal result or independent instrumentation."
+    },
+    {
+      "id": "prov:used",
+      "domain": [
+        "prov:Activity"
+      ],
+      "range": "prov:Entity",
+      "meaning": "A search, check or render run used an identified source, input, engine or configuration entity."
+    },
+    {
+      "id": "prov:wasGeneratedBy",
+      "domain": [
+        "prov:Entity"
+      ],
+      "range": "prov:Activity",
+      "meaning": "An observation, exported artifact or receipt was generated by an identified actual run."
+    },
+    {
+      "id": "prov:wasDerivedFrom",
+      "domain": [
+        "prov:Entity"
+      ],
+      "range": "prov:Entity",
+      "meaning": "A declared derivation, such as a portable projection from owned runtime XML; preserve the transformation and losses."
+    },
+    {
+      "id": "prov:wasInformedBy",
+      "domain": [
+        "prov:Activity"
+      ],
+      "range": "prov:Activity",
+      "meaning": "Connect actual activities, not their JSON receipt files; this is not an alias for record reproduction."
+    }
+  ],
+  "field_bindings": [
+    {
+      "term": "x3dc:episodeKey",
+      "fields": [
+        "game_id",
+        "generation"
+      ],
+      "semantics": "Pair required for a game lifetime; game_id alone may be reused. Neither field identifies global users or games."
+    },
+    {
+      "term": "x3dc:eventOrder",
+      "fields": [
+        "generation",
+        "seq",
+        "ply"
+      ],
+      "semantics": "Freshness/order context. seq is not a position hash; a server snapshot batch may share its high-watermark sequence across boards."
+    },
+    {
+      "term": "x3dc:displayedPosition",
+      "fields": [
+        "fen",
+        "ply"
+      ],
+      "semantics": "Move events carry the post-move board. Preserve turn, castling/en-passant rights and counters when required by the consumer."
+    },
+    {
+      "term": "x3dc:searchedPosition",
+      "fields": [
+        "eval_fen",
+        "eval_ply"
+      ],
+      "ui_record_fields": [
+        "evalFen",
+        "evalPly"
+      ],
+      "semantics": "Play-search scores bind to the pre-move position; never silently attach them to the resulting board."
+    },
+    {
+      "term": "x3dc:rawPositionInput",
+      "fields": [
+        "source_fen",
+        "input_fen"
+      ],
+      "ui_record_fields": [
+        "inputFen"
+      ],
+      "study_member": "rawInputFen",
+      "semantics": "Original serialized input where retained; distinguish it from rules-library-normalized fen, especially unavailable en-passant rights."
+    },
+    {
+      "term": "x3dc:scoreKind",
+      "fields": [
+        "evaluation_kind"
+      ],
+      "ui_record_fields": [
+        "kind"
+      ],
+      "values": [
+        "engine_cp",
+        "engine_mate",
+        "material_proxy",
+        "unavailable"
+      ],
+      "semantics": "Union across transports; Python engine events do not emit material_proxy. Do not compare different kinds as ordinary exact centipawns."
+    },
+    {
+      "term": "x3dc:scoreValue",
+      "fields": [
+        "eval_cp",
+        "mate_in"
+      ],
+      "ui_record_fields": [
+        "eval",
+        "mate"
+      ],
+      "semantics": "White-positive numeric score or a separate mate score. Missing is null, not zero; a mate distance is not a centipawn sample."
+    },
+    {
+      "term": "x3dc:scoreBound",
+      "fields": [
+        "score_bound"
+      ],
+      "ui_record_fields": [
+        "bound"
+      ],
+      "values": [
+        "exact",
+        "lowerbound",
+        "upperbound",
+        "unknown",
+        null
+      ],
+      "semantics": "White-perspective bounds; converting from Black reverses lower/upper. Nonexact and mate samples leave the numeric swing window."
+    },
+    {
+      "term": "x3dc:motifEvidence",
+      "fields": [
+        "status",
+        "witness_moves",
+        "revealed_square",
+        "severity"
+      ],
+      "semantics": "Candidate labels and legal discovery witnesses have different scopes. A verified exposing move does not establish optimal play or a win."
+    },
+    {
+      "term": "x3dc:drawPolicy",
+      "fields": [
+        "draw_policy",
+        "adjudicated",
+        "reason"
+      ],
+      "values": [
+        "claim_current_position",
+        "claim_available"
+      ],
+      "semantics": "Browser WASM/replay claims only reached threefold/100-halfmove conditions; server can also recognize a legal intended next move enabling a claim. Claims and caps are adjudicated; automatic endings are not. Policies are not parity claims."
+    },
+    {
+      "term": "x3dc:completionReason",
+      "fields": [
+        "reason"
+      ],
+      "shared_draw_reasons": [
+        "threefold",
+        "fifty_move",
+        "fivefold",
+        "seventyfive_move"
+      ],
+      "cap_reasons": [
+        "ply_cap",
+        "replay_cap"
+      ],
+      "semantics": "Retain the actual reason and policy. Engine/server ply cap differs from browser replay cap; this list is not the entire terminal-reason enumeration."
+    },
+    {
+      "term": "x3dc:studyIdentity",
+      "fields": [
+        "study.id",
+        "study.variant",
+        "study.input_fen",
+        "study.catalog_sha256"
+      ],
+      "semantics": "Fields of x3dchess.observation/1; bind a curated case to the current raw input and checked catalog bytes."
+    },
+    {
+      "term": "x3dc:positionExport",
+      "fields": [
+        "schema",
+        "input_fen",
+        "fen",
+        "turn",
+        "piece_count",
+        "representation"
+      ],
+      "schema_value": "x3dchess.position/1",
+      "semantics": "Static model occupancy with authored appearance. Full live history, workers, animation pose and clocks are excluded."
+    }
+  ],
+  "measurement_conventions": {
+    "score": "White-positive search score, with engine identity/options/budget and kind retained. Display division by 100 does not make the result a physical pawn count or probability.",
+    "material": "Authored proxy P=1, N=3, B=3, R=5, Q=9; White minus Black. No SI unit or universal exchange-value claim.",
+    "pressure": "White geometric attackers minus Black geometric attackers per square, including pinned attackers. Not legal destinations, safety, territory probability or an engine evaluation.",
+    "features": "phaseSpacePoint returns material_balance, space_control and king_safety; heterogeneous authored heuristics, not learned phase space. Visual clipping/scaling can merge distinct positions.",
+    "coordinates": "Owned X3D board uses a right-handed Y-up frame, files increasing along +X and rank 1 on +Z. One authored board square has width 1 scene unit. Consumer import may transform axes; record that transform before comparison.",
+    "hash": "Store algorithm plus artifact digest. Byte identity is separate from semantic position identity, publisher authentication and correctness.",
+    "time": "Record measurement unit, clock scope, workload, hardware, runtime and concurrency. A configured deadline or board-count bound is not achieved performance."
+  },
+  "concept_schemes": [
+    {
+      "id": "x3dc:acceptanceFacets",
+      "maps_to": "skos:ConceptScheme",
+      "concepts": [
+        "legality",
+        "event_order",
+        "occupancy",
+        "analysis_semantics",
+        "visibility",
+        "interaction",
+        "readability",
+        "resources",
+        "provenance"
+      ]
+    },
+    {
+      "id": "x3dc:evidenceModes",
+      "maps_to": "skos:ConceptScheme",
+      "concepts": [
+        "reported",
+        "source_inspected",
+        "executed",
+        "reproduced"
+      ],
+      "note": "Mode is independent of outcome and instrument. Executed parity may still be two implementations agreeing on the wrong meaning."
+    },
+    {
+      "id": "x3dc:evidenceOutcomes",
+      "maps_to": "skos:ConceptScheme",
+      "concepts": [
+        "pass",
+        "fail",
+        "partial",
+        "not_run",
+        "unknown"
+      ],
+      "note": "A blocked browser is not_run, never pass. A successful narrower instrument does not upgrade another facet."
+    },
+    {
+      "id": "x3dc:readiness",
+      "maps_to": "skos:ConceptScheme",
+      "concepts": [
+        "implemented",
+        "locally_checked",
+        "awaiting_native_execution",
+        "proposed",
+        "blocked_by_missing_inputs"
+      ],
+      "note": "Use per feature and acceptance scope, not one global maturity score."
+    },
+    {
+      "id": "x3dc:representations",
+      "maps_to": "skos:ConceptScheme",
+      "concepts": [
+        "FEN",
+        "UCI_history",
+        "SAN_history",
+        "PGN",
+        "observation_JSON",
+        "portable_position_X3D",
+        "live_X3D_scene",
+        "raster_figure"
+      ],
+      "note": "Representation classes name different preserved information, not interchangeable serializations of a whole application."
+    }
+  ],
+  "current_capabilities": [
+    {
+      "id": "F01",
+      "label": "Shared requested-board layout",
+      "state": "implemented",
+      "sources": [
+        "viewer/js/layout.js",
+        "viewer/js/scene.js",
+        "docs/RENDERER-CONTRACT.md"
+      ],
+      "boundary": "1–64 structural configurations; native performance remains unmeasured."
+    },
+    {
+      "id": "F02",
+      "label": "Bounded event acceptance and async scene ownership",
+      "state": "implemented",
+      "sources": [
+        "viewer/js/renderer-state.js",
+        "viewer/js/board.js",
+        "docs/RENDERER-CONTRACT.md"
+      ],
+      "boundary": "SAI-adapter controls include null-score bar/tint clearing and terminal state reset; they do not establish native scheduling, visibility or picking."
+    },
+    {
+      "id": "F03",
+      "label": "Typed analysis and searched-position identity",
+      "state": "implemented",
+      "sources": [
+        "viewer/js/analysis.js",
+        "server/x3dchess_server/analysis/",
+        "docs/ANALYSIS-FIDELITY.md"
+      ],
+      "boundary": "Bounded geometric candidates and neutral sample swings; not best-move attribution or forced wins."
+    },
+    {
+      "id": "F04",
+      "label": "Engine lifecycle, history and explicit adjudication policies",
+      "state": "implemented",
+      "sources": [
+        "server/x3dchess_server/",
+        "viewer/js/wasm-transport.js",
+        "viewer/js/replay.js",
+        "viewer/js/sse-transport.js",
+        "docs/SERVER-REVIEW.md",
+        "tools/transport-review.md"
+      ],
+      "boundary": "Actual Node-adapted WASM controls are narrower than browser Worker startup; claim policies differ."
+    },
+    {
+      "id": "F05",
+      "label": "Four curated rule studies with seven source variants",
+      "state": "implemented",
+      "sources": [
+        "viewer/js/study.js",
+        "viewer/data/studies.json",
+        "tools/build_studies.py",
+        "evidence/study-build.json"
+      ],
+      "boundary": "A controlled catalog with legal probes and zero game actions after terminal adjudication; retained raw move-generator witnesses are distinct. Not arbitrary puzzle import, search or ratings."
+    },
+    {
+      "id": "F06",
+      "label": "Portable static position export and runtime capture validation",
+      "state": "locally_checked",
+      "sources": [
+        "viewer/js/export.js",
+        "tools/runtime-fragments.mjs",
+        "tools/validate_x3d.py",
+        "evidence/x3d-validation.json"
+      ],
+      "boundary": "Deterministic classic export default; UI passes the selected palette. Declared pointerEvents projection; schema/semantic checks do not establish chess geometry, native pixels or full application serialization."
+    },
+    {
+      "id": "F07",
+      "label": "One actual Blender import, occupancy check and authored still",
+      "state": "locally_checked",
+      "sources": [
+        "tools/render_preview.py",
+        "evidence/blender-preview.json"
+      ],
+      "boundary": "Five imported mesh centers/base heights in one study. Typography remains imperfect; full topology/material/annotation equivalence and reverse export are unproved."
+    },
+    {
+      "id": "F08",
+      "label": "Actual native browser rendering",
+      "state": "awaiting_native_execution",
+      "sources": [
+        "tools/smoke.mjs",
+        "evidence/browser-smoke.json",
+        "docs/RUNTIME-VALIDATION.md"
+      ],
+      "boundary": "Recorded not_run: this host blocks Chromium socket operations. No native screenshot/GPU claim follows from Blender or Node results."
+    }
+  ],
+  "study_hooks": [
+    {
+      "id": "pin-paradox",
+      "question": "Can a pinned knight still attack the king's proposed destination?",
+      "concepts": [
+        "attack_vs_legal_move",
+        "constraint",
+        "counterexample"
+      ],
+      "cross_domain": [
+        "MathLab",
+        "STEM"
+      ]
+    },
+    {
+      "id": "en-passant-ray",
+      "question": "How can removing two pawns expose a distant rook ray?",
+      "concepts": [
+        "nonlocal_transition",
+        "occupancy_invariant",
+        "raw_vs_normalized_input"
+      ],
+      "cross_domain": [
+        "MathLab",
+        "STEM",
+        "x3d.docs"
+      ]
+    },
+    {
+      "id": "castling-transit",
+      "question": "Why is a safe destination insufficient for a king route?",
+      "concepts": [
+        "path_constraint",
+        "boundary_condition",
+        "endpoint_counterexample"
+      ],
+      "cross_domain": [
+        "MathLab",
+        "STEM"
+      ]
+    },
+    {
+      "id": "underpromotion",
+      "question": "When can taking less material avoid stalemate?",
+      "concepts": [
+        "proxy_objective",
+        "terminal_state",
+        "counterexample"
+      ],
+      "cross_domain": [
+        "MathLab",
+        "x3d.ml"
+      ]
+    }
+  ],
+  "work_register": [
+    {
+      "id": "C01",
+      "priority": "P0",
+      "state": "proposed",
+      "title": "Actual native-browser execution",
+      "depends_on": [],
+      "facets": [
+        "occupancy",
+        "visibility",
+        "interaction",
+        "provenance"
+      ],
+      "action": "Run pinned replay/WASM/Study modes with 1/20/64 boards and partial rows; exercise picking, themes, reduced motion, reset/undo and actual Workers.",
+      "acceptance": "Bind assertions, screenshots, console outcomes, hashes, browser/backend and scene state in scoped receipts; blocked startup remains not_run.",
+      "foldback": [
+        "x3d.docs",
+        "x3d.demos",
+        "STEM"
+      ]
+    },
+    {
+      "id": "C02",
+      "priority": "P1",
+      "state": "proposed",
+      "title": "Measured target-device workload",
+      "depends_on": [
+        "C01"
+      ],
+      "facets": [
+        "resources",
+        "provenance"
+      ],
+      "action": "Measure frame-time percentiles, memory/nodes, parse/commit time, queue age and search throughput at fixed engine budgets with heat on/off.",
+      "acceptance": "Record device, runtime, workload, measurement interval and instrument; report achieved values separately from configured bounds.",
+      "foldback": [
+        "STEM",
+        "Flywheel"
+      ]
+    },
+    {
+      "id": "C03",
+      "priority": "P1",
+      "state": "proposed",
+      "title": "Current-position relation inspector",
+      "depends_on": [],
+      "facets": [
+        "legality",
+        "analysis_semantics",
+        "interaction"
+      ],
+      "action": "Extend the curated Lens to selected-square attackers, legal destinations and pin rays; add a promotion chooser before arbitrary play.",
+      "acceptance": "Pinned attacks, double check, en-passant exposure and promotions have positive/negative controls; delayed relations cannot survive a position revision.",
+      "foldback": [
+        "MathLab",
+        "x3d.demos"
+      ]
+    },
+    {
+      "id": "C04",
+      "priority": "P1",
+      "state": "proposed",
+      "title": "Broader semantic import/export round trip",
+      "depends_on": [],
+      "facets": [
+        "occupancy",
+        "analysis_semantics",
+        "provenance"
+      ],
+      "action": "Extend the existing one-study Blender occupancy check to all piece types/special moves and an export/reimport route; inspect actual geometry independently of embedded metadata.",
+      "acceptance": "Compare color/type/square/turn and declared retained fields; intentionally moved XML geometry must fail even if original FEN metadata survives; retain separate XSD gates.",
+      "foldback": [
+        "STEM",
+        "x3d.docs",
+        "x3d.demos"
+      ]
+    },
+    {
+      "id": "C05",
+      "priority": "P1",
+      "state": "proposed",
+      "title": "Bounded PGN replay",
+      "depends_on": [],
+      "facets": [
+        "legality",
+        "event_order",
+        "provenance"
+      ],
+      "action": "Import a bounded game/line with SetUp/FEN context and source identity, legal stepping/undo and text-only comments.",
+      "acceptance": "Legal move checks cover promotion and Black-to-move starts; no claim that imported evaluations were recomputed.",
+      "foldback": [
+        "MathLab",
+        "x3d.demos"
+      ]
+    },
+    {
+      "id": "C06",
+      "priority": "P2",
+      "state": "proposed",
+      "title": "Feature-space collision study",
+      "depends_on": [],
+      "facets": [
+        "analysis_semantics",
+        "readability"
+      ],
+      "action": "Curate equal/near-equal authored feature points with different legal moves or terminal states; expose raw values and clipping.",
+      "acceptance": "Each point resolves to its actual board/ply; exact rule witnesses establish the differing property without invented forced-outcome claims.",
+      "foldback": [
+        "MathLab",
+        "STEM",
+        "x3d.ml"
+      ]
+    },
+    {
+      "id": "C07",
+      "priority": "P2",
+      "state": "proposed",
+      "title": "Bounded verified search branches",
+      "depends_on": [],
+      "facets": [
+        "legality",
+        "event_order",
+        "analysis_semantics",
+        "resources"
+      ],
+      "action": "Add a small focused MultiPV view with searched position, engine/options and depth/nodes/time identities.",
+      "acceptance": "Legally replay every drawn line; reject corrupt PVs and stale results; label selected continuations rather than exhaustive proof.",
+      "foldback": [
+        "MathLab",
+        "STEM",
+        "x3d.ml"
+      ]
+    },
+    {
+      "id": "C08",
+      "priority": "P2",
+      "state": "proposed",
+      "title": "Controlled tournament comparisons",
+      "depends_on": [],
+      "facets": [
+        "analysis_semantics",
+        "resources",
+        "provenance"
+      ],
+      "action": "Specify openings, color-swapped pairs, stopping/adjudication policy and uncertainty before comparing settings.",
+      "acceptance": "Separate wins/losses/draws/adjudications/search failures and show sample size; a small demonstration does not establish an engine rating.",
+      "foldback": [
+        "STEM",
+        "x3d.ml"
+      ]
+    },
+    {
+      "id": "C09",
+      "priority": "P2",
+      "state": "proposed",
+      "title": "Durable episode replay",
+      "depends_on": [],
+      "facets": [
+        "event_order",
+        "provenance"
+      ],
+      "action": "Add a durable accepted-event ledger and history identity rather than equating current snapshots with crash recovery.",
+      "acceptance": "Interrupt a process, resume consumption and verify no duplicate moves or old-generation visual commits; preserve policy/version identity.",
+      "foldback": [
+        "STEM",
+        "Flywheel"
+      ]
+    },
+    {
+      "id": "C10",
+      "priority": "P2",
+      "state": "proposed",
+      "title": "Visual regression and accessibility",
+      "depends_on": [
+        "C01"
+      ],
+      "facets": [
+        "visibility",
+        "interaction",
+        "readability"
+      ],
+      "action": "Use deterministic scene/camera states, masks/occupancy readback, contrast and picking checks, noncolor cues and keyboard focus tests.",
+      "acceptance": "Record per-theme tested views and reduced-motion behavior; masks prove scoped visibility rather than tactical truth; repair imported typography separately.",
+      "foldback": [
+        "x3d.docs",
+        "x3d.demos",
+        "STEM"
+      ]
+    },
+    {
+      "id": "C11",
+      "priority": "P2",
+      "state": "proposed",
+      "title": "Formal observation schema and graph adapter",
+      "depends_on": [],
+      "facets": [
+        "analysis_semantics",
+        "provenance"
+      ],
+      "action": "Define a real observation JSON Schema and a read-only provenance adapter using the subject/facet/scope distinctions here.",
+      "acceptance": "Reject wrong-FEN scores, unrelated render evidence, unrun records reported as passes and changed artifact bytes; use PROV activity relations only between actual runs.",
+      "foldback": [
+        "STEM",
+        "x3d.ml",
+        "Flywheel",
+        "x3d.docs"
+      ]
+    },
+    {
+      "id": "C12",
+      "priority": "P3",
+      "state": "proposed",
+      "title": "Additional renderers and piece assets",
+      "depends_on": [],
+      "facets": [
+        "occupancy",
+        "interaction",
+        "readability",
+        "resources",
+        "provenance"
+      ],
+      "action": "Evaluate a small attributed glTF/alternate-consumer piece set against the same verified game/event model and special-move fixtures.",
+      "acceptance": "Measure node/draw/parse costs, retain source/license and declare material/interaction losses; legible squares and chess semantics remain acceptance conditions.",
+      "foldback": [
+        "STEM",
+        "x3d.docs",
+        "x3d.demos"
+      ]
+    }
+  ],
+  "cross_project_contracts": [
+    {
+      "project": "MathLab",
+      "handoff": "One counterexample lesson card per study with prediction, probe, witness and explanation.",
+      "owner_boundary": "Retain the mathematical teaching sequence; consume exact chess witnesses rather than duplicate rule kernels."
+    },
+    {
+      "project": "STEM",
+      "handoff": "Reuse source state, derived relation, visual mapping and declared export-loss distinctions.",
+      "owner_boundary": "Each scientific domain retains its numerical model, units, uncertainty and independent witnesses."
+    },
+    {
+      "project": "x3d.docs",
+      "handoff": "Public synthetic SAI/extension fixtures and paired passing/failing controls.",
+      "owner_boundary": "API or schema correctness is separate from domain correctness and native visual evidence."
+    },
+    {
+      "project": "x3d.demos",
+      "handoff": "Discovery cards for the spectator, rule studies and declared offline still.",
+      "owner_boundary": "Verify actual live destination and intended consumer before publishing capability claims."
+    },
+    {
+      "project": "x3d.ml",
+      "handoff": "Public-safe study records, known wrong explanations, provenance and explicit train/evaluation splits if datasets are built.",
+      "owner_boundary": "This patch does not copy private corpus material, integrate a private archive or establish model performance."
+    },
+    {
+      "project": "Flywheel",
+      "handoff": "Typed observations and reproducible fixtures for stale state, score identity, motif semantics and export loss.",
+      "owner_boundary": "Keep existing orchestration/scorekeeping; do not collapse unrelated acceptance facets into another global scalar."
+    }
+  ],
+  "evidence_policy": [
+    "Historical RESULTS.md describes the earlier port; current module receipts and final aggregate records have their own scopes.",
+    "A source inspection is not an executed test. A successful adapter, Node engine or Blender run is not native browser proof.",
+    "Known-answer rule controls establish meaning before cross-language parity; matching output alone does not establish correctness.",
+    "Each observation should identify subject, instrument, facet, outcome, artifact hashes and limitations relevant to its claim.",
+    "This register proposes integrations with sibling projects; it does not claim those repositories were changed by this chess patch."
+  ]
+}

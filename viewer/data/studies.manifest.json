@@ -1,0 +1,9 @@
+{
+  "schema": "x3dchess.study-manifest/1",
+  "file": "studies.json",
+  "bytes": 23848,
+  "sha256": "a8ecab1cc0632945397e14c8eb6d4c162aa8fa690fd6c61f53952525a4ee27a9",
+  "producer_sha256": "66cfc3d5ae554f7d33d8269592c8bef5b4fa9a42431f29436cb7449756d1b63b",
+  "studies": 4,
+  "positions": 7
+}

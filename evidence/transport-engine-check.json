@@ -1,0 +1,80 @@
+{
+  "schema": "x3dchess.transport-engine-check/1",
+  "status": "pass",
+  "created_utc": "2026-11-18T02:24:22.407Z",
+  "environment": {
+    "node": "v22.23.5",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "scope": "Executed vendored Stockfish JS/WASM under Node through the actual UCI pool. Browser Worker/WASM fetch, renderer pixels, strength and hardware performance are not established.",
+  "cases": [
+    {
+      "id": "white-mate-in-one",
+      "fen": "7k/5Q2/6K1/8/8/8/8/8 w - - 0 1",
+      "result": {
+        "uci": "f7g7",
+        "cp": null,
+        "mate": 1,
+        "depth": 8,
+        "nodes": 210,
+        "score_pov": "white",
+        "eval_fen": "7k/5Q2/6K1/8/8/8/8/8 w - - 0 1",
+        "score_bound": "exact"
+      },
+      "legal": true,
+      "resulting_checkmate": true,
+      "resulting_fen": "7k/6Q1/6K1/8/8/8/8/8 b - - 1 1"
+    },
+    {
+      "id": "black-mate-in-one",
+      "fen": "8/8/8/8/8/6k1/5q2/7K b - - 0 1",
+      "result": {
+        "uci": "f2e1",
+        "cp": null,
+        "mate": -1,
+        "depth": 8,
+        "nodes": 210,
+        "score_pov": "white",
+        "eval_fen": "8/8/8/8/8/6k1/5q2/7K b - - 0 1",
+        "score_bound": "exact"
+      },
+      "legal": true,
+      "resulting_checkmate": true,
+      "resulting_fen": "8/8/8/8/8/6k1/8/4q2K w - - 1 2"
+    },
+    {
+      "id": "history-position",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+      "history": [
+        "e2e4",
+        "e7e5",
+        "g1f3"
+      ],
+      "result": {
+        "uci": "b8c6",
+        "cp": 31,
+        "mate": null,
+        "depth": 5,
+        "nodes": 1645,
+        "score_pov": "white",
+        "eval_fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+        "score_bound": "exact"
+      },
+      "legal": true,
+      "resulting_fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3"
+    }
+  ],
+  "engine_names": [
+    "Stockfish 19 Lite WASM"
+  ],
+  "searches": 3,
+  "nodes": 2065,
+  "source_sha256": {
+    "viewer/js/engine-pool.js": "2480b82349ead4b5f13bc2faeb0010586d50396b9d4dd7777823f0864436141c",
+    "viewer/vendor/chess.js": "76c7c34f0e2e9ab076521a5d6fe786a9cce537bb1b6f29d32a9c9970b5b232d2",
+    "viewer/vendor/stockfish/stockfish-19-lite-single.js": "ccb130d7ff29408531c47d859a49f91d59d4f482d05a53eb1a3231a4f624c91a",
+    "viewer/vendor/stockfish/stockfish-19-lite-single.wasm": "ee4f115bdb2d32cadf96cada104a05b5ec257d7ad6f57582190b49bc71f096de",
+    "tools/transport-engine-smoke.mjs": "17a896bf2a2a2b2f479b2b6ac623255258ebc191d2bcead4e801db28d3474f5c"
+  }
+}

@@ -1,0 +1,890 @@
+{
+  "oracle": {
+    "name": "python-chess",
+    "version": "1.11.2"
+  },
+  "producer_sha256": "66cfc3d5ae554f7d33d8269592c8bef5b4fa9a42431f29436cb7449756d1b63b",
+  "schema": "x3dchess.studies/1",
+  "scope": "Synthetic orthodox-chess rule experiments; no engine search, rating or best-move claim.",
+  "sources": [
+    {
+      "id": "fide",
+      "title": "FIDE Laws of Chess, articles 3 and 5",
+      "url": "https://handbook.fide.com/chapter/e012023"
+    },
+    {
+      "id": "python-chess",
+      "title": "python-chess core rules API",
+      "url": "https://python-chess.readthedocs.io/en/latest/core.html"
+    },
+    {
+      "id": "chess-js",
+      "title": "chess.js rules API",
+      "url": "https://jhlywa.github.io/chess.js/v1.4.0/"
+    }
+  ],
+  "studies": [
+    {
+      "articles": [
+        "3.1.3",
+        "3.9.1",
+        "3.9.2"
+      ],
+      "explanation": "The e-file rook pins the black knight to its king. That limits the knight’s legal movement, but the knight still attacks f5. The white king cannot step there. Moving the rook away removes the pin, while the attack on f5 remains.",
+      "id": "pin-paradox",
+      "insight": "An attacked square and a legal destination answer different questions.",
+      "probes": [
+        {
+          "expected_legal": [
+            false,
+            false
+          ],
+          "illegal": "Kf5 is illegal: the knight on e7 attacks f5, even while pinned.",
+          "label": "Try Kf5",
+          "uci": "f4f5"
+        },
+        {
+          "expected_legal": [
+            true,
+            true
+          ],
+          "label": "Compare Kg4",
+          "uci": "f4g4"
+        }
+      ],
+      "question": "May the white king step onto f5 when the attacking knight is pinned?",
+      "tag": "ATTACKS / LEGALITY",
+      "title": "Pinned is not powerless",
+      "variants": [
+        {
+          "attack_queries": [
+            {
+              "color": "b",
+              "expected_attackers": [
+                "e7"
+              ],
+              "square": "f5"
+            }
+          ],
+          "fen": "4k3/4n3/8/8/5K2/8/8/4R3 w - - 0 1",
+          "highlights": {
+            "lines": [
+              {
+                "color": "0.95 0.68 0.26",
+                "from": "e1",
+                "to": "e8"
+              },
+              {
+                "color": "1 0.32 0.28",
+                "from": "e7",
+                "to": "f5"
+              }
+            ],
+            "squares": [
+              {
+                "color": "0.95 0.68 0.26",
+                "square": "e7"
+              },
+              {
+                "color": "1 0.32 0.28",
+                "square": "f5"
+              }
+            ]
+          },
+          "id": "pinned",
+          "label": "Knight pinned",
+          "pin_queries": [
+            {
+              "color": "b",
+              "expected_pinned": true,
+              "square": "e7"
+            }
+          ],
+          "probes": [
+            {
+              "legal": false,
+              "uci": "f4f5"
+            },
+            {
+              "after": {
+                "check": false,
+                "checkmate": false,
+                "fen": "4k3/4n3/8/8/6K1/8/8/4R3 b - - 1 1",
+                "insufficient": false,
+                "legal_moves": [
+                  "e8d7",
+                  "e8d8",
+                  "e8f7",
+                  "e8f8"
+                ],
+                "stalemate": false
+              },
+              "legal": true,
+              "uci": "f4g4"
+            }
+          ],
+          "witness": {
+            "check": false,
+            "checkmate": false,
+            "fen": "4k3/4n3/8/8/5K2/8/8/4R3 w - - 0 1",
+            "insufficient": false,
+            "legal_moves": [
+              "e1a1",
+              "e1b1",
+              "e1c1",
+              "e1d1",
+              "e1e2",
+              "e1e3",
+              "e1e4",
+              "e1e5",
+              "e1e6",
+              "e1e7",
+              "e1f1",
+              "e1g1",
+              "e1h1",
+              "f4e3",
+              "f4e4",
+              "f4e5",
+              "f4f3",
+              "f4g3",
+              "f4g4",
+              "f4g5"
+            ],
+            "stalemate": false
+          }
+        },
+        {
+          "attack_queries": [
+            {
+              "color": "b",
+              "expected_attackers": [
+                "e7"
+              ],
+              "square": "f5"
+            }
+          ],
+          "fen": "4k3/4n3/8/8/5K2/8/8/R7 w - - 0 1",
+          "highlights": {
+            "lines": [
+              {
+                "color": "1 0.32 0.28",
+                "from": "e7",
+                "to": "f5"
+              }
+            ],
+            "squares": [
+              {
+                "color": "0.32 0.91 0.72",
+                "square": "e7"
+              },
+              {
+                "color": "1 0.32 0.28",
+                "square": "f5"
+              }
+            ]
+          },
+          "id": "unpinned",
+          "label": "Rook moved aside",
+          "pin_queries": [
+            {
+              "color": "b",
+              "expected_pinned": false,
+              "square": "e7"
+            }
+          ],
+          "probes": [
+            {
+              "legal": false,
+              "uci": "f4f5"
+            },
+            {
+              "after": {
+                "check": false,
+                "checkmate": false,
+                "fen": "4k3/4n3/8/8/6K1/8/8/R7 b - - 1 1",
+                "insufficient": false,
+                "legal_moves": [
+                  "e7c6",
+                  "e7c8",
+                  "e7d5",
+                  "e7f5",
+                  "e7g6",
+                  "e7g8",
+                  "e8d7",
+                  "e8d8",
+                  "e8f7",
+                  "e8f8"
+                ],
+                "stalemate": false
+              },
+              "legal": true,
+              "uci": "f4g4"
+            }
+          ],
+          "witness": {
+            "check": false,
+            "checkmate": false,
+            "fen": "4k3/4n3/8/8/5K2/8/8/R7 w - - 0 1",
+            "insufficient": false,
+            "legal_moves": [
+              "a1a2",
+              "a1a3",
+              "a1a4",
+              "a1a5",
+              "a1a6",
+              "a1a7",
+              "a1a8",
+              "a1b1",
+              "a1c1",
+              "a1d1",
+              "a1e1",
+              "a1f1",
+              "a1g1",
+              "a1h1",
+              "f4e3",
+              "f4e4",
+              "f4e5",
+              "f4f3",
+              "f4g3",
+              "f4g4",
+              "f4g5"
+            ],
+            "stalemate": false
+          }
+        }
+      ]
+    },
+    {
+      "articles": [
+        "3.7.3.1",
+        "3.7.3.2",
+        "3.9.2"
+      ],
+      "explanation": "Both the pawn leaving g5 and the pawn removed from f5 currently block the rook’s fifth-rank line. En passant would remove both blockers and expose the white king on h5. Move the rook to the fourth rank and the same pawn capture becomes legal.",
+      "id": "en-passant-ray",
+      "insight": "An en passant capture changes three squares, not two.",
+      "probes": [
+        {
+          "expected_legal": [
+            false,
+            true
+          ],
+          "illegal": "The capture would remove both fifth-rank pawns and leave the king exposed to the rook.",
+          "label": "Try gxf6 e.p.",
+          "uci": "g5f6"
+        },
+        {
+          "expected_legal": [
+            true,
+            true
+          ],
+          "label": "Compare g6",
+          "uci": "g5g6"
+        }
+      ],
+      "question": "Why is gxf6 en passant illegal when f6 looks harmless?",
+      "tag": "EN PASSANT / OCCUPANCY",
+      "title": "The capture that opens a rank",
+      "variants": [
+        {
+          "fen": "k7/8/8/r4pPK/8/8/8/8 w - f6 0 1",
+          "highlights": {
+            "lines": [
+              {
+                "color": "1 0.32 0.28",
+                "from": "a5",
+                "to": "h5"
+              }
+            ],
+            "squares": [
+              {
+                "color": "0.95 0.68 0.26",
+                "square": "f5"
+              },
+              {
+                "color": "0.95 0.68 0.26",
+                "square": "g5"
+              },
+              {
+                "color": "0.32 0.91 0.72",
+                "square": "f6"
+              },
+              {
+                "color": "1 0.32 0.28",
+                "square": "h5"
+              }
+            ]
+          },
+          "id": "rank-exposure",
+          "label": "Rook on fifth rank",
+          "probes": [
+            {
+              "legal": false,
+              "uci": "g5f6"
+            },
+            {
+              "after": {
+                "check": false,
+                "checkmate": false,
+                "fen": "k7/8/6P1/r4p1K/8/8/8/8 b - - 0 1",
+                "insufficient": false,
+                "legal_moves": [
+                  "a5a1",
+                  "a5a2",
+                  "a5a3",
+                  "a5a4",
+                  "a5a6",
+                  "a5a7",
+                  "a5b5",
+                  "a5c5",
+                  "a5d5",
+                  "a5e5",
+                  "a8a7",
+                  "a8b7",
+                  "a8b8",
+                  "f5f4"
+                ],
+                "stalemate": false
+              },
+              "legal": true,
+              "uci": "g5g6"
+            }
+          ],
+          "witness": {
+            "check": false,
+            "checkmate": false,
+            "fen": "k7/8/8/r4pPK/8/8/8/8 w - - 0 1",
+            "insufficient": false,
+            "legal_moves": [
+              "g5g6",
+              "h5g6",
+              "h5h4",
+              "h5h6"
+            ],
+            "stalemate": false
+          }
+        },
+        {
+          "fen": "k7/8/8/5pPK/r7/8/8/8 w - f6 0 1",
+          "highlights": {
+            "lines": [
+              {
+                "color": "0.95 0.68 0.26",
+                "from": "a4",
+                "to": "h4"
+              }
+            ],
+            "squares": [
+              {
+                "color": "0.95 0.68 0.26",
+                "square": "f5"
+              },
+              {
+                "color": "0.95 0.68 0.26",
+                "square": "g5"
+              },
+              {
+                "color": "0.32 0.91 0.72",
+                "square": "f6"
+              }
+            ]
+          },
+          "id": "rank-clear",
+          "label": "Rook moved off rank",
+          "probes": [
+            {
+              "after": {
+                "check": false,
+                "checkmate": false,
+                "fen": "k7/8/5P2/7K/r7/8/8/8 b - - 0 1",
+                "insufficient": false,
+                "legal_moves": [
+                  "a4a1",
+                  "a4a2",
+                  "a4a3",
+                  "a4a5",
+                  "a4a6",
+                  "a4a7",
+                  "a4b4",
+                  "a4c4",
+                  "a4d4",
+                  "a4e4",
+                  "a4f4",
+                  "a4g4",
+                  "a4h4",
+                  "a8a7",
+                  "a8b7",
+                  "a8b8"
+                ],
+                "stalemate": false
+              },
+              "legal": true,
+              "uci": "g5f6"
+            },
+            {
+              "after": {
+                "check": false,
+                "checkmate": false,
+                "fen": "k7/8/6P1/5p1K/r7/8/8/8 b - - 0 1",
+                "insufficient": false,
+                "legal_moves": [
+                  "a4a1",
+                  "a4a2",
+                  "a4a3",
+                  "a4a5",
+                  "a4a6",
+                  "a4a7",
+                  "a4b4",
+                  "a4c4",
+                  "a4d4",
+                  "a4e4",
+                  "a4f4",
+                  "a4g4",
+                  "a4h4",
+                  "a8a7",
+                  "a8b7",
+                  "a8b8",
+                  "f5f4"
+                ],
+                "stalemate": false
+              },
+              "legal": true,
+              "uci": "g5g6"
+            }
+          ],
+          "witness": {
+            "check": false,
+            "checkmate": false,
+            "fen": "k7/8/8/5pPK/r7/8/8/8 w - f6 0 1",
+            "insufficient": false,
+            "legal_moves": [
+              "g5f6",
+              "g5g6",
+              "h5g6",
+              "h5h6"
+            ],
+            "stalemate": false
+          }
+        }
+      ]
+    },
+    {
+      "articles": [
+        "3.7.3.3",
+        "3.7.3.5",
+        "5.2.1",
+        "5.2.2"
+      ],
+      "explanation": "Promote on c8 and inspect the black king’s replies. A queen leaves no legal move without giving check: stalemate. A rook leaves Ka6 available. Bishop and knight promotions produce insufficient-material draws in this fixture. No engine win claim is needed to establish those differences.",
+      "id": "underpromotion",
+      "insight": "A material advantage cannot override a terminal draw.",
+      "probes": [
+        {
+          "expected_legal": [
+            true
+          ],
+          "expected_stalemate": true,
+          "label": "Promote to queen",
+          "uci": "c7c8q"
+        },
+        {
+          "expected_legal": [
+            true
+          ],
+          "expected_replies": [
+            "a7a6"
+          ],
+          "expected_stalemate": false,
+          "label": "Promote to rook",
+          "uci": "c7c8r"
+        },
+        {
+          "expected_insufficient": true,
+          "expected_legal": [
+            true
+          ],
+          "label": "Promote to bishop",
+          "uci": "c7c8b"
+        },
+        {
+          "expected_insufficient": true,
+          "expected_legal": [
+            true
+          ],
+          "label": "Promote to knight",
+          "uci": "c7c8n"
+        }
+      ],
+      "question": "Does promoting to the most valuable piece always help?",
+      "tag": "PROMOTION / TERMINAL STATES",
+      "title": "When a queen brings a draw",
+      "variants": [
+        {
+          "fen": "8/k1P5/2K5/8/8/8/8/8 w - - 0 1",
+          "highlights": {
+            "lines": [
+              {
+                "color": "0.32 0.91 0.72",
+                "from": "c7",
+                "to": "c8"
+              }
+            ],
+            "squares": [
+              {
+                "color": "0.95 0.68 0.26",
+                "square": "c7"
+              },
+              {
+                "color": "0.32 0.91 0.72",
+                "square": "c8"
+              },
+              {
+                "color": "1 0.32 0.28",
+                "square": "a7"
+              }
+            ]
+          },
+          "id": "promotion-choice",
+          "label": "Choose a promotion",
+          "probes": [
+            {
+              "after": {
+                "check": false,
+                "checkmate": false,
+                "fen": "2Q5/k7/2K5/8/8/8/8/8 b - - 0 1",
+                "insufficient": false,
+                "legal_moves": [],
+                "stalemate": true
+              },
+              "legal": true,
+              "uci": "c7c8q"
+            },
+            {
+              "after": {
+                "check": false,
+                "checkmate": false,
+                "fen": "2R5/k7/2K5/8/8/8/8/8 b - - 0 1",
+                "insufficient": false,
+                "legal_moves": [
+                  "a7a6"
+                ],
+                "stalemate": false
+              },
+              "legal": true,
+              "uci": "c7c8r"
+            },
+            {
+              "after": {
+                "check": false,
+                "checkmate": false,
+                "fen": "2B5/k7/2K5/8/8/8/8/8 b - - 0 1",
+                "insufficient": true,
+                "legal_moves": [
+                  "a7a8",
+                  "a7b8"
+                ],
+                "stalemate": false
+              },
+              "legal": true,
+              "uci": "c7c8b"
+            },
+            {
+              "after": {
+                "check": true,
+                "checkmate": false,
+                "fen": "2N5/k7/2K5/8/8/8/8/8 b - - 0 1",
+                "insufficient": true,
+                "legal_moves": [
+                  "a7a6",
+                  "a7a8",
+                  "a7b8"
+                ],
+                "stalemate": false
+              },
+              "legal": true,
+              "uci": "c7c8n"
+            }
+          ],
+          "witness": {
+            "check": false,
+            "checkmate": false,
+            "fen": "8/k1P5/2K5/8/8/8/8/8 w - - 0 1",
+            "insufficient": false,
+            "legal_moves": [
+              "c6b5",
+              "c6c5",
+              "c6d5",
+              "c6d6",
+              "c6d7",
+              "c7c8b",
+              "c7c8n",
+              "c7c8q",
+              "c7c8r"
+            ],
+            "stalemate": false
+          }
+        }
+      ]
+    },
+    {
+      "articles": [
+        "3.8.2",
+        "3.8.2.2"
+      ],
+      "explanation": "The black rook attacks f1, the square crossed by the white king. That prevents castling even though the king’s starting and landing squares are safe. Move the black rook to the a-file and compare the same castling move.",
+      "id": "castling-transit",
+      "insight": "A legal destination does not make every route legal.",
+      "probes": [
+        {
+          "expected_legal": [
+            false,
+            true
+          ],
+          "illegal": "Castling is illegal while f1, the king’s transit square, is attacked.",
+          "label": "Try O-O",
+          "uci": "e1g1"
+        },
+        {
+          "expected_legal": [
+            true,
+            true
+          ],
+          "label": "Compare Ke2",
+          "uci": "e1e2"
+        }
+      ],
+      "question": "Can White castle when e1 and g1 are safe, but f1 is attacked?",
+      "tag": "CASTLING / PATH CONSTRAINTS",
+      "title": "The square the king must cross",
+      "variants": [
+        {
+          "attack_queries": [
+            {
+              "color": "b",
+              "expected_attackers": [],
+              "square": "e1"
+            },
+            {
+              "color": "b",
+              "expected_attackers": [
+                "f8"
+              ],
+              "square": "f1"
+            },
+            {
+              "color": "b",
+              "expected_attackers": [],
+              "square": "g1"
+            }
+          ],
+          "fen": "k4r2/8/8/8/8/8/8/4K2R w K - 0 1",
+          "highlights": {
+            "lines": [
+              {
+                "color": "1 0.32 0.28",
+                "from": "f8",
+                "to": "f1"
+              },
+              {
+                "color": "0.95 0.68 0.26",
+                "from": "e1",
+                "to": "g1"
+              }
+            ],
+            "squares": [
+              {
+                "color": "0.32 0.91 0.72",
+                "square": "e1"
+              },
+              {
+                "color": "1 0.32 0.28",
+                "square": "f1"
+              },
+              {
+                "color": "0.32 0.91 0.72",
+                "square": "g1"
+              }
+            ]
+          },
+          "id": "transit-attacked",
+          "label": "Transit square attacked",
+          "probes": [
+            {
+              "legal": false,
+              "uci": "e1g1"
+            },
+            {
+              "after": {
+                "check": false,
+                "checkmate": false,
+                "fen": "k4r2/8/8/8/8/8/4K3/7R b - - 1 1",
+                "insufficient": false,
+                "legal_moves": [
+                  "a8a7",
+                  "a8b7",
+                  "a8b8",
+                  "f8b8",
+                  "f8c8",
+                  "f8d8",
+                  "f8e8",
+                  "f8f1",
+                  "f8f2",
+                  "f8f3",
+                  "f8f4",
+                  "f8f5",
+                  "f8f6",
+                  "f8f7",
+                  "f8g8",
+                  "f8h8"
+                ],
+                "stalemate": false
+              },
+              "legal": true,
+              "uci": "e1e2"
+            }
+          ],
+          "witness": {
+            "check": false,
+            "checkmate": false,
+            "fen": "k4r2/8/8/8/8/8/8/4K2R w K - 0 1",
+            "insufficient": false,
+            "legal_moves": [
+              "e1d1",
+              "e1d2",
+              "e1e2",
+              "h1f1",
+              "h1g1",
+              "h1h2",
+              "h1h3",
+              "h1h4",
+              "h1h5",
+              "h1h6",
+              "h1h7",
+              "h1h8"
+            ],
+            "stalemate": false
+          }
+        },
+        {
+          "attack_queries": [
+            {
+              "color": "b",
+              "expected_attackers": [],
+              "square": "e1"
+            },
+            {
+              "color": "b",
+              "expected_attackers": [],
+              "square": "f1"
+            },
+            {
+              "color": "b",
+              "expected_attackers": [],
+              "square": "g1"
+            }
+          ],
+          "fen": "rk6/8/8/8/8/8/8/4K2R w K - 0 1",
+          "highlights": {
+            "lines": [
+              {
+                "color": "0.32 0.91 0.72",
+                "from": "e1",
+                "to": "g1"
+              }
+            ],
+            "squares": [
+              {
+                "color": "0.32 0.91 0.72",
+                "square": "e1"
+              },
+              {
+                "color": "0.32 0.91 0.72",
+                "square": "f1"
+              },
+              {
+                "color": "0.32 0.91 0.72",
+                "square": "g1"
+              }
+            ]
+          },
+          "id": "transit-safe",
+          "label": "Rook moved aside",
+          "probes": [
+            {
+              "after": {
+                "check": false,
+                "checkmate": false,
+                "fen": "rk6/8/8/8/8/8/8/5RK1 b - - 1 1",
+                "insufficient": false,
+                "legal_moves": [
+                  "a8a1",
+                  "a8a2",
+                  "a8a3",
+                  "a8a4",
+                  "a8a5",
+                  "a8a6",
+                  "a8a7",
+                  "b8a7",
+                  "b8b7",
+                  "b8c7",
+                  "b8c8"
+                ],
+                "stalemate": false
+              },
+              "legal": true,
+              "uci": "e1g1"
+            },
+            {
+              "after": {
+                "check": false,
+                "checkmate": false,
+                "fen": "rk6/8/8/8/8/8/4K3/7R b - - 1 1",
+                "insufficient": false,
+                "legal_moves": [
+                  "a8a1",
+                  "a8a2",
+                  "a8a3",
+                  "a8a4",
+                  "a8a5",
+                  "a8a6",
+                  "a8a7",
+                  "b8a7",
+                  "b8b7",
+                  "b8c7",
+                  "b8c8"
+                ],
+                "stalemate": false
+              },
+              "legal": true,
+              "uci": "e1e2"
+            }
+          ],
+          "witness": {
+            "check": false,
+            "checkmate": false,
+            "fen": "rk6/8/8/8/8/8/8/4K2R w K - 0 1",
+            "insufficient": false,
+            "legal_moves": [
+              "e1d1",
+              "e1d2",
+              "e1e2",
+              "e1f1",
+              "e1f2",
+              "e1g1",
+              "h1f1",
+              "h1g1",
+              "h1h2",
+              "h1h3",
+              "h1h4",
+              "h1h5",
+              "h1h6",
+              "h1h7",
+              "h1h8"
+            ],
+            "stalemate": false
+          }
+        }
+      ]
+    }
+  ]
+}

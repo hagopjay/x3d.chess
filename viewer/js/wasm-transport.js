@@ -1,70 +1,84 @@
-// WasmTransport: N games driven by a shared WasmEnginePool. Emits the same events as the Python server.
-// Game config ported from chess-spectator game_manager.py: opening per board (weighted), skill 14-20 cycling,
-// speed rising with skill. Search depth is a browser default (12) rather than the original 14-20 (see docs/PORT-MAP.md).
+// Real Stockfish WASM games. Failures are surfaced; never replaced by random replay.
 import { Chess } from "../vendor/chess.js";
-import { Transport } from "./transport.js";
+import { Transport, integerOption, terminalResult } from "./transport.js";
 import { WasmEnginePool } from "./engine-pool.js";
 import { mulberry32 } from "./rng.js";
 import { pickOpening } from "./openings.js";
 import { GameAnalysis } from "./analysis.js";
-
-const PLY_CAP = 200;
-const MATE_CP = 1500;
-
+const PLY_CAP = 200, MATE_CP = 1500;
 export class WasmTransport extends Transport {
-  /** config: {boards, seed, depth, poolSize} */
+  constructor(onEvent, { poolFactory = (config) => new WasmEnginePool(config) } = {}) { super(onEvent); this.poolFactory = poolFactory; }
   async start({ boards = 20, seed = 1, depth = 12, poolSize } = {}) {
-    this.pool = new WasmEnginePool(poolSize ? { size: poolSize } : {});
-    await this.pool.init();
-    this.running = true;
-    this.cfg = { depth };
-    this.cache = { hits: 0, misses: 0 };
-    this.games = Array.from({ length: boards }, (_, i) => {
-      const rng = mulberry32(seed * 1000 + i), skill = 14 + (i % 7);
-      return { id: `g${i}`, rng, skill, speedMs: 80 + (skill - 14) * 20, chess: new Chess(), ply: 0, opening: null, an: new GameAnalysis() };
-    });
-    this.games.forEach((g) => this._newGame(g));
-    this.games.forEach((g) => this._loop(g));
-  }
-
-  async stop() { this.running = false; this.pool?.terminate(); }
-
-  _newGame(g) {
-    g.opening = pickOpening(g.rng);
-    g.chess = new Chess(g.opening.fen);
-    g.ply = 0; g.an.reset();
-    this.onEvent({ type: "snapshot_game", game_id: g.id, fen: g.chess.fen(), ply: 0, eval_cp: 0, opening: g.opening.name, skill: g.skill });
-  }
-
-  async _loop(g) {
-    while (this.running) {
-      const c = g.chess;
-      if (c.isGameOver() || g.ply >= PLY_CAP) {
-        const reason = c.isCheckmate() ? "checkmate" : c.isStalemate() ? "stalemate" : c.isThreefoldRepetition() ? "threefold"
-          : c.isInsufficientMaterial() ? "insufficient_material" : c.isDraw() ? "fifty_move" : "ply_cap";
-        const result = c.isCheckmate() ? (c.turn() === "w" ? "0-1" : "1-0") : "1/2-1/2";
-        this.onEvent({ type: "game_complete", game_id: g.id, result, reason });
-        await new Promise((r) => setTimeout(r, 2500));          // let the viewer show the final position
-        if (!this.running) return;
-        this._newGame(g);
-        continue;
-      }
-      let s;
-      try { s = await this.pool.search(c.fen(), { depth: this.cfg.depth, skill: g.skill }); }
-      catch (e) { if (!this.running) return; throw e; }
-      if (!this.running) return;
-      if (!s.uci) { g.ply = PLY_CAP; continue; }
-      const mv = c.move({ from: s.uci.slice(0, 2), to: s.uci.slice(2, 4), promotion: s.uci[4] });
-      g.ply++;
-      const eval_cp = s.mate != null ? Math.sign(s.mate) * MATE_CP : s.cp ?? 0;
-      const an = g.an.onMove(c, g.ply, eval_cp);
-      this.onEvent({
-        type: "move", game_id: g.id, ply: g.ply, san: mv.san, uci: s.uci, fen: c.fen(),
-        eval_cp, mate_in: s.mate, depth: s.depth, nodes: s.nodes, tactics: an.tactics, critical: an.critical,
-        flags: mv.flags, captured: mv.captured || null,
+    integerOption(boards, 1, 64, "Board count"); integerOption(depth, 1, 30, "Depth");
+    if (!Number.isSafeInteger(seed)) throw new TypeError("Seed must be a safe integer");
+    if (poolSize !== undefined) integerOption(poolSize, 1, 8, "Pool size");
+    const request = ++this.startRequest;
+    await this.stop({ silent: true, fromStart: true });
+    if (request !== this.startRequest) return;
+    const run = this.begin("wasm"), pool = this.poolFactory(poolSize ? { size: poolSize } : {}); this.pool = pool;
+    try {
+      await pool.init();
+      if (!this.active(run)) return;
+      this.cfg = { depth }; this.cache = { hits: 0, misses: 0 };
+      this.games = Array.from({ length: boards }, (_, i) => {
+        const rng = mulberry32(seed * 1000 + i), skill = 14 + (i % 7);
+        return { id: `g${i}`, rng, skill, speedMs: 80 + (skill - 14) * 20, generation: 0, seq: 0, an: new GameAnalysis() };
       });
-      if (an.phase) this.onEvent({ type: "phase_space_update", game_id: g.id, ...an.phase });
-      await new Promise((r) => setTimeout(r, g.speedMs));
+      for (const game of this.games) { if (!this.active(run)) return; this._newGame(game); }
+      this.status("running", "Stockfish WASM workers are ready", { workers: pool.size });
+      this.tasks = this.games.map((game) => this._loop(game, run).catch((error) => {
+        if (this.active(run)) { this.halt(); pool.terminate(); this.status("error", error.message); }
+      }));
+    } catch (error) {
+      pool.terminate();
+      if (this.active(run)) { this.halt(); this.status("error", error.message); throw error; }
+    }
+  }
+  async stop({ silent = false, fromStart = false } = {}) {
+    if (!fromStart) this.startRequest++;
+    this.halt(); this.pool?.terminate();
+    await Promise.all(this.tasks || []); this.tasks = [];
+    if (!silent) this.status("stopped", "Stockfish workers stopped");
+  }
+  _newGame(game) {
+    game.opening = pickOpening(game.rng); game.initialFen = new Chess().fen();
+    game.chess = new Chess(); game.moves = [];
+    if (game.opening.moves) {
+      for (const san of game.opening.moves) { const move = game.chess.move(san); game.moves.push(move.from + move.to + (move.promotion || "")); }
+      if (game.chess.fen() !== game.opening.fen) throw new Error("Opening move history disagrees with its published FEN");
+    } else { game.initialFen = game.opening.fen; game.chess = new Chess(game.initialFen); }
+    game.ply = 0; game.generation++; game.seq = 0; game.an.reset();
+    this.gameEvent(game, { type: "snapshot_game", game_id: game.id, state: "playing", fen: game.chess.fen(), ply: 0,
+      eval_cp: null, eval_fen: null, eval_ply: null, evaluation_kind: "unavailable", opening: game.opening.name, skill: game.skill,
+      start_fen: game.opening.fen, history: [] });
+  }
+  async _loop(game, run) {
+    while (this.active(run)) {
+      const chess = game.chess, ending = terminalResult(chess, game.ply, PLY_CAP, "ply_cap");
+      if (ending) {
+        this.gameEvent(game, { type: "game_complete", game_id: game.id, ...ending });
+        if (!await this.delay(2500, run)) return;
+        this._newGame(game); continue;
+      }
+      const before = chess.fen(), beforePly = game.ply;
+      const score = await this.pool.search(before, { depth: this.cfg.depth, skill: game.skill,
+        initialFen: game.initialFen, moves: game.moves, gameKey: `${game.id}:${game.generation}` });
+      if (!this.active(run)) return;
+      if (game.chess !== chess || chess.fen() !== before) throw new Error("Board changed during its Stockfish search");
+      if (!score.uci) throw new Error("Stockfish returned no move for a non-terminal position");
+      const move = chess.move({ from: score.uci.slice(0, 2), to: score.uci.slice(2, 4), promotion: score.uci[4] });
+      if (!move) throw new Error("Stockfish returned an illegal move");
+      game.moves.push(score.uci); game.ply++;
+      const cp = score.mate != null ? Math.sign(score.mate) * MATE_CP : score.cp;
+      const analysis = game.an.onMove(chess, game.ply, cp, { evalFen: before, evalPly: beforePly, mateIn: score.mate, scoreBound: score.score_bound });
+      this.gameEvent(game, { type: "move", game_id: game.id, state: "playing", ply: game.ply,
+        san: move.san, uci: score.uci, fen: chess.fen(), eval_cp: cp, mate_in: score.mate,
+        eval_fen: before, eval_ply: beforePly, evaluation_kind: score.mate != null ? "engine_mate" : cp != null ? "engine_cp" : "unavailable",
+        score_bound: score.score_bound ?? null, depth: score.depth, nodes: score.nodes,
+        tactics: analysis.tactics, critical: analysis.critical, critical_for_ply: analysis.critical_for_ply ?? (analysis.critical ? beforePly : null),
+        flags: move.flags, captured: move.captured || null });
+      if (this.active(run) && analysis.phase) this.gameEvent(game, { type: "phase_space_update", game_id: game.id, ...analysis.phase });
+      if (!await this.delay(game.speedMs, run)) return;
     }
   }
 }

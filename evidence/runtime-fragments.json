@@ -1,0 +1,128 @@
+{
+  "schema": "x3dchess.runtime-fragments/1",
+  "status": "generated",
+  "created_utc": "2026-11-18T02:24:19.179Z",
+  "tool_sha256": "a9815aa4283169fa3964bdf18d8f857442cffc81247b7cab7069cf744c2512ba",
+  "source_sha256": {
+    "viewer/js/pieces.js": "6fce8f6769f92f94ffa88602f2d3db1dd5b0510f8494a5f37f0bff11fea91d32",
+    "viewer/js/fx.js": "831cab1cfe448a679d18e00f57aa730000d12d2c7646339e0762865e28bade70",
+    "viewer/js/overlays.js": "70938dcfe7496a153c82dc5d91ba55c1c821d3772aad365ab08d2defdf27bd33",
+    "viewer/js/phasespace.js": "a281ba19e52afa36566d987b745f44089506e15deb31a46e3833b668b1d3e0ba",
+    "viewer/js/particles.js": "7ebbd85ae562464c1e2d22a07bd404fd3a52c00c0cc1095bacf1fb2e6cd7e8aa",
+    "viewer/js/layout.js": "88ba20bea584bf69a0bfd5cc861d70d07fa7eb034d97cfbb040504fac3b99540",
+    "viewer/js/export.js": "0e100b68be81a4bd2a08738ed98cac8f780a39a90d85b5982e4d4bcfc6744084"
+  },
+  "fixtures": [
+    {
+      "file": "examples/x3d/runtime-pieces.x3d",
+      "bytes": 10516,
+      "sha256": "733c4816c15eb771ceebd71af2d2d6e493e55541b3452b10469d7a500979f1c3",
+      "raw_runtime_sha256": "f9abdff80a60568f53856853851d5f93c3e8001ec8ef3d2f695f7475058d27e3",
+      "projection_losses": [
+        {
+          "field": "Shape.pointerEvents",
+          "records": 40,
+          "reason": "X_ITE picking extension omitted from portable X3D."
+        }
+      ],
+      "scope": "All twelve current piece factories; synthetic geometry bank, not a chess position."
+    },
+    {
+      "file": "examples/x3d/runtime-move-fx.x3d",
+      "bytes": 1167,
+      "sha256": "00c672182e22f059c979a421a948499353a1b615ef7cfa27e8cbff51dbfd8f92",
+      "raw_runtime_sha256": "ec627f934345a4b1ccf6c5c1f9994d3171196b74a2af8bb76c1c2adc78e47bb5",
+      "projection_losses": [
+        {
+          "field": "Shape.pointerEvents",
+          "records": 4,
+          "reason": "X_ITE picking extension omitted from portable X3D."
+        }
+      ],
+      "scope": "Move/check/candidate relation writer syntax; this composite is a geometry fixture, not a claim that its motif is legal."
+    },
+    {
+      "file": "examples/x3d/runtime-study-fx.x3d",
+      "bytes": 1155,
+      "sha256": "17ff35ebe660438736495c91baba2dd0fa2e013d099b07fb45ab429712dec0e1",
+      "raw_runtime_sha256": "398c3f6c9595c69a6b7d91cef29e4bc83fc52b105a96a3796216a52ffc1ecc91",
+      "projection_losses": [
+        {
+          "field": "Shape.pointerEvents",
+          "records": 4,
+          "reason": "X_ITE picking extension omitted from portable X3D."
+        }
+      ],
+      "scope": "Actual relation overlay writer; links describe relationships, not move trajectories."
+    },
+    {
+      "file": "examples/x3d/runtime-heatmap.x3d",
+      "bytes": 5247,
+      "sha256": "53d814fea1cc017854efd1fae46f710419c3d8f47b3e3b750e707431868bd2a9",
+      "raw_runtime_sha256": "67c14837889830168c51849938e3518c08d1ec7f058dfbf6d3e77dd8ca3ef47e",
+      "projection_losses": [
+        {
+          "field": "Shape.pointerEvents",
+          "records": 1,
+          "reason": "X_ITE picking extension omitted from portable X3D."
+        }
+      ],
+      "scope": "Actual 64-face attack-count overlay factory; color data is updated separately at runtime."
+    },
+    {
+      "file": "examples/x3d/runtime-graph.x3d",
+      "bytes": 714,
+      "sha256": "19a4fca9ce2d44ed25ff24c6ef860154fbe76a76fb93829c4b9c85051d439dd1",
+      "raw_runtime_sha256": "a3238b45dbf04c431151fcbb5ccea0ee09464a7453cfccbca32c0e5c1b4b5498",
+      "projection_losses": [
+        {
+          "field": "Shape.pointerEvents",
+          "records": 2,
+          "reason": "X_ITE picking extension omitted from portable X3D."
+        }
+      ],
+      "scope": "Actual evaluation graph factory before runtime history points exist."
+    },
+    {
+      "file": "examples/x3d/runtime-phase-space.x3d",
+      "bytes": 2994,
+      "sha256": "47d5d782ab7b94e26cc03395aaefd07d79e2722db2265afd2639fcecb924fa83",
+      "raw_runtime_sha256": "a1d74dd9735cae711a1c810f7bbd4a5f3ee68bf4518c999c0a0042e7aa01008f",
+      "projection_losses": [],
+      "scope": "Captured actual feature-space factory; heuristic axes are not a physical state space or probability."
+    },
+    {
+      "file": "examples/x3d/runtime-particles.x3d",
+      "bytes": 728,
+      "sha256": "712e3709bc0c6dee9bd11cc05f55bf91ae995aa4e6684887b637c5f9fadb0eca",
+      "raw_runtime_sha256": "fd6fc0322a410fc821537412d6c3db14814c5e25c851726e5c714a53efdfe3e8",
+      "projection_losses": [],
+      "scope": "Captured actual capture-cue ParticleSystem; authored effect, not a physical simulation."
+    },
+    {
+      "file": "examples/x3d/runtime-grid-01.x3d",
+      "bytes": 10503,
+      "sha256": "b61860927fe205267a31b539b28a1e021955fda87819aa37d18b321d4f6480be",
+      "raw_runtime_sha256": "d7e884abd73e5a322a9ef4799dd621cf0b30d8ccb81947eba6283359ed9ba391",
+      "projection_losses": [],
+      "scope": "Actual runtime grid builder for 1 boards; no live browser/SAI execution claimed."
+    },
+    {
+      "file": "examples/x3d/runtime-grid-20.x3d",
+      "bytes": 12653,
+      "sha256": "e3316532b05d131ed45317241ae3fdf1987858ca92b4dc3157c978b900ace4e0",
+      "raw_runtime_sha256": "b4237d5c16a2261204862611adec65f3c4aaa121dd3f65f9dd79e8f1d5e62807",
+      "projection_losses": [],
+      "scope": "Actual runtime grid builder for 20 boards; no live browser/SAI execution claimed."
+    },
+    {
+      "file": "examples/x3d/runtime-grid-64.x3d",
+      "bytes": 17659,
+      "sha256": "7fcc57e1ba426f2ba212f1d8dd78758e2cf8f0f1935b502bafe352474845ba08",
+      "raw_runtime_sha256": "3426ee9942ba5f2bb2ec07c5a6d2497763e7d3a3e97953d7c5616b083d582634",
+      "projection_losses": [],
+      "scope": "Actual runtime grid builder for 64 boards; no live browser/SAI execution claimed."
+    }
+  ],
+  "scope": "Actual XML writer capture and explicit portability projection. Run tools/validate_x3d.py for schema/implemented semantic verdicts. No browser pixels or chess analysis is inferred."
+}

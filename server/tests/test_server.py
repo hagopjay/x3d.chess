@@ -40,8 +40,9 @@ def test_phase_space_start_is_balanced():
 
 
 def test_tactics_detects_knight_fork():
-    # side to move (white) has Ne7 hitting Qc8 and Kg8; the ported detector only scans the side to move
-    b = chess.Board("2q3k1/4N3/8/8/8/8/8/6K1 w - - 0 1")
+    # White's Ne7 hits Qc8 and Kg8; Black is legally responding to check.
+    # Geometric candidates are scanned for both colors, without claiming a forced win.
+    b = chess.Board("2q3k1/4N3/8/8/8/8/8/6K1 b - - 0 1")
     kinds = {m.pattern.value for m in TacticalDetector().detect_all_patterns(b)}
     assert "fork" in kinds
 

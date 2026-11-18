@@ -1,0 +1,4 @@
+<X3D profile='Interchange' version='4.0'><head><meta name="title" content="Chess runtime writer: graph"/><meta name="x3dchess.snapshot" content="{&quot;scope&quot;:&quot;Actual evaluation graph factory before runtime history points exist.&quot;}"/></head><Scene><Group DEF='graph'>
+    <Shape><Appearance><Material emissiveColor='0.25 0.3 0.4' diffuseColor='0 0 0'/></Appearance><IndexedLineSet coordIndex='0 1 -1'><Coordinate point='-4 0.06 5, 4 0.06 5'/></IndexedLineSet></Shape>
+    <Shape><Appearance><Material emissiveColor='0.4 1 0.7' diffuseColor='0 0 0'/></Appearance><IndexedLineSet DEF='graphline' coordIndex='-1'><Coordinate DEF='graphc' point='0 0 0'/></IndexedLineSet></Shape>
+  </Group></Scene></X3D>

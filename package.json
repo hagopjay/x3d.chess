@@ -1,0 +1,9 @@
+{
+  "name": "x3d-chess-observatory",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "test": "node tools/check.mjs"
+  }
+}

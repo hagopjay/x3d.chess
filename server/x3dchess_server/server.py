@@ -11,6 +11,7 @@ import json
 import os
 import shlex
 import shutil
+from pathlib import Path
 from aiohttp import web
 
 from .games import GameManager
@@ -34,6 +35,12 @@ def make_app(gm: GameManager) -> web.Application:
     async def stats(_):
         return web.json_response(gm.stats())
 
+    async def game(request):
+        g = next((g for g in gm.games if g.id == request.match_info["game_id"]), None)
+        if g is None:
+            raise web.HTTPNotFound(text="unknown game")
+        return web.json_response(gm._snapshot_event(g))
+
     async def events(req):
         r = web.StreamResponse(headers={"Content-Type": "text/event-stream", "Cache-Control": "no-cache",
                                         "Access-Control-Allow-Origin": "*"})
@@ -43,10 +50,16 @@ def make_app(gm: GameManager) -> web.Application:
             while True:
                 try:
                     ev = await asyncio.wait_for(q.get(), timeout=15)
-                    await r.write(f"data: {json.dumps(ev)}\n\n".encode())
                 except asyncio.TimeoutError:
-                    await r.write(b": heartbeat\n\n")
-        except (asyncio.CancelledError, ConnectionResetError):
+                    payload = b": heartbeat\n\n"
+                else:
+                    if ev is None:
+                        break
+                    payload = f"data: {json.dumps(ev, allow_nan=False)}\n\n".encode()
+                await asyncio.wait_for(r.write(payload), timeout=10)
+        except (ConnectionResetError, BrokenPipeError, asyncio.TimeoutError):
+            if req.transport is not None:
+                req.transport.close()
             pass
         finally:
             gm.unregister(q)
@@ -54,13 +67,20 @@ def make_app(gm: GameManager) -> web.Application:
 
     app = web.Application(middlewares=[cors])
     app.add_routes([web.get("/health", health), web.get("/api/games", games), web.get("/api/snapshot", games),
-                    web.get("/api/stats", stats), web.get("/events", events)])
+                    web.get("/api/games/{game_id}", game), web.get("/api/stats", stats), web.get("/events", events)])
     return app
 
 
 def find_engine(arg: str | None) -> list[str]:
     if arg:
-        return shlex.split(arg, posix=os.name != "nt")
+        if Path(arg).is_file():
+            return [arg]
+        words = shlex.split(arg, posix=os.name != "nt")
+        if os.name == "nt":
+            words = [s[1:-1] if len(s) >= 2 and s[0] == s[-1] and s[0] in "\"'" else s for s in words]
+        if not words:
+            raise SystemExit("--engine must name an executable or command")
+        return words
     exe = os.environ.get("STOCKFISH") or shutil.which("stockfish")
     if not exe:
         raise SystemExit("no engine: pass --engine, set STOCKFISH, or put stockfish on PATH")
@@ -69,25 +89,37 @@ def find_engine(arg: str | None) -> list[str]:
 
 async def amain(a) -> None:
     pool = EnginePool(find_engine(a.engine), size=a.pool)
-    await pool.start()
-    gm = GameManager(pool, boards=a.boards, depth=a.depth, seed=a.seed)
-    await gm.start()
-    runner = web.AppRunner(make_app(gm))
-    await runner.setup()
-    await web.TCPSite(runner, a.host, a.port).start()
-    print(f"x3d.chess server: {a.boards} boards on {a.pool} engines at depth {a.depth} -> http://{a.host}:{a.port}/events", flush=True)
+    gm, runner = None, None
     try:
+        await pool.start()
+        gm = GameManager(pool, boards=a.boards, depth=a.depth, seed=a.seed)
+        await gm.start()
+        runner = web.AppRunner(make_app(gm), shutdown_timeout=2)
+        await runner.setup()
+        await web.TCPSite(runner, a.host, a.port).start()
+        print(f"x3d.chess server: {a.boards} boards on {a.pool} engines at depth {a.depth} -> http://{a.host}:{a.port}/events", flush=True)
         await asyncio.Event().wait()
     finally:
-        await gm.stop(); await pool.close()
+        if gm is not None: await gm.stop()
+        if runner is not None: await runner.cleanup()
+        await pool.close()
 
 
 def main() -> None:
+    def within(name, low, high):
+        def parse(raw):
+            try:
+                value = int(raw)
+                if not low <= value <= high: raise ValueError
+                return value
+            except ValueError:
+                raise argparse.ArgumentTypeError(f"{name} must be {low}–{high}") from None
+        return parse
     p = argparse.ArgumentParser()
-    p.add_argument("--engine"); p.add_argument("--boards", type=int, default=20)
-    p.add_argument("--pool", type=int, default=max(1, (os.cpu_count() or 4) // 2))
-    p.add_argument("--depth", type=int, default=12); p.add_argument("--seed", type=int, default=1)
-    p.add_argument("--host", default="127.0.0.1"); p.add_argument("--port", type=int, default=8080)
+    p.add_argument("--engine"); p.add_argument("--boards", type=within("boards",1,64), default=20)
+    p.add_argument("--pool", type=within("pool",1,16), default=min(4,max(1,(os.cpu_count() or 4)//2)))
+    p.add_argument("--depth", type=within("depth",1,30), default=12); p.add_argument("--seed", type=int, default=1)
+    p.add_argument("--host", default="127.0.0.1"); p.add_argument("--port", type=within("port",1,65535), default=8080)
     asyncio.run(amain(p.parse_args()))
 
 
