@@ -16,7 +16,7 @@ export class GameRecords{
       const r=this.get(ev.game_id);if(!r)return;
       r.sans.push(ev.san);if(r.sans.length>512)r.sans.shift();r.eval=finite(ev.eval_cp)?ev.eval_cp:null;r.mate=finite(ev.mate_in)?ev.mate_in:null;
       r.kind=ev.evaluation_kind||'unavailable';r.evalFen=ev.eval_fen??null;r.evalPly=ev.eval_ply??null;r.bound=ev.score_bound||null;
-      r.evals.push(r.mate===null?r.eval:null);if(r.evals.length>120)r.evals.shift();r.fen=ev.fen;r.ply=ev.ply;r.depth=ev.depth??r.depth;r.generation=ev.generation;r.seq=ev.seq;
+      r.evals.push(r.mate===null&&(r.kind==='material_proxy'||(r.kind==='engine_cp'&&r.bound==='exact'))?r.eval:null);if(r.evals.length>120)r.evals.shift();r.fen=ev.fen;r.ply=ev.ply;r.depth=ev.depth??r.depth;r.generation=ev.generation;r.seq=ev.seq;
       r.tactics=(ev.tactics||[]).map(t=>t.description).slice(0,3);
       if(ev.critical){r.critical.push({ply:ev.critical_for_ply??ev.eval_ply??ev.ply,severity:ev.critical});if(r.critical.length>40)r.critical.shift();}
     }else if(ev.type==='game_complete'){const r=this.get(ev.game_id);if(r){r.result=`${ev.result} (${ev.reason})`;r.state='complete';r.adjudicated=!!ev.adjudicated;}}

@@ -13,6 +13,7 @@ import {controlGrid} from '../viewer/js/analysis.js';
 import {sqPos} from '../viewer/js/board.js';
 import {projectPortableX3D} from '../viewer/js/export.js';
 import * as I from '../viewer/js/inspector.js';
+import {describeInspection} from '../viewer/js/lenses.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PY = process.env.CHESS_TEST_PYTHON || 'python3';
@@ -27,6 +28,15 @@ const froms = (list) => list.map(a => a.square).sort();
 
 // ---- 1. study catalog: pinned knight still covers f5 ---------------------------------------------
 const PIN = '4k3/4n3/8/8/5K2/8/8/4R3 w - - 0 1';
+test('inspector summary distinguishes an opponent piece from a piece with zero legal destinations', () => {
+  assert.match(describeInspection(I.inspect(PIN, 'e7')), /legal destinations: n\/a \(not the side to move\)/);
+  assert.match(describeInspection(I.inspect(PIN.replace(' w ', ' b '), 'e7')), /0 legal destinations/);
+});
+test('inspector summary counts destinations separately from promotion choices', () => {
+  const ins = I.inspect('7k/P7/8/8/8/8/8/7K w - - 0 1', 'a7');
+  assert.equal(ins.legal.moves.length, 4); assert.equal(ins.legal.destinations.length, 1);
+  assert.match(describeInspection(ins), /1 legal destination(?: ·|$)/);
+});
 test('pin paradox: pinned knight e7 geometrically attacks f5 but its move would be illegal', () => {
   const f5 = I.inspect(PIN, 'f5');
   assert.equal(f5.piece, null);

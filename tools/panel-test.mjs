@@ -8,6 +8,7 @@ assert.equal(formatEvaluation(records.get('g0')),'—');assert.equal(records.get
 records.onEvent({type:'move',game_id:'g0',fen,ply:1,san:'Ke2',eval_cp:30,eval_fen:'pre-move',eval_ply:0,tactics:[{description:'candidate'}],critical:'small_swing',critical_for_ply:0});
 assert.equal(records.get('g0').critical[0].ply,0);assert.equal(records.get('g0').evalFen,'pre-move');
 records.onEvent({type:'move',game_id:'g0',fen,ply:2,san:'Ke7',eval_cp:null,tactics:[]});assert.deepEqual(records.get('g0').tactics,[]);assert.equal(formatEvaluation(records.get('g0')),'—');
+records.onEvent({type:'move',game_id:'g0',fen,ply:3,san:'Ke2',eval_cp:90,evaluation_kind:'engine_cp',score_bound:'lowerbound'});assert.equal(records.get('g0').evals.at(-1),null);
 assert.equal(formatEvaluation({mate:-1}),'−M1');assert.equal(readConfig('?engine=study&boards=64').boards,1);
 for(const query of ['?boards=0','?boards=1.5','?boards=65','?depth=NaN','?engine=unknown','?server=javascript:alert(1)','?pool=0'])assert.throws(()=>readConfig(query));
 console.log('PASS panel provenance/null evaluation/cleared findings/terminal snapshot and bounded query controls');

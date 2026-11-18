@@ -30,7 +30,7 @@ try {
   }
   const executable=process.env.CHROMIUM_EXECUTABLE_PATH|| (fsSync.existsSync('/usr/bin/chromium')?'/usr/bin/chromium':undefined);
   try{
-    browser=await playwright.chromium.launch({executablePath:executable,headless:true,args:['--no-sandbox','--use-gl=swiftshader','--enable-unsafe-swiftshader']});
+    browser=await playwright.chromium.launch({executablePath:executable,headless:true,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--lang=en-US','--enable-unsafe-swiftshader']});
   }catch(e){report.browser_unavailable=String(e);throw e;}
   report.status='fail';report.browser_version=browser.version();
   const external=process.env.X_ITE_DIR?path.resolve(process.env.X_ITE_DIR):null;
@@ -48,7 +48,7 @@ try {
     }catch(e){res.writeHead(e instanceof URIError?400:404);res.end();}
   });
   await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve);});
-  const port=server.address().port,page=await browser.newPage({viewport:{width:1440,height:960}});
+  const port=server.address().port,page=await browser.newPage({locale:'en-US',viewport:{width:1440,height:960}});
   page.on('pageerror',e=>report.errors.push(String(e)));
   page.on('console',m=>{if(m.type()==='error')report.errors.push(m.text());});
   if(external)await page.route('https://cdn.jsdelivr.net/npm/x_ite@*/dist/**',r=>r.fulfill({path:path.join(external,r.request().url().split('/dist/')[1])}));

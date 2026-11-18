@@ -206,7 +206,7 @@ export function describeInspection(ins) {
   const bits = [`${ins.square}: ${p}`];
   if (ins.piece) {
     bits.push(`attacked by ${ins.enemyAttackers.length}, defended by ${ins.defenders.length} (geometric)`);
-    bits.push(dest === undefined ? "legal moves: n/a (not the side to move)" : `${dest} legal move${dest === 1 ? "" : "s"}`);
+    bits.push(!ins.legal?.sideToMove ? "legal destinations: n/a (not the side to move)" : `${dest} legal destination${dest === 1 ? "" : "s"}`);
     if (ins.pin.pinned) bits.push(`absolutely pinned by ${ins.pin.pinner}`);
   } else bits.push(`attack balance ${ins.control.balance >= 0 ? "+" : ""}${ins.control.balance}`);
   if (ins.position.doubleCheck) bits.push("double check");

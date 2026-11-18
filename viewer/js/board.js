@@ -34,7 +34,7 @@ export class BoardView {
     this.nodes = new Map(); this.proto = ctx.browser.currentScene.getNamedNode(`board_${index}`);
     this.busy = Promise.resolve(); this.fxBusy = Promise.resolve();
     this.epoch = 0; this.fxRevision = 0; this.studyRevision = 0;
-    this.heatOn = false; this.evals = []; this.disposed = false;
+    this.heatOn = false; this.evals = []; this.evalKinds = []; this.disposed = false;
     this.lastEval = null; this.setEval(null);
     this.lens = new BoardLens(this);
   }
@@ -129,9 +129,17 @@ export class BoardView {
     const cols = heatColors(fen);
     this.heat.geometry.color.color = new X3D.MFColorRGBA(...cols.map((c) => new X3D.SFColorRGBA(...c)));
   }
-  async pushEval(cp) {
-    if (!Number.isFinite(cp)) return;
-    this.evals.push(cp); if (this.evals.length > GRAPH_LEN) this.evals.shift();
+  async pushEval(sample) {
+    // Typed producer records preserve the distinction between a point score,
+    // a bound, a mate report and an unavailable sample. Legacy numeric callers
+    // remain supported, but the live controller supplies the complete record.
+    const numeric = typeof sample === "number", kind = numeric ? "legacy" : sample?.evaluation_kind;
+    const point = numeric || (kind === "engine_cp" && sample.score_bound === "exact") ||
+      (kind === "material_proxy" && sample.score_bound == null);
+    const raw = numeric ? sample : sample?.eval_cp, cp = point && Number.isFinite(raw) ? raw : null;
+    this.evals.push(cp); this.evalKinds.push(kind ?? "unavailable");
+    if (this.evals.length > GRAPH_LEN) { this.evals.shift(); this.evalKinds.shift(); }
+    if (!this.graphScene && !this.graphPromise && !this.evals.some(Number.isFinite)) return;
     if (!this.graphScene && !this.graphPromise) this.graphPromise = this.ctx.browser.createX3DFromString(graphXml(this.origin)).then((s) => {
       if (this.disposed) return;
       this.graphScene = s; this.ctx.browser.currentScene.addRootNode(s.rootNodes[0]);
@@ -141,11 +149,20 @@ export class BoardView {
   }
   _paintGraph() {
     if (!this.graphScene) return;
-    const pts = graphPoints(this.evals, this.origin);
+    // Unused gap coordinates lie on the baseline; no segment references them.
+    // Keep their sample slots so a missing observation does not compress time.
+    const pts = graphPoints(this.evals.map((cp) => cp ?? 0), this.origin), indices = [];
+    let active = false, priorKind = null;
+    for (const [i, cp] of this.evals.entries()) {
+      const kind = this.evalKinds[i];
+      if (active && (!Number.isFinite(cp) || kind !== priorKind)) { indices.push(-1); active = false; }
+      if (Number.isFinite(cp)) { indices.push(i); active = true; priorKind = kind; }
+    }
+    if (active || !indices.length) indices.push(-1);
     this.graphScene.getNamedNode("graphc").point = new X3D.MFVec3f(...pts.map((p) => new X3D.SFVec3f(...p)));
-    this.graphScene.getNamedNode("graphline").coordIndex = new X3D.MFInt32(...pts.map((_, i) => i), -1);
+    this.graphScene.getNamedNode("graphline").coordIndex = new X3D.MFInt32(...indices);
   }
-  resetEvals() { this.evals = []; this._paintGraph(); }
+  resetEvals() { this.evals = []; this.evalKinds = []; this._paintGraph(); }
   childCount() { return this.group ? this.group.children.length : 0; }
   async _reconcile(fen, epoch = this.epoch) {
     if (!this._current(epoch)) return;

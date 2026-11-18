@@ -122,6 +122,25 @@ test('holdGame freezes a game at its current FEN until released, then play resum
   assert.throws(() => transport.holdGame('g9'), /Unknown game/);
   transport.releaseGame('g0'); await until(() => events.filter(e => e.type === 'move').length > frozen); await transport.stop();
 });
+test('stop wakes a loop already awaiting an analysis hold without applying its pending move', { timeout: 1500 }, async () => {
+  const events = [], pool = new LegalPool(); let finishSearch;
+  pool.search = (fen) => new Promise(resolve => {
+    const chess = new Chess(fen), move = chess.moves({ verbose: true })[0];
+    finishSearch = () => resolve({ uci: move.from + move.to + (move.promotion || ''), cp: 0, mate: null });
+  });
+  const transport = new WasmTransport(e => events.push(e), { poolFactory: () => pool });
+  await transport.start({ boards: 1, seed: 1 });
+  const fen = transport.holdGame('g0'), game = transport.games[0], held = game.hold.promise; let waiting = false;
+  // This thenable records the actual await, so the test cannot pass merely by
+  // stopping while the loop is still in its engine search or delay.
+  game.hold.promise = { then(resolve, reject) { waiting = true; return held.then(resolve, reject); } };
+  finishSearch(); await until(() => waiting);
+  await transport.stop();
+  assert.equal(game.hold, null); assert.equal(game.chess.fen(), fen);
+  assert.equal(events.filter(e => e.type === 'move').length, 0);
+  assert.equal(transport.tasks.length, 0); assert.equal(transport.timers.size, 0); assert(pool.closed);
+  await transport.stop(); assert.equal(transport.state, 'stopped');
+});
 test('WASM move is legal, carries generation/seq, and binds its score to the pre-move FEN and ply', async () => {
   const events = [], pool = new LegalPool(), transport = new WasmTransport(e => events.push(e), { poolFactory: () => pool });
   await transport.start({ boards: 1, seed: 1 }); await until(() => events.some(e => e.type === 'move')); await transport.stop();

@@ -1,6 +1,6 @@
 {
   "schema": "x3dchess.pinned-x3d-validation/1",
-  "created_utc": "2026-11-18T03:06:24.643427+00:00",
+  "created_utc": "2026-11-18T04:11:22.719019+00:00",
   "status": "pass",
   "input_cap_bytes": 8388608,
   "instrument": {
@@ -541,8 +541,8 @@
     },
     {
       "path": "viewer/scenes/grid.x3d",
-      "bytes": 13035,
-      "candidate_sha256": "4dd7e2b4817374c70044c385344c0a6430b261b4087ba99f02d3843914730afe",
+      "bytes": 14391,
+      "candidate_sha256": "97996edff23280c766da360e2c33d971fa4617bf8e8c9f38e502a72816ff9868",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -741,8 +741,8 @@
     },
     {
       "path": "examples/x3d/castling-transit-transit-attacked.x3d",
-      "bytes": 21070,
-      "candidate_sha256": "a04df5648f8e88b497f512c2e0e7386da8cc63cd4e99e9e1d1f7c1fa186cfa69",
+      "bytes": 53967,
+      "candidate_sha256": "6d5a80494130842e77616ae137b26ad527f201fe259a5892f0aaef0b69a33a16",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -787,8 +787,8 @@
     },
     {
       "path": "examples/x3d/castling-transit-transit-safe.x3d",
-      "bytes": 20855,
-      "candidate_sha256": "c8ad29fb7aecab5eb721890457ef53ebd2c94c92b49618fc201b3729c6fa3bca",
+      "bytes": 53752,
+      "candidate_sha256": "b4ac34728500a3096b967ce80aa9fe83237aa081a580c7b0ef3eae81d70b78e7",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -833,8 +833,8 @@
     },
     {
       "path": "examples/x3d/en-passant-ray-rank-clear.x3d",
-      "bytes": 21637,
-      "candidate_sha256": "8c890fb66fc71584d0c0e58f85520dd838ca96a6ad253d495ead045afd77701a",
+      "bytes": 59752,
+      "candidate_sha256": "f52b795cdd5400b82cc05343d29cb26b69381f4d79b3bc5dc666664a32ecbe21",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -886,8 +886,8 @@
     },
     {
       "path": "examples/x3d/en-passant-ray-rank-exposure.x3d",
-      "bytes": 21845,
-      "candidate_sha256": "d90da513bc5817a9c7d8e0a4075330ba72131b96e8c9934e7406135f15a2f4ac",
+      "bytes": 59960,
+      "candidate_sha256": "e614eb13e6114a19dfac6457986c9b5732f21d6962639ad1f314388da49eb824",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -939,8 +939,8 @@
     },
     {
       "path": "examples/x3d/pin-paradox-pinned.x3d",
-      "bytes": 20837,
-      "candidate_sha256": "201bbbaf67a01f05496c1eb4d5fe1aa2084c21291c1dd23b8d734a409150ca2f",
+      "bytes": 51237,
+      "candidate_sha256": "44bcbe61b6a55c83abf9639dad1efd1c44f68d626abc5eeba702bce874cd0e77",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -985,8 +985,8 @@
     },
     {
       "path": "examples/x3d/pin-paradox-unpinned.x3d",
-      "bytes": 20619,
-      "candidate_sha256": "78ee42e528bb8db0b8f9fdd5ae19255fc0abeedce4fcb16f631d3f9c6ca39667",
+      "bytes": 51019,
+      "candidate_sha256": "af0a6bc6dedb8efd18a2ca0796c6d9b37f9a8b5797aa2f096672c40afe8497e7",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -1077,8 +1077,8 @@
     },
     {
       "path": "examples/x3d/runtime-grid-01.x3d",
-      "bytes": 10636,
-      "candidate_sha256": "f0fe8117df3ed6fd6efa9dbc9d0e174c7de67fa615a899e09287cae95ca3d4b8",
+      "bytes": 11992,
+      "candidate_sha256": "8919f19399ec1d9628da7c59705d227ae7ba309ad97a361890f47b8f7c2d3432",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -1144,8 +1144,8 @@
     },
     {
       "path": "examples/x3d/runtime-grid-20.x3d",
-      "bytes": 12786,
-      "candidate_sha256": "962c5ca5f0c84c653386369c598528facc96643357fe0a2104ce97c4b478dd45",
+      "bytes": 14142,
+      "candidate_sha256": "ea71c0c209f7b3e6fa7b2955430ba2b64a7455aaaa99e1e3e10b4b56b2500467",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -1344,8 +1344,8 @@
     },
     {
       "path": "examples/x3d/runtime-grid-64.x3d",
-      "bytes": 17792,
-      "candidate_sha256": "898b9c72116943609dca3559148966227d6c204a32970ec0bc7153f2c7dec78d",
+      "bytes": 19148,
+      "candidate_sha256": "71030a0fa7cd403fb0533d4878b11a3740fb822f6b2c0ea4077c7b268fa7f8b6",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -2022,8 +2022,8 @@
     },
     {
       "path": "examples/x3d/runtime-pieces.x3d",
-      "bytes": 10516,
-      "candidate_sha256": "733c4816c15eb771ceebd71af2d2d6e493e55541b3452b10469d7a500979f1c3",
+      "bytes": 108517,
+      "candidate_sha256": "5bce5176423f11734c38280cac2ea049374b7aeab36cc60d349f469c5c52ed21",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -2072,8 +2072,8 @@
     },
     {
       "path": "examples/x3d/underpromotion-promotion-choice.x3d",
-      "bytes": 20067,
-      "candidate_sha256": "47853592a7234d46cff0803601d332c05cb7062225c65e2742b1b34e6f344f35",
+      "bytes": 43519,
+      "candidate_sha256": "916ba03600bc30bfd92eb06ab3ab5f55a5c90c8bd03156546189e7bf783bd0d5",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -2242,5 +2242,5 @@
     "Parameterized model fidelity and exported visual semantics require separate application controls.",
     "This unsigned local report is not a formal Loom acceptance receipt or publisher authentication."
   ],
-  "report_sha256": "c3dee04773df5bc5a579d67201f7bec418988e97b5426445206b82423655e16e"
+  "report_sha256": "4612c10c354e1a33dbd2e1f39cf89adb7fd9f8642ed325ae6ee81e39a7a91d49"
 }

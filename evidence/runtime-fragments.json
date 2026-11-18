@@ -1,10 +1,10 @@
 {
   "schema": "x3dchess.runtime-fragments/1",
   "status": "generated",
-  "created_utc": "2026-11-18T03:06:21.850Z",
+  "created_utc": "2026-11-18T04:11:19.709Z",
   "tool_sha256": "a9815aa4283169fa3964bdf18d8f857442cffc81247b7cab7069cf744c2512ba",
   "source_sha256": {
-    "viewer/js/pieces.js": "6fce8f6769f92f94ffa88602f2d3db1dd5b0510f8494a5f37f0bff11fea91d32",
+    "viewer/js/pieces.js": "bbd5de3442e2df6ce544ac3ce669d9e9344f26dd7c15bcffccf5c60e78caa2a4",
     "viewer/js/fx.js": "831cab1cfe448a679d18e00f57aa730000d12d2c7646339e0762865e28bade70",
     "viewer/js/overlays.js": "70938dcfe7496a153c82dc5d91ba55c1c821d3772aad365ab08d2defdf27bd33",
     "viewer/js/phasespace.js": "a281ba19e52afa36566d987b745f44089506e15deb31a46e3833b668b1d3e0ba",
@@ -15,13 +15,13 @@
   "fixtures": [
     {
       "file": "examples/x3d/runtime-pieces.x3d",
-      "bytes": 10516,
-      "sha256": "733c4816c15eb771ceebd71af2d2d6e493e55541b3452b10469d7a500979f1c3",
-      "raw_runtime_sha256": "f9abdff80a60568f53856853851d5f93c3e8001ec8ef3d2f695f7475058d27e3",
+      "bytes": 108517,
+      "sha256": "5bce5176423f11734c38280cac2ea049374b7aeab36cc60d349f469c5c52ed21",
+      "raw_runtime_sha256": "6c58edc2fc8d8628854c7c16d4afa44ca6444da4569b0c752ca7d34539ea70f4",
       "projection_losses": [
         {
           "field": "Shape.pointerEvents",
-          "records": 40,
+          "records": 44,
           "reason": "X_ITE picking extension omitted from portable X3D."
         }
       ],
@@ -101,25 +101,25 @@
     },
     {
       "file": "examples/x3d/runtime-grid-01.x3d",
-      "bytes": 10636,
-      "sha256": "f0fe8117df3ed6fd6efa9dbc9d0e174c7de67fa615a899e09287cae95ca3d4b8",
-      "raw_runtime_sha256": "c84d29f2df05aa6a29f046a89e65630cc5c9b37f7125634d45548665d889b1ff",
+      "bytes": 11992,
+      "sha256": "8919f19399ec1d9628da7c59705d227ae7ba309ad97a361890f47b8f7c2d3432",
+      "raw_runtime_sha256": "6c0a3ceefdf0ac5137317f637f4d518c785637250f08499f21dc582cc2adf0cb",
       "projection_losses": [],
       "scope": "Actual runtime grid builder for 1 boards; no live browser/SAI execution claimed."
     },
     {
       "file": "examples/x3d/runtime-grid-20.x3d",
-      "bytes": 12786,
-      "sha256": "962c5ca5f0c84c653386369c598528facc96643357fe0a2104ce97c4b478dd45",
-      "raw_runtime_sha256": "50517e5925b900a1a476f648b37b9a0f68addff7b79a652fdb944efde5c8d871",
+      "bytes": 14142,
+      "sha256": "ea71c0c209f7b3e6fa7b2955430ba2b64a7455aaaa99e1e3e10b4b56b2500467",
+      "raw_runtime_sha256": "52fbc0e3057a2e7245b440ebcbb045a62b517b9fc859efe5bd4ca40b91021442",
       "projection_losses": [],
       "scope": "Actual runtime grid builder for 20 boards; no live browser/SAI execution claimed."
     },
     {
       "file": "examples/x3d/runtime-grid-64.x3d",
-      "bytes": 17792,
-      "sha256": "898b9c72116943609dca3559148966227d6c204a32970ec0bc7153f2c7dec78d",
-      "raw_runtime_sha256": "6e33fb076c1082a6f2da46a535323d20d6c067258525fcfaae0f39aaac742e88",
+      "bytes": 19148,
+      "sha256": "71030a0fa7cd403fb0533d4878b11a3740fb822f6b2c0ea4077c7b268fa7f8b6",
+      "raw_runtime_sha256": "77dfdbc087243e2a4e3779b44f1628c3f855003eccf146e6bf9b3d9141151f34",
       "projection_losses": [],
       "scope": "Actual runtime grid builder for 64 boards; no live browser/SAI execution claimed."
     }

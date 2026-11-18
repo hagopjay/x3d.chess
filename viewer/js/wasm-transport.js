@@ -8,6 +8,15 @@ import { GameAnalysis } from "./analysis.js";
 const PLY_CAP = 200, MATE_CP = 1500;
 export class WasmTransport extends Transport {
   constructor(onEvent, { poolFactory = (config) => new WasmEnginePool(config) } = {}) { super(onEvent); this.poolFactory = poolFactory; }
+  halt() {
+    super.halt();
+    // A held loop is waiting outside the engine pool and the timer registry.
+    // Wake it on every cancellation path; active(run) then prevents its move.
+    for (const game of this.games || []) {
+      if (!game.hold) continue;
+      const { release } = game.hold; game.hold = null; release();
+    }
+  }
   async start({ boards = 20, seed = 1, depth = 12, poolSize } = {}) {
     integerOption(boards, 1, 64, "Board count"); integerOption(depth, 1, 30, "Depth");
     if (!Number.isSafeInteger(seed)) throw new TypeError("Seed must be a safe integer");
