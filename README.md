@@ -11,12 +11,12 @@ Ported from the owner's *chess-spectator* backup (Python/aiohttp/python-chess/St
 | Capability | Where |
 |---|---|
 | 20 boards (5x4, configurable), 32 pieces each, move animation, eval bar and eval-tinted boards | `viewer/` (X_ITE, SAI) |
-| Three interchangeable transports: `replay` (no engine), `wasm` (Stockfish 19 in Web Workers), `sse` (Python server) | `?engine=replay|wasm|sse` |
+| Three interchangeable transports: `wasm` (Stockfish 19 in Web Workers; the default), `sse` (Python server), `replay` (no engine, labelled on the page) | `?engine=wasm|sse|replay` |
 | One shared engine pool serving all boards (20 boards on 3 engines tested) | `server/x3dchess_server/pool.py`, `viewer/js/engine-pool.js` |
 | Tactic lines, last-move highlight, 3D phase space with trails (server mode) | `viewer/js/fx.js`, `phasespace.js` |
 | Analysis ported from the original: tactics, critical moments, phase space, convergence (Python), plus JS twins of the first three for browser-only mode, parity-tested | `server/x3dchess_server/analysis/`, `viewer/js/analysis.js`, `tools/parity.mjs` |
 | Capture and check cues, last-move highlight, tactic lines | `viewer/js/fx.js` |
-| Click a board to fly to it (TouchSensor, eased camera), game panel with move list and eval sparkline, arrows and Esc; themes (`t`, `?theme=neon|classic|ice`); capture bursts (`ParticleSystem`) | `viewer/js/camera.js`, `panel.js`, `themes.js`, `particles.js` |
+| Click a board to fly to it (TouchSensor, eased camera), game panel with move list and eval sparkline, arrows and Esc; themes (`t`, `?theme=moss|sage|mint|neon|classic|ice`; default `moss`, a low-glare green); capture bursts (`ParticleSystem`) | `viewer/js/camera.js`, `panel.js`, `themes.js`, `particles.js` |
 | Pressure heatmap (toggle `h` or the button, `?heat=1`) and per-board eval graph | `viewer/js/overlays.js` |
 | XSD gate, headless-Chromium smoke, pytest | `tools/`, `server/tests/` |
 
@@ -34,8 +34,8 @@ tools/       gen_grid.py, gen_board.py (scene generators), validate.sh (XSD gate
 ```bash
 python3 tools/gen_grid.py && tools/validate.sh                      # generate scenes + XSD gate
 python3 -m http.server -d viewer 8000                               # no server needed:
-#   http://localhost:8000/?engine=wasm&boards=20&depth=12              Stockfish in the browser
-#   http://localhost:8000/?engine=replay                               engine-free demo
+#   http://localhost:8000/?boards=20&depth=12                          Stockfish in the browser (the default)
+#   http://localhost:8000/?engine=replay                               engine-free demo (material proxy, labelled on the page)
 
 # PC server (native Stockfish): the viewer then uses ?engine=sse
 pip install -r server/requirements.txt

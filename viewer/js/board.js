@@ -121,6 +121,7 @@ export class BoardView {
   applyTheme(t) {
     this.proto.darkColor = new X3D.SFColor(...t.dark.split(" ").map(Number));
     this.proto.lightColor = new X3D.SFColor(...t.light.split(" ").map(Number));
+    this.setEval(this.lastEval ?? 0);
     this.busy = this.busy.then(async () => {
       if (this.group) this.group.children = new X3D.MFNode();
       this.nodes.clear();
@@ -134,8 +135,16 @@ export class BoardView {
     const p = Math.max(-8, Math.min(8, cp / 100));
     const k = 0.5 + p / 16;
     this.proto.evalScale = new X3D.SFVec3f(1, 1, Math.max(0.05, k));
-    const t = Math.min(1, Math.abs(p) / 4) * (this.ctx.theme?.tint ?? 1);
-    const [r, g, b] = p >= 0 ? [0.02 * (t > 0), 0.03 * (t > 0) + 0.15 * t, 0.07 * (t > 0) + 0.2 * t] : [0.07 * (t > 0) + 0.2 * t, 0.02 * (t > 0), 0.07 * (t > 0) + 0.1 * t];
+    const th = this.ctx.theme, t = Math.min(1, Math.abs(p) / 4) * (th?.tint ?? 1);
+    let r, g, b;
+    if (th?.hue) {                                                       // green themes: zero base, faint teal/amber wash
+      const h = (p >= 0 ? th.hue.w : th.hue.b).split(" ").map(Number);
+      [r, g, b] = h.map((x) => x * t * 4);
+      this.proto.tintDark = new X3D.SFColor(r, g, b);
+      this.proto.tintLight = new X3D.SFColor(r * 0.5, g * 0.5, b * 0.5);
+      return;
+    }
+    [r, g, b] = p >= 0 ? [0.02 * (t > 0), 0.03 * (t > 0) + 0.15 * t, 0.07 * (t > 0) + 0.2 * t] : [0.07 * (t > 0) + 0.2 * t, 0.02 * (t > 0), 0.07 * (t > 0) + 0.1 * t];
     this.proto.tintDark = new X3D.SFColor(r, g, b);
     this.proto.tintLight = new X3D.SFColor(r * 1.3, g * 1.3, b * 1.3);
   }
