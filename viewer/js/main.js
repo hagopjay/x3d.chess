@@ -16,6 +16,11 @@ const Cls = { replay: ReplayTransport, wasm: WasmTransport, sse: SseTransport }[
 const transport = new Cls((ev) => scene.onEvent(ev));
 await transport.start({ boards, seed, intervalMs: interval, depth: +(q.get("depth") ?? 12), poolSize: +(q.get("pool") || 0) || undefined, url: q.get("server") || undefined });
 window.x3dchess = { scene, transport };
+let heatOn = q.get("heat") === "1";
+if (heatOn) scene.setHeat(true);
+const toggleHeat = () => { heatOn = !heatOn; scene.setHeat(heatOn); document.getElementById("heatbtn").style.opacity = heatOn ? 1 : 0.55; };
+document.getElementById("heatbtn").onclick = toggleHeat;
+addEventListener("keydown", (e) => { if (e.key === "h") toggleHeat(); });
 setInterval(() => { status.textContent = `${boards} boards · ${scene.pieceCount()} pieces · ${scene.stats.moves} moves · ${engine}${engine === 'replay' ? ' (material proxy)' : ''}`; }, 500);
 
 for (const b of document.querySelectorAll("#views button")) {

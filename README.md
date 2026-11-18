@@ -16,6 +16,7 @@ Ported from the owner's *chess-spectator* backup (Python/aiohttp/python-chess/St
 | Tactic lines, last-move highlight, 3D phase space with trails (server mode) | `viewer/js/fx.js`, `phasespace.js` |
 | Analysis ported from the original: tactics, critical moments, phase space, convergence (Python), plus JS twins of the first three for browser-only mode, parity-tested | `server/x3dchess_server/analysis/`, `viewer/js/analysis.js`, `tools/parity.mjs` |
 | Capture and check cues, last-move highlight, tactic lines | `viewer/js/fx.js` |
+| Pressure heatmap (toggle `h` or the button, `?heat=1`) and per-board eval graph | `viewer/js/overlays.js` |
 | XSD gate, headless-Chromium smoke, pytest | `tools/`, `server/tests/` |
 
 ## Layout

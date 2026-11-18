@@ -234,3 +234,10 @@ export class GameAnalysis {
     return { tactics, critical, phase };
   }
 }
+
+/** Net attacker count per square (white minus black), index a1=0..h8=63. Same counting as the phase-space space term. */
+export function controlGrid(chess) {
+  const g = new Array(64);
+  for (let sq = 0; sq < 64; sq++) { const n = sqName(sq); g[sq] = chess.attackers(n, "w").length - chess.attackers(n, "b").length; }
+  return g;
+}

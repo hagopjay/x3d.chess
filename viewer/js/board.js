@@ -1,6 +1,7 @@
 // BoardView: one board in the grid. Keeps a square->node map and reconciles it with each FEN.
 import { pieceXml } from "./pieces.js";
 import { moveFxXml } from "./fx.js";
+import { heatXml, heatColors, graphXml, graphPoints, GRAPH_LEN } from "./overlays.js";
 
 const FILES = "abcdefgh";
 export const sqPos = (sq, origin) => [origin[0] + FILES.indexOf(sq[0]) - 3.5, 0.05, origin[2] + 3.5 - (Number(sq[1]) - 1)];
@@ -62,9 +63,36 @@ export class BoardView {
     });
     return this.fxBusy;
   }
+  /** Overlay toggles. Heat is created lazily on first enable and refreshed from the latest FEN. */
+  async setHeat(on) {
+    this.heatOn = on;
+    if (on && !this.heat) {
+      const s = await this.ctx.browser.createX3DFromString(heatXml(this.origin));
+      this.heat = s.rootNodes[0]; this.ctx.browser.currentScene.addRootNode(this.heat);
+    }
+    if (this.heat) this.heat.visible = on;
+    if (on && this.lastFen) this._paintHeat(this.lastFen);
+  }
+  _paintHeat(fen) {
+    const cols = heatColors(fen);
+    this.heat.geometry.color.color = new X3D.MFColorRGBA(...cols.map((c) => new X3D.SFColorRGBA(...c)));
+  }
+  async pushEval(cp) {
+    (this.evals ||= []).push(cp); if (this.evals.length > GRAPH_LEN) this.evals.shift();
+    if (!this.graph) {
+      this.graph = true;                                               // reserve first so concurrent calls do not double-create
+      const s = await this.ctx.browser.createX3DFromString(graphXml(this.origin));
+      this.graphScene = s; this.ctx.browser.currentScene.addRootNode(s.rootNodes[0]);
+    }
+    const pts = graphPoints(this.evals, this.origin);
+    this.graphScene.getNamedNode("graphc").point = new X3D.MFVec3f(...pts.map((p) => new X3D.SFVec3f(...p)));
+    this.graphScene.getNamedNode("graphline").coordIndex = new X3D.MFInt32(...pts.map((_, i) => i), -1);
+  }
+  resetEvals() { this.evals = []; }
   childCount() { return this.group ? this.group.children.length : 0; }
 
   async _reconcile(fen) {
+    this.lastFen = fen; if (this.heatOn && this.heat) this._paintHeat(fen);
     const next = fenPlacement(fen);
     // 1. squares that are unchanged keep their node
     const vacated = [];                    // [{sq, entry}]
