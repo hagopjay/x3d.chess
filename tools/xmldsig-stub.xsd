@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Minimal stand-in for the W3C xmldsig schema, which the X3D XSD imports but which is
+     not always reachable (offline/proxied CI). Scenes here carry no <Signature>, so an open
+     declaration is sufficient to let the X3D schema compile. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+           targetNamespace="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified">
+  <xs:element name="Signature">
+    <xs:complexType><xs:sequence><xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/></xs:sequence>
+      <xs:anyAttribute processContents="skip"/></xs:complexType>
+  </xs:element>
+</xs:schema>
