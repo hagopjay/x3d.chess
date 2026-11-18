@@ -92,7 +92,7 @@ async def amain(a) -> None:
     gm, runner = None, None
     try:
         await pool.start()
-        gm = GameManager(pool, boards=a.boards, depth=a.depth, seed=a.seed)
+        gm = GameManager(pool, boards=a.boards, depth=a.depth, seed=a.seed, variant=getattr(a, "variant", "standard"), position=getattr(a, "position", None))
         await gm.start()
         runner = web.AppRunner(make_app(gm), shutdown_timeout=2)
         await runner.setup()
@@ -119,8 +119,13 @@ def main() -> None:
     p.add_argument("--engine"); p.add_argument("--boards", type=within("boards",1,64), default=20)
     p.add_argument("--pool", type=within("pool",1,16), default=min(4,max(1,(os.cpu_count() or 4)//2)))
     p.add_argument("--depth", type=within("depth",1,30), default=12); p.add_argument("--seed", type=int, default=1)
+    p.add_argument("--variant", choices=("standard", "960"), default="standard", help="960 = Fischer Random (Chess960)")
+    p.add_argument("--position", type=within("position",0,959), default=None, help="fixed Chess960 start id 0-959 (518 = standard array); default random per game")
     p.add_argument("--host", default="127.0.0.1"); p.add_argument("--port", type=within("port",1,65535), default=8080)
-    asyncio.run(amain(p.parse_args()))
+    a = p.parse_args()
+    if a.position is not None and a.variant != "960":
+        p.error("--position needs --variant 960")
+    asyncio.run(amain(a))
 
 
 if __name__ == "__main__":

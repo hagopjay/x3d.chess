@@ -1,8 +1,8 @@
 {
   "schema": "x3dchess.runtime-check/1",
   "status": "pass",
-  "started_utc": "2026-11-18T04:11:22.858Z",
-  "finished_utc": "2026-11-18T04:11:23.290Z",
+  "started_utc": "2026-11-18T04:32:40.851Z",
+  "finished_utc": "2026-11-18T04:32:41.165Z",
   "node": "v22.23.5",
   "tool_sha256": "204ccde4a55a0140bcf06e1f290adc0822f9947ef284035c1b1d0ecd06043ff5",
   "xite": {
@@ -40,7 +40,7 @@
         "value": 1,
         "perspective": "side-to-move"
       },
-      "elapsed_ms": 7.025576000000001,
+      "elapsed_ms": 5.862922999999995,
       "last_info": "info depth 8 seldepth 2 multipv 1 score mate 1 nodes 210 nps 35000 hashfull 0 time 6 pv f7g7",
       "san": "Qg7#",
       "independent_chessjs_checkmate": true,
@@ -56,7 +56,7 @@
         "value": 0,
         "perspective": "side-to-move"
       },
-      "elapsed_ms": 0.5180579999999964,
+      "elapsed_ms": 0.4415960000000041,
       "last_info": "info depth 0 score mate 0",
       "status": "pass"
     },

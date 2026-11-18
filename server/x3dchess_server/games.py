@@ -21,9 +21,29 @@ PLY_CAP = 200
 MATE_CP = 1500
 
 
+def view_fen(board: chess.Board) -> str:
+    """FEN the browser overlays can read with chess.js: castling field "-" for Chess960 boards (chess.js has no 960
+    castling and rejects Shredder letters). The full rights travel in `fen960`; standard boards are unchanged."""
+    if not board.chess960:
+        return board.fen()
+    f = board.fen().split(" ")
+    f[2] = "-"
+    return " ".join(f)
+
+
+def display_uci(board: chess.Board, move: chess.Move) -> str:
+    """Board highlight squares: castling is shown king -> destination, even though the engine speaks king-takes-rook."""
+    if board.chess960 and board.is_castling(move):
+        rank = chess.square_rank(move.from_square)
+        dest = chess.square(6 if board.is_kingside_castling(move) else 2, rank)
+        return chess.Move(move.from_square, dest).uci()
+    return move.uci()
+
+
 class Game:
-    def __init__(self, gid: str, skill: int, rng: random.Random):
+    def __init__(self, gid: str, skill: int, rng: random.Random, variant: str = "standard", position: int | None = None):
         self.id, self.skill, self.rng = gid, skill, rng
+        self.variant, self.fixed_position, self.position_id = variant, position, None
         self.speed_s = 0.08 + (skill - 14) * 0.02       # same formula as the original game_manager
         self.board = chess.Board()
         self.ply = 0
@@ -34,10 +54,14 @@ class Game:
         self.new_game()
 
     def new_game(self) -> None:
-        ops = list(OPENING_BOOK.values())
-        op = self.rng.choices(ops, weights=[o.weight for o in ops], k=1)[0]
-        self.opening, self.board, self.ply = op.name, op.board(), 0
-        self.start_fen = self.board.fen()
+        if self.variant == "960":
+            self.position_id = self.fixed_position if self.fixed_position is not None else self.rng.randrange(960)
+            self.opening, self.board, self.ply = f"Chess960 · #{self.position_id}", chess.Board.from_chess960_pos(self.position_id), 0
+        else:
+            ops = list(OPENING_BOOK.values())
+            op = self.rng.choices(ops, weights=[o.weight for o in ops], k=1)[0]
+            self.opening, self.board, self.ply = op.name, op.board(), 0
+        self.start_fen = view_fen(self.board)
         self.eval_cp = self.eval_fen = self.eval_ply = self.mate_in = None
         self.score_bound = None
         self.state, self.result, self.reason, self.adjudicated = "playing", None, None, False
@@ -48,12 +72,19 @@ class Game:
 
 class GameManager:
     def __init__(self, pool: EnginePool, boards: int = 20, depth: int = 12, seed: int = 1,
-                 client_queue_size: int = 2000):
+                 client_queue_size: int = 2000, variant: str = "standard", position: int | None = None):
         bounded_int(boards, 1, 64, "boards")
+        if variant not in ("standard", "960"):
+            raise ValueError("variant must be standard or 960")
+        if position is not None:
+            bounded_int(position, 0, 959, "position")
+            if variant != "960":
+                raise ValueError("position needs variant 960")
+        self.variant = variant
         self.pool, self.depth = pool, bounded_int(depth, 1, 30, "depth")
         bounded_int(client_queue_size, boards, 10000, "client_queue_size")
         self.client_queue_size = client_queue_size
-        self.games = [Game(f"g{i}", 14 + (i % 7), random.Random(seed * 1000 + i)) for i in range(boards)]
+        self.games = [Game(f"g{i}", 14 + (i % 7), random.Random(seed * 1000 + i), variant, position) for i in range(boards)]
         self.clients: set[asyncio.Queue] = set()
         self.tactics = TacticalDetector()
         self.phase = PhaseSpaceAnalyzer()
@@ -92,7 +123,8 @@ class GameManager:
         self.clients.discard(q)
 
     def _snapshot_event(self, g: Game) -> dict:
-        return {"type": "snapshot_game", "game_id": g.id, "fen": g.board.fen(), "ply": g.ply,
+        return {"type": "snapshot_game", "game_id": g.id, "fen": view_fen(g.board), "ply": g.ply,
+                **({"variant": "chess960", "position_id": g.position_id, "fen960": g.board.shredder_fen()} if g.variant == "960" else {}),
                 "eval_cp": g.eval_cp, "eval_fen": g.eval_fen, "eval_ply": g.eval_ply,
                 "eval_source": "uci_search" if g.eval_fen else "unknown", "mate_in": g.mate_in,
                 "evaluation_kind": "engine_mate" if g.mate_in is not None else "engine_cp" if g.eval_cp is not None else "unavailable",
@@ -107,7 +139,7 @@ class GameManager:
         return {"boards": len(self.games), "engines": p.size, "searches": p.searches, "nodes": p.nodes,
                 "engine_busy_s": round(p.busy_s, 2), "moves": self.total_moves, "clients": len(self.clients),
                 "depth": self.depth, "engines_alive": p.alive, "engine_failures": p.failures,
-                "engine_launches": p.launches, "draw_policy": "claim_available",
+                "engine_launches": p.launches, "draw_policy": "claim_available", "variant": self.variant,
                 "ply_cap": PLY_CAP, "running": bool(self.tasks)}
 
     # ---- loop ----------------------------------------------------------
@@ -145,7 +177,7 @@ class GameManager:
         g.state = "complete"
         self.emit({"type": "game_complete", "game_id": g.id, "result": g.result,
                    "reason": g.reason, "adjudicated": g.adjudicated,
-                   "draw_policy": "claim_available", "fen": g.board.fen(), "ply": g.ply, "state": "complete"})
+                   "draw_policy": "claim_available", "fen": view_fen(g.board), "ply": g.ply, "state": "complete"})
         return True
 
     async def _loop(self, g: Game) -> None:
@@ -170,32 +202,38 @@ class GameManager:
                 if mv not in b.legal_moves:
                     raise ValueError("engine returned an illegal move")
                 san = b.san(mv)
-                captured = b.piece_at(mv.to_square) is not None or b.is_en_passant(mv)
+                captured = (b.piece_at(mv.to_square) is not None and not b.is_castling(mv)) or b.is_en_passant(mv)
+                shown = display_uci(b, mv)
             except Exception as e:                          # engine died: report, back off, keep the board alive
                 log.warning("%s: search failed: %s", g.id, e)
                 await asyncio.sleep(1)
                 continue
-            s = {**s, "eval_fen": source_fen, "eval_ply": source_ply}
+            source_view = view_fen(b)
+            s = {**s, "eval_fen": source_view, "eval_ply": source_ply}
+            castled = b.is_castling(mv)
+            castle_side = ('k' if b.is_kingside_castling(mv) else 'q') if castled else None
             b.push(mv)
             g.ply += 1
             g.history.append(san)
             self.total_moves += 1
-            g.mate_in, g.eval_fen, g.eval_ply = s["mate"], source_fen, source_ply
+            g.mate_in, g.eval_fen, g.eval_ply = s["mate"], source_view, source_ply
             g.score_bound = s.get("score_bound", "exact")
             g.eval_cp = ((s.get("mate_cp") if s.get("mate_cp") is not None else
                           (MATE_CP if s["mate"] > 0 else -MATE_CP)) if s["mate"] is not None
                          else s["cp"])
-            tactics, critical = self._analyse(g, s, s["uci"])
-            self.emit({"type": "move", "game_id": g.id, "ply": g.ply, "san": san, "uci": s["uci"], "fen": b.fen(),
+            tactics, critical = self._analyse(g, s, shown)
+            self.emit({"type": "move", "game_id": g.id, "ply": g.ply, "san": san, "uci": shown, "fen": view_fen(b),
+                       **({"engine_uci": s["uci"], "fen960": b.shredder_fen(), "castle": castle_side} if g.variant == "960" and castled else {}),
+                       **({"fen960": b.shredder_fen()} if g.variant == "960" and not castled else {}),
                        "eval_cp": g.eval_cp, "mate_in": s["mate"], "depth": s["depth"], "nodes": s["nodes"],
-                       "eval_fen": source_fen, "eval_ply": source_ply, "eval_source": "uci_search",
+                       "eval_fen": source_view, "eval_ply": source_ply, "eval_source": "uci_search",
                        "evaluation_kind": "engine_mate" if s["mate"] is not None else "engine_cp" if g.eval_cp is not None else "unavailable",
                        "score_bound": g.score_bound,
                        "tactics": tactics, "critical": critical,
                        "critical_for_ply": source_ply if critical else None, "captured": captured or None})
             if g.ply % 4 == 0:
                 self.emit({"type": "phase_space_update", "game_id": g.id,
-                           **self.phase.analyze_position(g.id, b.fen(), g.ply).to_dict()})
+                           **self.phase.analyze_position(g.id, view_fen(b), g.ply).to_dict()})
             if self.total_moves % 20 == 0:
                 self.emit({"type": "convergence_update", "summary": self.convergence.get_summary(),
                            "pairs": self.convergence.get_top_convergent_pairs(3), "outliers": self.convergence.get_outliers()})

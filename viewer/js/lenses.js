@@ -102,7 +102,7 @@ export class BoardLens {
   async showBranches(result) {
     const rev = ++this.rev.branches, epoch = this.view.epoch;
     if (!result || !acceptResult(this.view.lastFen, result).accepted) return false;
-    const { lines } = verifyResult(result), geom = branchGeometry(result.fenSearched, lines, this.origin);
+    const { lines } = verifyResult(result), geom = branchGeometry(result.engineFen ?? result.fenSearched, lines, this.origin);
     const s = await this._mount("branches", branchesXml(this.origin));
     if (!s || !this._alive(epoch) || rev !== this.rev.branches || this.view.lastFen !== result.fenSearched) return false;
     applyBranchesToScene(s, geom, undefined, globalThis.X3D);

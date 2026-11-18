@@ -1,6 +1,6 @@
 {
   "schema": "x3dchess.pinned-x3d-validation/1",
-  "created_utc": "2026-11-18T04:11:22.719019+00:00",
+  "created_utc": "2026-11-18T04:32:40.746866+00:00",
   "status": "pass",
   "input_cap_bytes": 8388608,
   "instrument": {
@@ -2242,5 +2242,5 @@
     "Parameterized model fidelity and exported visual semantics require separate application controls.",
     "This unsigned local report is not a formal Loom acceptance receipt or publisher authentication."
   ],
-  "report_sha256": "4612c10c354e1a33dbd2e1f39cf89adb7fd9f8642ed325ae6ee81e39a7a91d49"
+  "report_sha256": "568dcbc444d0f947d0ed801de72cbf58ad83dbfd687e2ffd9332a17f19574e1e"
 }

@@ -48,6 +48,9 @@
 //   scene.js: nothing required; the Group is per-board and added as a root node like the graph.
 //   Declared component: the fragment uses profile Interchange with explicit Rendering component (level 4).
 import { Chess } from "../vendor/chess.js";
+import { Chess960 } from "./chess960.js";
+// A Shredder-FEN (castling as rook files) can only be a Chess960 position; everything else is plain chess.js.
+const openChess = (fen) => (/^\S+ [wb] [A-Ha-h]{1,4} /.test(String(fen)) ? new Chess960(fen) : new Chess(fen));
 // Local copies (not imported from board.js) so board.js -> lenses.js -> branches.js has no import cycle.
 const FILES = "abcdefgh";
 const validSquare = (sq) => typeof sq === "string" && /^[a-h][1-8]$/.test(sq);
@@ -116,7 +119,7 @@ export function verifyLine(fen, pvUci) {
   const pv = typeof pvUci === "string" ? pvUci.trim().split(/\s+/).filter(Boolean) : pvUci;
   if (!Array.isArray(pv)) return fail("PV must be an array or a string");
   let chess;
-  try { chess = new Chess(fen); } catch (e) { return fail("Invalid FEN"); }
+  try { chess = openChess(fen); } catch (e) { return fail("Invalid FEN"); }
   if (pv.length === 0) return fail("Empty PV");
   if (pv.length > MAX_PV) return fail("PV longer than " + MAX_PV + " plies", 0, pv.length);
   const moves = [];
@@ -139,7 +142,7 @@ const flip = (b) => (b === "lowerbound" ? "upperbound" : b === "upperbound" ? "l
  * Per multipv rank the deepest line wins (later wins ties). Unscored lines stay 'unavailable' (never 0). */
 export function normalizeResult({ fenSearched, lines } = {}) {
   let chess;
-  try { chess = new Chess(fenSearched); } catch (e) { throw new TypeError("normalizeResult needs a valid searched FEN"); }
+  try { chess = openChess(fenSearched); } catch (e) { throw new TypeError("normalizeResult needs a valid searched FEN"); }
   if (!Array.isArray(lines)) throw new TypeError("normalizeResult needs a lines array");
   const stm = chess.turn(), sign = stm === "w" ? 1 : -1, byRank = new Map();
   let dropped = 0;
@@ -158,17 +161,17 @@ export function normalizeResult({ fenSearched, lines } = {}) {
     const old = byRank.get(rank);
     if (!old || entry.depth >= old.depth) byRank.set(rank, entry);
   }
-  return { fenSearched: chess.fen(), sideToMove: stm, lines: [...byRank.values()].sort((a, b) => a.rank - b.rank), dropped };
+  return { fenSearched: chess.fen(), ...(chess.fen960 ? { engineFen: chess.fen960() } : {}), sideToMove: stm, lines: [...byRank.values()].sort((a, b) => a.rank - b.rank), dropped };
 }
 
 /** Attach verification to every normalized line; only fully legal lines are returned in `lines`. */
 export function verifyResult(result) {
   const lines = [], rejected = [];
   for (const l of result.lines) {
-    const v = verifyLine(result.fenSearched, l.pv);
+    const v = verifyLine(result.engineFen ?? result.fenSearched, l.pv);
     (v.ok ? lines : rejected).push({ ...l, verification: v });
   }
-  return { fenSearched: result.fenSearched, lines, rejected };
+  return { fenSearched: result.fenSearched, ...(result.engineFen ? { engineFen: result.engineFen } : {}), lines, rejected };
 }
 
 /** Drop a result whose searched FEN is not the current board FEN (or whose revision is older). */

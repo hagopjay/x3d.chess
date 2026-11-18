@@ -37,6 +37,7 @@ function renderStudy(v){
 
 async function start(){
   config=readConfig(location.search);if(!THEMES[config.theme])throw new Error('Unknown theme; choose moss, sage, mint, neon, classic or ice');
+  $('rules').value=config.variant==='960'?(config.position===518?'960:518':'960'):'standard';$('rules').disabled=config.engine==='study'||config.engine==='sse';
   $('mode').value=config.engine;$('modeName').textContent=names[config.engine];$('workspace').classList.toggle('study',config.engine==='study');$('studyPanel').hidden=config.engine!=='study';
   $('legend').hidden=config.engine!=='study';$('runbtn').textContent=config.engine==='study'?'Reset study':'Stop session';
   await Promise.race([customElements.whenDefined('x3d-canvas'),new Promise((_,reject)=>setTimeout(()=>reject(new Error('Local X3D runtime did not initialize')),15000))]);
@@ -56,6 +57,7 @@ async function start(){
   for(const id of ['exportFen','exportX3D','exportPacket'])$(id).disabled=false;
 }
 
+$('rules').onchange=()=>{const u=new URL(location),[v,pos]=$('rules').value.split(':');u.searchParams.set('variant',v);if(pos)u.searchParams.set('pos',pos);else u.searchParams.delete('pos');location.assign(u);};
 $('mode').onchange=()=>{const u=new URL(location);u.searchParams.set('engine',$('mode').value);if($('mode').value==='study')u.searchParams.set('boards','1');else if(u.searchParams.get('boards')==='1')u.searchParams.set('boards','20');location.assign(u);};
 $('variant').onchange=()=>safe(()=>transport.variant(Number($('variant').value)));
 $('studyReset').onclick=()=>safe(()=>transport.reset());$('studyUndo').onclick=()=>safe(()=>transport.undo());$('themebtn').onclick=()=>safe(()=>scene.cycleTheme());
