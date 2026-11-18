@@ -22,7 +22,7 @@ function moveExtra(ev) {
   return extra;
 }
 
-export async function createScene(browser, { boards = 20, cols = 5, pitch = 10, panelEl = null, onError = null, onLens = null, reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false } = {}) {
+export async function createScene(browser, { boards = 20, cols = 5, pitch = 10, panelEl = null, onError = null, onLens = null, onFocus = null, reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false } = {}) {
   const layout = gridLayout({ boards, cols, pitch });
   const response = await fetch(new URL("../scenes/grid.x3d", import.meta.url));
   if (!response.ok) throw new Error("The local X3D board template is unavailable");
@@ -64,9 +64,9 @@ export async function createScene(browser, { boards = 20, cols = 5, pitch = 10, 
   };
   const select = (i) => {
     if (disposed || !Number.isInteger(i) || i < 0 || i >= boards) return;
-    selected = i; rig.board(i); panel?.show(i);
+    if(selected!==i){onFocus?.(i); selected = i; rig.board(i);} panel?.show(i);
   };
-  const deselect = () => { selected = null; rig.overview(); panel?.hide(); if (lensState.inspect) { views.forEach((v) => v.lens.clearInspection()); note(""); } };
+  const deselect = () => { if(selected!==null)onFocus?.(null); selected = null; rig.overview(); panel?.hide(); if (lensState.inspect) { views.forEach((v) => v.lens.clearInspection()); note(""); } };
   const touchCallbacks = views.map((v, i) => {
     const key = `touch${i}`, field = v.proto.getField("touchTime");
     const hit = v.proto.getField("hitPoint"), hitKey = `hit${i}`;
@@ -106,7 +106,7 @@ export async function createScene(browser, { boards = 20, cols = 5, pitch = 10, 
   const settled = () => Promise.all([themeQueue, ...views.map((v) => v.settled())]);
   return {
     browser, layout, gridXml, views, stats, phase: ps, rig, records, panel,
-    select, deselect, get selected() { return selected; },
+    select, deselect, inspectSquare: inspectAt, get selected() { return selected; },
     nextBoard: (d) => select(((selected ?? (d < 0 ? 0 : -1)) + Math.sign(d) + boards) % boards),
     setTheme, get theme() { return themeName; },
     cycleTheme: () => setTheme(THEME_ORDER[(THEME_ORDER.indexOf(themeName) + 1) % THEME_ORDER.length]),
@@ -179,7 +179,7 @@ export async function createScene(browser, { boards = 20, cols = 5, pitch = 10, 
         records.onEvent(ev);
         if (accepted.generationChanged || accepted.snapshot) ps.reset(ev.game_id);
         if (ev.type === "snapshot_game" || ev.type === "move") {
-          v.lastEval = Number.isFinite(ev.eval_cp) ? ev.eval_cp : null;
+          v.lastEval = ev.evaluation_kind === 'engine_mate' ? null : Number.isFinite(ev.eval_cp) ? ev.eval_cp : null;
           v.setEval(v.lastEval);
           const rec = { evaluation_kind: ev.evaluation_kind, eval_cp: ev.eval_cp ?? null, mate_in: ev.mate_in ?? null, score_bound: ev.score_bound ?? null, eval_fen: ev.eval_fen ?? null, eval_ply: ev.eval_ply ?? null };
           sky.update(Number(ev.game_id.slice(1)), rec, ev.generation ?? 0, ev.seq ?? ++fallbackSeq);
@@ -188,7 +188,7 @@ export async function createScene(browser, { boards = 20, cols = 5, pitch = 10, 
             stats.moves++; if (ev.tactics?.length) stats.tactics++; if (ev.critical) stats.critical++;
             v.lens.pushScore(rec);
             const jobs = [v.apply(ev.fen), v.showMove(ev.uci, ev.tactics, moveExtra(ev))];
-            if (v.lastEval != null) jobs.push(v.pushEval(v.lastEval));
+            jobs.push(v.pushEval(rec));
             if (ev.captured && ev.uci && !reducedMotion) {
               stats.bursts++;
               void burst(browser, sqPos(ev.uci.slice(2, 4), v.origin), themeName === "ice" ? "0.2 0.4 1" : "1 0.5 0.15", { isAlive: () => !disposed }).then((cleanup) => {

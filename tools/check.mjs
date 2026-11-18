@@ -115,7 +115,7 @@ try{
   // Parity is intentionally not regenerated: stale Python/JS producer hashes fail.
   const suites=[['analysis','tools/analysis.test.mjs'],['renderer','tools/renderer-tests.mjs'],
     ['transport','tools/transport-tests.mjs'],['study','tools/study-test.mjs'],
-    ['panel','tools/panel-test.mjs'],['export','tools/export-test.mjs'],['parity','tools/parity.mjs'],
+    ['pieces','tools/pieces-test.mjs'],['position-report','tools/position-report-test.mjs'],['analysis-desk','tools/analysis-desk-test.mjs'],['panel','tools/panel-test.mjs'],['export','tools/export-test.mjs'],['parity','tools/parity.mjs'],
     ['terrain','tools/terrain-test.mjs'],['branches','tools/branches-test.mjs'],['inspector','tools/inspector-test.mjs'],
     ['concepts','tools/concepts-test.mjs'],['skyline','tools/skyline-test.mjs']];
   for(const [id,file] of suites)await command(id,process.execPath,[file]);

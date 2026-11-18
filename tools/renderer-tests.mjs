@@ -64,13 +64,26 @@ await check("malformed placement and overlay input refused",()=>{
   assert.throws(()=>studyFxXml({squares:['z9']},[0,0,0]));assert.throws(()=>studyFxXml({lines:[{from:'a1',to:'a8',color:"1'/>"}]},[0,0,0]));
 });
 await check("piece queue recovers after rejected asynchronous creation",async()=>{
-  const {browser,v}=view();browser.fail=xml=>xml.includes('<Cone');await assert.rejects(v.apply(WHITE),/planted/);await v.apply(WHITE);assert.equal(v.nodes.size,2);assert.equal(v.childCount(),2);
+  const {browser,v}=view();browser.fail=xml=>xml.includes('<IndexedFaceSet');await assert.rejects(v.apply(WHITE),/planted/);await v.apply(WHITE);assert.equal(v.nodes.size,2);assert.equal(v.childCount(),2);
 });
 await check("new snapshot cancels old in-flight geometry",async()=>{
-  const {browser,v}=view();const release=browser.hold(xml=>xml.includes('<Cone'));const a=v.apply(WHITE);await Promise.resolve();const b=v.reset(BLACK);release();await Promise.all([a,b]);assert.deepEqual([...v.nodes.keys()],['a8']);assert.equal(v.childCount(),1);
+  const {browser,v}=view();const release=browser.hold(xml=>xml.includes('<IndexedFaceSet'));const a=v.apply(WHITE);await Promise.resolve();const b=v.reset(BLACK);release();await Promise.all([a,b]);assert.deepEqual([...v.nodes.keys()],['a8']);assert.equal(v.childCount(),1);
 });
 await check("graph creation is shared by concurrent pushes; reset clears actual lines",async()=>{
   const {browser,v}=view();const release=browser.hold(xml=>xml.includes("DEF='graph'"));const a=v.pushEval(100),b=v.pushEval(-200);release();await Promise.all([a,b]);assert.equal(browser.calls.filter(x=>x.includes("DEF='graph'")).length,1);assert.equal(v.graphScene.getNamedNode('graphc').point.length,2);v.resetEvals();assert.equal(v.graphScene.getNamedNode('graphc').point.length,0);assert.deepEqual([...v.graphScene.getNamedNode('graphline').coordIndex],[-1]);
+});
+await check("graph retains sample slots and breaks across missing scores, mate reports, bounds and source changes",async()=>{
+  const {v}=view(), cp=n=>({evaluation_kind:'engine_cp',eval_cp:n,score_bound:'exact'});
+  for(const sample of [cp(100),{evaluation_kind:'unavailable',eval_cp:null},cp(200),
+    {evaluation_kind:'engine_mate',eval_cp:1500,mate_in:3,score_bound:'exact'},cp(300),
+    {...cp(400),score_bound:'lowerbound'},cp(500),
+    {evaluation_kind:'material_proxy',eval_cp:600,score_bound:null}]) await v.pushEval(sample);
+  assert.deepEqual(v.evals,[100,null,200,null,300,null,500,600]);
+  assert.deepEqual([...v.graphScene.getNamedNode('graphline').coordIndex],[0,-1,2,-1,4,-1,6,-1,7,-1]);
+  const points=v.graphScene.getNamedNode('graphc').point;
+  assert.equal(points.length,8); assert(points[2].x>points[0].x,'missing sample must keep its horizontal slot');
+  await v.pushEval(cp(700));
+  assert.deepEqual([...v.graphScene.getNamedNode('graphline').coordIndex].slice(-4),[7,-1,8,-1]);
 });
 await check("rapid heat on/on/off makes one shape and preserves final off intent",async()=>{
   const {browser,v}=view();const release=browser.hold(xml=>xml.includes("DEF='heat'"));const a=v.setHeat(true),b=v.setHeat(true),c=v.setHeat(false);release();await Promise.all([a,b,c]);assert.equal(browser.calls.filter(x=>x.includes("DEF='heat'")).length,1);assert.equal(v.heat.visible,false);
@@ -86,7 +99,7 @@ await check("event generations, sequences and terminal state prevent stale board
 });
 await check("a board's palette survives another scene changing the default",async()=>{
   const {browser,v}=view();await v.applyTheme(THEMES.moss);setPieceTheme(THEMES.ice);await v.apply(WHITE);
-  const built=browser.calls.find(xml=>xml.includes('<Cone'));assert(built.includes(`diffuseColor='${THEMES.moss.w.c}'`));assert(built.includes(`diffuseColor='${THEMES.moss.b.c}'`));
+  const built=browser.calls.find(xml=>xml.includes('<IndexedFaceSet'));assert(built.includes(`diffuseColor='${THEMES.moss.w.c}'`));assert(built.includes(`diffuseColor='${THEMES.moss.b.c}'`));
 });
 await check("runtime scene constructs requested PROTOs and disposes callbacks",async()=>{
   for(const boards of [1,21]){const browser=new Browser(),scene=await createScene(browser,{boards,reducedMotion:true});await scene.setTheme('moss');assert.equal(await scene.onEvent({type:'snapshot_game',game_id:`g${boards-1}`,generation:99,seq:999,ply:0,fen:'8/8/8/8/8/8/8/8 w - - 0 1'}),false);await scene.onEvent({type:'snapshot_game',game_id:`g${boards-1}`,generation:1,ply:0,fen:WHITE});assert.equal(scene.pieceCount(),2);assert.equal(scene.misplaced(),0);assert.equal(scene.views.length,boards);const cb=scene.views[0].proto.callbacks;assert.equal(cb.size,2);scene.dispose();assert.equal(cb.size,0);assert.equal(await scene.onEvent({type:'move',game_id:'g0',generation:1,ply:1,fen:WHITE}),false);}

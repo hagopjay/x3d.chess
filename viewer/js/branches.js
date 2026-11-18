@@ -63,7 +63,7 @@ const UCI_MOVE = /^[a-h][1-8][a-h][1-8][qrbn]?$/;
 const INT = /^-?\d+$/;
 
 export const LEGEND = Object.freeze({
-  pv: "PV branches are selected engine continuations (principal variations) from one MultiPV search, not an exhaustive move tree and not a proof that any alternative loses.",
+  pv: "PV branches are selected engine continuations (principal variations) from one MultiPV search, not an exhaustive move tree and not a proof that any alternative loses. Arc links join successive destination squares, not piece trajectories.",
   verified: "Every drawn move was replayed legally from the searched FEN with chess.js; a line with any illegal move is not drawn.",
   score_cp: "Engine centipawn score of the searched position, White point of view; it depends on depth/time and is not a win probability or material count.",
   score_mate: "Engine-reported forced mate distance (White point of view: positive means White mates); a search result, not an exhaustive proof here.",

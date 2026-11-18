@@ -1,0 +1,215 @@
+{
+  "schema": "x3dchess.desk-smoke/1",
+  "status": "pass",
+  "started_utc": "2026-11-18T04:14:02.503Z",
+  "node": "v22.23.5",
+  "steps": [
+    {
+      "name": "analyst-position-and-layout",
+      "status": "pass",
+      "result": {
+        "density": "analyst",
+        "selected": 0,
+        "metrics": 4,
+        "stage": {
+          "x": 290,
+          "y": 84,
+          "right": 1060,
+          "bottom": 899,
+          "width": 770
+        },
+        "desk": {
+          "x": 1060,
+          "y": 84,
+          "right": 1440,
+          "bottom": 899,
+          "width": 380
+        },
+        "oldPanelDisplay": "none",
+        "bodyWidth": 1440,
+        "viewport": 1440
+      },
+      "elapsed_ms": 10
+    },
+    {
+      "name": "structure-and-numeric-control-tabs",
+      "status": "pass",
+      "result": {
+        "cells": 64,
+        "first": {
+          "square": "a8",
+          "value": "0",
+          "label": "a8: White 0, Black 0, balance 0"
+        },
+        "last": {
+          "square": "h1",
+          "value": "+1",
+          "label": "h1: White 1, Black 0, balance +1"
+        },
+        "inspection": {
+          "square": "f5",
+          "schema": "x3dchess.inspection/1",
+          "mounted": true,
+          "pressed": "true"
+        }
+      },
+      "elapsed_ms": 674
+    },
+    {
+      "name": "camera-and-palette-controls",
+      "status": "pass",
+      "result": {
+        "top": {
+          "p": [
+            0,
+            14.5,
+            0
+          ],
+          "o": [
+            -1,
+            0,
+            0,
+            1.5707963267948966
+          ]
+        },
+        "black": {
+          "p": [
+            0,
+            11.3,
+            -10
+          ],
+          "o": [
+            0,
+            0.9110387329540337,
+            0.41232078174342474,
+            3.141592653589793
+          ]
+        },
+        "paletteRoundTrip": [
+          "ice",
+          "moss"
+        ]
+      },
+      "elapsed_ms": 922
+    },
+    {
+      "name": "mobile-390-layout-and-control",
+      "status": "pass",
+      "result": {
+        "viewport": 390,
+        "bodyWidth": 390,
+        "deskWidth": 390,
+        "deskTop": 147.484375,
+        "stageBottom": 147.484375,
+        "matrixCount": 64
+      },
+      "elapsed_ms": 148
+    },
+    {
+      "name": "actual-wasm-multipv-hold-and-release",
+      "status": "pass",
+      "result": {
+        "held": true,
+        "lines": 3,
+        "labels": [
+          "#1 d8 cp -16 (White POV) e5",
+          "#2 d8 cp +7 (White POV) Bf5",
+          "#3 d8 cp +22 (White POV) Nxc3"
+        ],
+        "fen": "r1bqkb1r/ppp1pppp/2n5/3n4/3P3P/2N5/PP2PPP1/R1BQKBNR b KQkq - 0 5",
+        "resumed": true
+      },
+      "elapsed_ms": 3882
+    },
+    {
+      "name": "released-search-cannot-overwrite-newer-result",
+      "status": "pass",
+      "result": {
+        "faultInjection": true,
+        "table": "#1 · cp +222",
+        "labels": [
+          "#1 d8 cp +222 (White POV) Rb8"
+        ],
+        "held": true,
+        "requests": [
+          {
+            "fen": "r1bqkb1r/ppp2ppp/2n5/3Pp3/7P/2P5/P3PPP1/R1BQKBNR b KQkq - 0 7",
+            "options": {
+              "multipv": 3,
+              "depth": 8
+            }
+          },
+          {
+            "fen": "r1bqkb1r/ppp2ppp/8/n2Pp3/4P2P/2P5/P4PP1/R1BQKBNR b KQkq - 0 8",
+            "options": {
+              "multipv": 3,
+              "depth": 8
+            }
+          }
+        ]
+      },
+      "elapsed_ms": 6537
+    },
+    {
+      "name": "stop-during-pending-analysis-does-not-hang",
+      "status": "pass",
+      "result": {
+        "faultInjection": true,
+        "stop_ms": 1723,
+        "held": false,
+        "tasks": 0,
+        "searchDisabled": true,
+        "lines": 0,
+        "labels": [],
+        "error": null
+      },
+      "elapsed_ms": 3164
+    }
+  ],
+  "errors": [],
+  "images": [
+    {
+      "path": "evidence/desk-shots/desk-control-desktop.png",
+      "sha256": "dbda237f7abb9c6c5a89405ff23f545b361ce7c9185e0c514aab95f5c045daf1"
+    },
+    {
+      "path": "evidence/desk-shots/desk-control-mobile.png",
+      "sha256": "91c591a9e86523fc3c44b57c5800dc6d83a012a0c8636a3ab4f2df0fe172d27b"
+    },
+    {
+      "path": "evidence/desk-shots/desk-search-desktop.png",
+      "sha256": "e5ed71dd87bd6c097f8cae5411d314545821c2bf3e4b96b69a24ddd450a72e1a"
+    }
+  ],
+  "source_sha256": {
+    "viewer/index.html": "1944773d6c0228a59e87b668091032b0f4034ade294f9a817a821c5f2bc0343b",
+    "viewer/style.css": "668717c87fa4ed4082a3d918fec316d1f94a18457b51d815765c2c0d9cb88687",
+    "viewer/js/main.js": "60fd53c84ae5ffabdbabdfb6004b144ae0b6738ca5d069fc2d49c1a6b44010f6",
+    "viewer/js/analysis-desk.js": "02d1473533378907a0d21b0978b78a8fb4b7fde6acdcb3421062e85faeafc62c",
+    "viewer/js/position-report.js": "7970a2b2878b771aade98fa285c3152c6a20292bb940448cde2900beb2d10e22",
+    "viewer/js/camera.js": "dacc16cb43d309f593e1677d4bac2c6919268baada7ef5be35cb34a83ba78e03",
+    "viewer/js/scene.js": "73f7771b68327700c52e7682e014325398d305c68c16e84d954a62849abd8070",
+    "viewer/js/lenses.js": "77a0bc6b6349178d4746de427826f29883741d1ccaa3d08a3c973eae6517970c",
+    "viewer/js/wasm-transport.js": "0fcf30c0a6436e2be277a9519296371866c8d50031422fbaee7c20e334a79eee",
+    "viewer/js/pieces.js": "bbd5de3442e2df6ce544ac3ce669d9e9344f26dd7c15bcffccf5c60e78caa2a4",
+    "viewer/js/board.js": "1d24ac0fae98e18f26a7ed6185eae364737d0d87dbaeba4cfe86f47bc918d9f4",
+    "viewer/js/branches.js": "56a7ea413a9e9698836291d4be124aafb20c3ca3271fdb674db257a6b8513653",
+    "viewer/js/themes.js": "bdc36b23d3233ec96cc8e85bcf2d12421407d6c22e868adaa719f8e8141e4f8a",
+    "viewer/js/engine-pool.js": "89de6dbe3a4f370be336fbabe6fb9abe8017a075d4292bda196ebca23888b167",
+    "viewer/vendor/chess.js": "76c7c34f0e2e9ab076521a5d6fe786a9cce537bb1b6f29d32a9c9970b5b232d2",
+    "viewer/scenes/grid.x3d": "97996edff23280c766da360e2c33d971fa4617bf8e8c9f38e502a72816ff9868",
+    "viewer/vendor/x_ite/x_ite.min.js": "b861aee7eb416d813290982aa8ba419543174671ed575bfd5ac97ad47d4c1522"
+  },
+  "scope": "Local native Chromium/X_ITE interaction at 1440x960 and 390x844 using SwiftShader. One actual two-board WASM MultiPV search plus explicitly synthetic delayed-result fault injection. No target-device performance or chess-strength claim.",
+  "playwright": "1.63.0",
+  "launch_args": [
+    "--no-sandbox",
+    "--use-gl=angle",
+    "--use-angle=swiftshader",
+    "--enable-unsafe-swiftshader",
+    "--lang=en-US"
+  ],
+  "browser_version": "153.0.8010.12",
+  "finished_utc": "2026-11-18T04:14:31.605Z",
+  "tool_sha256": "5dc26d6f4ce474566c4e67bf4f65845b334b688a273454e15c246824178e946c"
+}

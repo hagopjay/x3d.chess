@@ -4,11 +4,24 @@ An AI-vs-AI arena and a small laboratory for visual chess reasoning. Boards,
 pieces, attack relations, highlights, graphs and feature-space trails are X3D
 geometry driven through X_ITE's Scene Access Interface.
 
-This review extends baseline `dea017f6b4e13abdbbe11553aeac131a3d80704d`.
-It repairs rules, analysis, transport and render-state defects and adds four
-verified rule experiments. [Field guide](viewer/guide.html) ·
-[Baseline review](docs/CHESS-REVIEW.md) · [Integration atlas](docs/INTEGRATION-ATLAS.md) ·
+The current enhancement pass extends `66b9d5d6fd0f0ef18bf4d9a7ef106154d9fc9700`.
+Choose **Detail → Analyst** for an instrument desk beside the X3D viewport:
+material and mobility, pawn topology and king rings, a numerical 64-square
+control matrix linked to X3D inspection, and a bounded engine search workspace.
+Pieces have sculpted silhouettes; focused cameras include overhead and Black-side views.
+
+[Critical review and roadmap](docs/VISUAL-ANALYSIS-REVIEW.md) ·
+[Field guide](viewer/guide.html) · [Integration atlas](docs/INTEGRATION-ATLAS.md) ·
 [Runtime evidence and limits](docs/RUNTIME-VALIDATION.md).
+
+```bash
+python3 run_chess.py
+# http://127.0.0.1:8862/?engine=wasm&boards=4&depth=8&detail=analyst
+# http://127.0.0.1:8862/?engine=study&detail=analyst
+```
+
+The original rule-study/reliability review extended baseline `dea017f`.
+The historical Blender still below depicts that earlier piece set.
 
 ![Actual portable X3D imported into Blender for an authored studio still](docs/assets/chess-preview.png)
 

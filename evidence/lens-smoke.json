@@ -1,13 +1,13 @@
 {
   "schema": "x3dchess.browser-smoke/1",
   "status": "pass",
-  "started_utc": "2026-11-18T03:03:18.861Z",
-  "node": "v22.23.5",
-  "query": "?engine=wasm&boards=8&depth=8&pool=2",
+  "started_utc": "2026-11-18T04:00:12.100Z",
+  "node": "v24.22.1",
+  "query": "?engine=wasm&boards=4&depth=8&pool=2",
   "errors": [],
   "scope": "Native X_ITE UI/geometry check when executed. A blocked browser is not a pass.",
-  "playwright": "1.63.0",
-  "browser_version": "153.0.8010.12",
+  "playwright": "1.62.1",
+  "browser_version": "153.0.8010.0",
   "steps": [
     {
       "name": "terrain",
@@ -28,35 +28,31 @@
       "name": "inspector-key",
       "square": "f4",
       "schema": "x3dchess.inspection/1",
-      "info": "f4: empty square · attack balance +1"
+      "info": "f4: empty square · attack balance -1"
     },
     {
       "name": "inspector-click",
       "selected": 0,
-      "square": "d4"
+      "square": "c4"
     },
     {
       "name": "engine-lines",
-      "info": "Engine lines (g0 paused; press L again to resume) · #1 d10 cp -74 (White POV) Nd7 | #2 d10 cp -71 (White POV) h5 | #3 d10 cp -70 (White POV) Bd7 · PV branches are selected engine continuations (princi",
+      "info": "Engine lines · g0 held · legally replayed engine continuations · release to resume",
       "labels": [
-        "#1 d10 cp -74 (White POV) Nd7",
-        "#2 d10 cp -71 (White POV) h5",
-        "#3 d10 cp -70 (White POV) Bd7"
+        "#1 d10 cp +6 (White POV) Rh4+",
+        "#2 d10 cp +8 (White POV) Rxc4",
+        "#3 d10 cp +10 (White POV) Ke7"
       ]
     },
     {
       "name": "skyline",
       "visible": true,
-      "columns": 8,
+      "columns": 4,
       "labels": [
-        "-0.7",
-        "-0.1",
-        "+0.9",
         "+0.0",
-        "+M1",
         "+0.1",
-        "+0.1",
-        "+0.2"
+        "-9.5 clip",
+        "+4.1"
       ]
     }
   ],
@@ -64,22 +60,22 @@
     "mode": "wasm"
   },
   "scene": {
-    "boards": 8,
-    "pieces": 192,
+    "boards": 4,
+    "pieces": 29,
     "misplaced": 0,
     "stats": {
-      "moves": 324,
+      "moves": 737,
       "complete": 1,
-      "tactics": 56,
-      "critical": 120,
-      "phase": 79,
-      "bursts": 75,
+      "tactics": 134,
+      "critical": 382,
+      "phase": 183,
+      "bursts": 118,
       "dropped": 0,
       "errors": 0,
       "lastError": null
     },
-    "sky_revision": 333
+    "sky_revision": 742
   },
-  "finished_utc": "2026-11-18T03:04:42.444Z",
-  "tool_sha256": "ff56ddc50a65dc4b7777cb5ddeedfba5d1aae2628081d53c83b3a73c65dfac8a"
+  "finished_utc": "2026-11-18T04:01:25.517Z",
+  "tool_sha256": "2d6fe5c1c344d4727d820f645f342f2781f7ab3d82187188c7ade587110a5c63"
 }

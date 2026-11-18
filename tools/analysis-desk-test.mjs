@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {controlHtml,searchHtml} from '../viewer/js/analysis-desk.js';
+import {positionReport} from '../viewer/js/position-report.js';
+import {normalizeResult} from '../viewer/js/branches.js';
+import {Chess} from '../viewer/vendor/chess.js';
+const fen=new Chess().fen(),p=positionReport(fen),html=controlHtml(p);
+assert.equal([...html.matchAll(/data-square=/g)].length,64);
+assert(html.indexOf('data-square="a8"')<html.indexOf('data-square="a1"'));
+assert(html.includes('White sources:'));
+const report={fen},r=normalizeResult({fenSearched:fen,lines:['info depth 8 multipv 1 score cp 25 nodes 1000 time 40 pv e2e4 e7e5','info depth 8 multipv 2 score cp 20 pv e2e5']});
+const text=searchHtml(report,r,'<script>');assert(!text.includes('<script>'));assert(text.includes('&lt;script&gt;'));assert(text.includes('e4 e5'));assert(text.includes('1 accepted / 1 rejected'));assert(text.includes('1000 nodes'));assert(text.includes('40 ms'));
+const next=new Chess();next.move('e4');assert(!searchHtml({fen:next.fen()},r).includes('e4 e5'));
+assert(searchHtml(report,null).includes('No branch scores are invented'));
+console.log('PASS analysis desk numeric matrix, orientation, exact source binding, legally filtered lines, budgets and escaped text');

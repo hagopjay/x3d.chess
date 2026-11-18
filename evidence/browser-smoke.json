@@ -1,14 +1,285 @@
 {
   "schema": "x3dchess.browser-smoke/1",
-  "status": "not_run",
-  "started_utc": "2026-11-18T01:32:12.661Z",
+  "status": "pass",
+  "started_utc": "2026-11-18T04:00:25.680Z",
   "node": "v24.22.1",
-  "query": "?engine=replay&boards=20",
+  "query": "?engine=replay&boards=20&interval=1000",
   "errors": [],
   "scope": "Native X_ITE UI/geometry check when executed. A blocked browser is not a pass.",
   "playwright": "1.62.1",
-  "browser_unavailable": "Error: browserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /usr/bin/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --use-gl=swiftshader --enable-unsafe-swiftshader --user-data-dir=/tmp/playwright_chromiumdev_profile-fDPQ7V --remote-debugging-pipe --no-startup-window\n<launched> pid=16\n[pid=16][err] /usr/bin/chromium: 9: [: 5225713664: unexpected operator\n[pid=16][err] [16:16:1117/203213.212924:FATAL:chrome/browser/process_singleton_posix.cc:297] Check failed: . socket() failed: Operation not permitted (1)\n[pid=16][err] [1117/203213.213297:ERROR:third_party/crashpad/crashpad/util/linux/scoped_ptrace_attach.cc:27] ptrace: Operation not permitted (1)\nCall log:\n\u001b[2m  - <launching> /usr/bin/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --use-gl=swiftshader --enable-unsafe-swiftshader --user-data-dir=/tmp/playwright_chromiumdev_profile-fDPQ7V --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=16\u001b[22m\n\u001b[2m  - [pid=16][err] /usr/bin/chromium: 9: [: 5225713664: unexpected operator\u001b[22m\n\u001b[2m  - [pid=16][err] [16:16:1117/203213.212924:FATAL:chrome/browser/process_singleton_posix.cc:297] Check failed: . socket() failed: Operation not permitted (1)\u001b[22m\n\u001b[2m  - [pid=16][err] [1117/203213.213297:ERROR:third_party/crashpad/crashpad/util/linux/scoped_ptrace_attach.cc:27] ptrace: Operation not permitted (1)\u001b[22m\n\u001b[2m  - [pid=16] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=16] <kill>\u001b[22m\n\u001b[2m  - [pid=16] <will force kill>\u001b[22m\n\u001b[2m  - [pid=16] <process did exit: exitCode=null, signal=SIGABRT>\u001b[22m\n\u001b[2m  - [pid=16] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=16] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=16] <gracefully close end>\u001b[22m\n",
-  "error": "browserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /usr/bin/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --use-gl=swiftshader --enable-unsafe-swiftshader --user-data-dir=/tmp/playwright_chromiumdev_profile-fDPQ7V --remote-debugging-pipe --no-startup-window\n<launched> pid=16\n[pid=16][err] /usr/bin/chromium: 9: [: 5225713664: unexpected operator\n[pid=16][err] [16:16:1117/203213.212924:FATAL:chrome/browser/process_singleton_posix.cc:297] Check failed: . socket() failed: Operation not permitted (1)\n[pid=16][err] [1117/203213.213297:ERROR:third_party/crashpad/crashpad/util/linux/scoped_ptrace_attach.cc:27] ptrace: Operation not permitted (1)\nCall log:\n\u001b[2m  - <launching> /usr/bin/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --use-gl=swiftshader --enable-unsafe-swiftshader --user-data-dir=/tmp/playwright_chromiumdev_profile-fDPQ7V --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=16\u001b[22m\n\u001b[2m  - [pid=16][err] /usr/bin/chromium: 9: [: 5225713664: unexpected operator\u001b[22m\n\u001b[2m  - [pid=16][err] [16:16:1117/203213.212924:FATAL:chrome/browser/process_singleton_posix.cc:297] Check failed: . socket() failed: Operation not permitted (1)\u001b[22m\n\u001b[2m  - [pid=16][err] [1117/203213.213297:ERROR:third_party/crashpad/crashpad/util/linux/scoped_ptrace_attach.cc:27] ptrace: Operation not permitted (1)\u001b[22m\n\u001b[2m  - [pid=16] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=16] <kill>\u001b[22m\n\u001b[2m  - [pid=16] <will force kill>\u001b[22m\n\u001b[2m  - [pid=16] <process did exit: exitCode=null, signal=SIGABRT>\u001b[22m\n\u001b[2m  - [pid=16] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=16] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=16] <gracefully close end>\u001b[22m\n\n    at /workspace/scratch/aee90170662d/x3d.chess/tools/smoke.mjs:33:39\n    at async node:internal/modules/esm/loader:647:26",
-  "finished_utc": "2026-11-18T01:32:13.221Z",
-  "tool_sha256": "ce480b09b8d2970942d09bedec18772c722b5721cae7026d5a8dae0feed4a561"
+  "browser_version": "153.0.8010.0",
+  "before_stop": {
+    "mode": "replay",
+    "transport": "running"
+  },
+  "scene": {
+    "boards": 20,
+    "pieces": 640,
+    "sceneChildren": 640,
+    "misplaced": 0,
+    "stats": {
+      "moves": 20,
+      "complete": 0,
+      "tactics": 0,
+      "critical": 0,
+      "phase": 0,
+      "bursts": 0,
+      "dropped": 0,
+      "errors": 0,
+      "lastError": null
+    },
+    "graphCount": 20,
+    "heatPainted": 0,
+    "phasePoints": 0,
+    "selected": null,
+    "board_origins": [
+      {
+        "declared": [
+          -20,
+          0,
+          -15
+        ],
+        "actual": [
+          -20,
+          0,
+          -15
+        ]
+      },
+      {
+        "declared": [
+          -10,
+          0,
+          -15
+        ],
+        "actual": [
+          -10,
+          0,
+          -15
+        ]
+      },
+      {
+        "declared": [
+          0,
+          0,
+          -15
+        ],
+        "actual": [
+          0,
+          0,
+          -15
+        ]
+      },
+      {
+        "declared": [
+          10,
+          0,
+          -15
+        ],
+        "actual": [
+          10,
+          0,
+          -15
+        ]
+      },
+      {
+        "declared": [
+          20,
+          0,
+          -15
+        ],
+        "actual": [
+          20,
+          0,
+          -15
+        ]
+      },
+      {
+        "declared": [
+          -20,
+          0,
+          -5
+        ],
+        "actual": [
+          -20,
+          0,
+          -5
+        ]
+      },
+      {
+        "declared": [
+          -10,
+          0,
+          -5
+        ],
+        "actual": [
+          -10,
+          0,
+          -5
+        ]
+      },
+      {
+        "declared": [
+          0,
+          0,
+          -5
+        ],
+        "actual": [
+          0,
+          0,
+          -5
+        ]
+      },
+      {
+        "declared": [
+          10,
+          0,
+          -5
+        ],
+        "actual": [
+          10,
+          0,
+          -5
+        ]
+      },
+      {
+        "declared": [
+          20,
+          0,
+          -5
+        ],
+        "actual": [
+          20,
+          0,
+          -5
+        ]
+      },
+      {
+        "declared": [
+          -20,
+          0,
+          5
+        ],
+        "actual": [
+          -20,
+          0,
+          5
+        ]
+      },
+      {
+        "declared": [
+          -10,
+          0,
+          5
+        ],
+        "actual": [
+          -10,
+          0,
+          5
+        ]
+      },
+      {
+        "declared": [
+          0,
+          0,
+          5
+        ],
+        "actual": [
+          0,
+          0,
+          5
+        ]
+      },
+      {
+        "declared": [
+          10,
+          0,
+          5
+        ],
+        "actual": [
+          10,
+          0,
+          5
+        ]
+      },
+      {
+        "declared": [
+          20,
+          0,
+          5
+        ],
+        "actual": [
+          20,
+          0,
+          5
+        ]
+      },
+      {
+        "declared": [
+          -20,
+          0,
+          15
+        ],
+        "actual": [
+          -20,
+          0,
+          15
+        ]
+      },
+      {
+        "declared": [
+          -10,
+          0,
+          15
+        ],
+        "actual": [
+          -10,
+          0,
+          15
+        ]
+      },
+      {
+        "declared": [
+          0,
+          0,
+          15
+        ],
+        "actual": [
+          0,
+          0,
+          15
+        ]
+      },
+      {
+        "declared": [
+          10,
+          0,
+          15
+        ],
+        "actual": [
+          10,
+          0,
+          15
+        ]
+      },
+      {
+        "declared": [
+          20,
+          0,
+          15
+        ],
+        "actual": [
+          20,
+          0,
+          15
+        ]
+      }
+    ],
+    "engine": null
+  },
+  "image": {
+    "path": "../../../../tmp/chess-replay20.png",
+    "sha256": "a42768c228ec69d2497af3c24ea46c91683769dbae07216e7e9696c008cbec48"
+  },
+  "finished_utc": "2026-11-18T04:01:10.690Z",
+  "tool_sha256": "0cf4d41a825e62c895463cd963f34767a788c6ceebdb39547a6b195c34363638"
 }

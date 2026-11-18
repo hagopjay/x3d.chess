@@ -10,11 +10,14 @@ receipts are local, unsigned measurements bound to their input/tool hashes.
 | Generated X3D | `evidence/x3d-validation.json` | 19 documents pass full XSD 4.0 and the pinned validator's implemented semantic checks; both paired negative controls caught |
 | Writer coverage | `evidence/runtime-fragments.json` | Ten captures of actual XML writers, with producer hashes and portability losses |
 | Real engine | `evidence/runtime-check.json` | Five controls execute the unchanged vendored Stockfish WebAssembly engine through Node UCI |
-| Native X_ITE browser | `evidence/browser-smoke.json` | `not_run`: Chromium launch is blocked by this environment's socket policy |
+| Native X_ITE browser | `evidence/desk-smoke.json` | Local Chromium 153 / SwiftShader: Analyst desktop/mobile UI, actual WASM MultiPV, square inspection, camera/theme and cancellation checks; details and hashes in receipt |
 
-The native result is deliberately incomplete. No new rendered screenshot, GPU
-performance measurement, or browser Worker execution is claimed by the Node,
-XML, or mocked SAI checks. Historical screenshots do not certify this revision.
+`evidence/browser-smoke.json` records the additional 20-board replay smoke;
+`evidence/lens-smoke.json` records native terrain, concepts, inspection, engine
+lines and skyline checks. These local headless software-renderer observations
+are separate from the cloud review browser, which could not create WebGL. No target-device GPU frame rate or engine-strength measurement is
+claimed. Browser screenshots are test outputs, reproducible with the harness.
+The original Blender preview remains historical and depicts the earlier geometry.
 
 ## Aggregate reproduction
 
