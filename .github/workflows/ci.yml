@@ -1,0 +1,16 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: sudo apt-get install -y libxml2-utils
+      - run: pip install -r server/requirements.txt pytest
+      - run: python3 tools/gen_grid.py && tools/validate.sh
+      - run: node tools/parity.mjs
+      - run: cd server && python -m pytest -q tests

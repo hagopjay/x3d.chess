@@ -4,6 +4,7 @@
 import { Chess } from "../vendor/chess.js";
 import { Transport } from "./transport.js";
 import { mulberry32 } from "./rng.js";
+import { GameAnalysis } from "./analysis.js";
 
 const VAL = { p: 100, n: 300, b: 300, r: 500, q: 900, k: 0 };
 const PLY_CAP = 140;
@@ -19,7 +20,7 @@ export class ReplayTransport extends Transport {
   async start(config = {}) {
     const { boards = 20, seed = 1, intervalMs = 700 } = config;
     this.games = Array.from({ length: boards }, (_, i) => ({
-      id: `g${i}`, chess: new Chess(), rng: mulberry32(seed * 1000 + i), ply: 0, gen: 0,
+      id: `g${i}`, chess: new Chess(), rng: mulberry32(seed * 1000 + i), ply: 0, gen: 0, an: new GameAnalysis(),
     }));
     for (const g of this.games) this._emitSnapshotFor(g);
     this.timer = setInterval(() => this.games.forEach((g, i) => setTimeout(() => this._step(g), (i * 37) % intervalMs)), intervalMs);
@@ -38,7 +39,7 @@ export class ReplayTransport extends Transport {
         : c.isInsufficientMaterial() ? "insufficient_material" : c.isDrawByFiftyMoves?.() ? "fifty_move" : "replay_cap";
       const result = c.isCheckmate() ? (c.turn() === "w" ? "0-1" : "1-0") : "1/2-1/2";
       this.onEvent({ type: "game_complete", game_id: g.id, result, reason });
-      c.reset(); g.ply = 0; g.gen++;
+      c.reset(); g.ply = 0; g.gen++; g.an.reset();
       this._emitSnapshotFor(g);
       return;
     }
@@ -48,10 +49,12 @@ export class ReplayTransport extends Transport {
     for (let i = 0; i < moves.length; i++) { r -= weights[i]; if (r <= 0) { pick = moves[i]; break; } }
     c.move(pick);
     g.ply++;
+    const cp = materialCp(c), an = g.an.onMove(c, g.ply, cp);
     this.onEvent({
       type: "move", game_id: g.id, ply: g.ply, san: pick.san, uci: pick.from + pick.to + (pick.promotion || ""),
-      fen: c.fen(), eval_cp: materialCp(c), mate_in: null, tactics: [], critical: null,
+      fen: c.fen(), eval_cp: cp, mate_in: null, tactics: an.tactics, critical: an.critical,
       flags: pick.flags, captured: pick.captured || null,
     });
+    if (an.phase) this.onEvent({ type: "phase_space_update", game_id: g.id, ...an.phase });
   }
 }

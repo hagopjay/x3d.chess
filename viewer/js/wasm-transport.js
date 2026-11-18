@@ -6,6 +6,7 @@ import { Transport } from "./transport.js";
 import { WasmEnginePool } from "./engine-pool.js";
 import { mulberry32 } from "./rng.js";
 import { pickOpening } from "./openings.js";
+import { GameAnalysis } from "./analysis.js";
 
 const PLY_CAP = 200;
 const MATE_CP = 1500;
@@ -20,7 +21,7 @@ export class WasmTransport extends Transport {
     this.cache = { hits: 0, misses: 0 };
     this.games = Array.from({ length: boards }, (_, i) => {
       const rng = mulberry32(seed * 1000 + i), skill = 14 + (i % 7);
-      return { id: `g${i}`, rng, skill, speedMs: 80 + (skill - 14) * 20, chess: new Chess(), ply: 0, opening: null };
+      return { id: `g${i}`, rng, skill, speedMs: 80 + (skill - 14) * 20, chess: new Chess(), ply: 0, opening: null, an: new GameAnalysis() };
     });
     this.games.forEach((g) => this._newGame(g));
     this.games.forEach((g) => this._loop(g));
@@ -31,7 +32,7 @@ export class WasmTransport extends Transport {
   _newGame(g) {
     g.opening = pickOpening(g.rng);
     g.chess = new Chess(g.opening.fen);
-    g.ply = 0;
+    g.ply = 0; g.an.reset();
     this.onEvent({ type: "snapshot_game", game_id: g.id, fen: g.chess.fen(), ply: 0, eval_cp: 0, opening: g.opening.name, skill: g.skill });
   }
 
@@ -56,11 +57,13 @@ export class WasmTransport extends Transport {
       const mv = c.move({ from: s.uci.slice(0, 2), to: s.uci.slice(2, 4), promotion: s.uci[4] });
       g.ply++;
       const eval_cp = s.mate != null ? Math.sign(s.mate) * MATE_CP : s.cp ?? 0;
+      const an = g.an.onMove(c, g.ply, eval_cp);
       this.onEvent({
         type: "move", game_id: g.id, ply: g.ply, san: mv.san, uci: s.uci, fen: c.fen(),
-        eval_cp, mate_in: s.mate, depth: s.depth, nodes: s.nodes, tactics: [], critical: null,
+        eval_cp, mate_in: s.mate, depth: s.depth, nodes: s.nodes, tactics: an.tactics, critical: an.critical,
         flags: mv.flags, captured: mv.captured || null,
       });
+      if (an.phase) this.onEvent({ type: "phase_space_update", game_id: g.id, ...an.phase });
       await new Promise((r) => setTimeout(r, g.speedMs));
     }
   }
