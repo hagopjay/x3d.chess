@@ -24,7 +24,7 @@ Five opt-in overlays sit on top of the arena. Each one answers a named question 
 | Terrain, independent oracle | `node tools/terrain-test.mjs` | 609 checks, both modes vs python-chess, XSD and semantics pass |
 | Concepts, independent oracle | `node tools/concepts-test.mjs` | 50,112 checks over 327 positions (random play plus classics), python-chess 1.11 oracle, mutated fixtures detected |
 | Inspector | `node tools/inspector-test.mjs` | 35 tests, 100 random positions x 64 squares vs python-chess, FIDE study positions |
-| Branches | `node tools/branches-test.mjs` | 9 groups including real vendored Stockfish MultiPV 3 at depth 8 on three FENs; corrupted PV and stale FEN rejected |
+| Branches | `node tools/branches-test.mjs` | 9 groups including real vendored Stockfish MultiPV 3 at depth 8 on four FENs; corrupted PV and stale FEN rejected |
 | Skyline | `node tools/skyline-test.mjs` | 3,360 checks, 1 to 64 boards, 7 documents validated |
 | Hold for analysis | `node tools/transport-tests.mjs` | held game does not advance, play resumes on release |
 | Native browser | `QUERY="?engine=wasm&boards=8&depth=8&pool=2" node tools/lens-smoke.mjs` | terrain on 8 of 8 boards, 13 concepts cycled, inspector by keyboard and real mouse click, engine lines drawn (3 verified PVs) with the game held then released, skyline 8 columns; 0 console errors, 0 misplaced pieces |

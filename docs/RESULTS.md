@@ -30,7 +30,7 @@ Recorded baseline environment: 4 vCPU Linux sandbox, Chromium (Playwright 1.63) 
 | Terrain vs independent attack counts | 609 checks, both modes | `tools/terrain-test.mjs`, python-chess 1.11 |
 | Concept lens vs independent oracle | 50,112 checks over 327 positions | `tools/concepts-test.mjs`, `tools/concepts_gen.py` |
 | Inspector legal sets | 100 random positions x 64 squares agree | `tools/inspector-test.mjs`, `tools/inspector_expect.py` |
-| MultiPV branches, real engine | 3 FENs, MultiPV 3, depth 8: every PV verifies legally | `tools/branches-test.mjs`, vendored Stockfish 19 lite under Node |
+| MultiPV branches, real engine | 4 FENs, MultiPV 3, depth 8: every PV verifies legally | `tools/branches-test.mjs`, vendored Stockfish 19 lite under Node |
 | Skyline | 3,360 checks, 1 to 64 boards | `tools/skyline-test.mjs` |
 | Native lens run, 8 boards, wasm depth 8 pool 2 | all five lenses exercised, 0 console errors, 0 misplaced pieces | `tools/lens-smoke.mjs`, Chromium 153 SwiftShader, `evidence/lens-smoke.json` |
 
