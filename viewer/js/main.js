@@ -8,7 +8,7 @@ import {coordinateLabelsXml,exportPositionX3D} from './export.js';
 import {THEMES} from './themes.js';
 
 const $=id=>document.getElementById(id),el=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;};
-let scene=null,transport=null,config=null,heatOn=false,stopped=false,studyView=null,message='Preparing the scene';
+let scene=null,transport=null,config=null,heatOn=false,lens={},stopped=false,studyView=null,message='Preparing the scene';
 const names={wasm:'ENGINE ARENA',sse:'UCI SERVER',replay:'REPLAY · MATERIAL PROXY',study:'STUDY ROOM · RULE WITNESSES'};
 function error(e){$('error').hidden=false;$('error').textContent=e?.message||String(e);$('statusDot').dataset.state='error';}
 function transportStatus(ev){if(ev.type!=='transport_status')return false;message=ev.message||ev.state;$('statusDot').dataset.state=ev.state;if(ev.state==='error')error(message);return true;}
@@ -34,7 +34,7 @@ async function start(){
   $('legend').hidden=config.engine!=='study';$('runbtn').textContent=config.engine==='study'?'Reset study':'Stop session';
   await Promise.race([customElements.whenDefined('x3d-canvas'),new Promise((_,reject)=>setTimeout(()=>reject(new Error('Local X3D runtime did not initialize')),15000))]);
   const browser=X3D.getBrowser($('canvas'));if(!browser)throw new Error('The browser could not initialize X3D');
-  scene=await createScene(browser,{boards:config.boards,panelEl:config.engine==='study'?null:$('panel'),onError:error});
+  scene=await createScene(browser,{boards:config.boards,panelEl:config.engine==='study'?null:$('panel'),onError:error,onLens:text=>lensInfo(text)});
   await scene.setTheme(config.theme);heatOn=config.heat;if(heatOn)await scene.setHeat(true);$('heatbtn').setAttribute('aria-pressed',String(heatOn));
   if(config.engine==='study'){
     const labels=await browser.createX3DFromString(`<X3D profile="Interchange" version="4.0"><head><component name="Text" level="1"/></head><Scene>${coordinateLabelsXml(scene.layout.origins[0])}</Scene></X3D>`);
@@ -45,7 +45,7 @@ async function start(){
     if(config.engine==='wasm'&&(typeof Worker==='undefined'||typeof WebAssembly==='undefined'))throw new Error('Browser engines need Web Workers and WebAssembly. Choose Study room or Replay explicitly.');
     const Type={wasm:WasmTransport,sse:SseTransport,replay:ReplayTransport}[config.engine];transport=new Type(ev=>{if(!transportStatus(ev))void scene.onEvent(ev);});
   }
-  window.x3dchess={scene,transport,config,ready:false};await transport.start(config);window.x3dchess.ready=true;$('loading').hidden=true;
+  $('linesbtn').disabled=config.engine!=='wasm';window.x3dchess={scene,transport,config,ready:false};await transport.start(config);window.x3dchess.ready=true;$('loading').hidden=true;
   for(const id of ['exportFen','exportX3D','exportPacket'])$(id).disabled=false;
 }
 
@@ -56,7 +56,33 @@ const heat=()=>safe(async()=>{heatOn=!heatOn;await scene.setHeat(heatOn);$('heat
 document.querySelector('[data-vp=vp_overview]').onclick=()=>{scene?.deselect();$('contextNote').textContent='Click a board to inspect its position and score provenance.';};
 document.querySelector('[data-vp=vp_phase]').onclick=()=>{scene?.deselect();scene?.rig.phase();$('contextNote').textContent='Heuristic feature embedding: material, attack-count space, king shelter. Axes clip at ±5 and scale by 0.7; equal points need not mean equal positions.';};
 $('runbtn').onclick=()=>safe(async()=>{if(config.engine==='study')return transport.reset();if(stopped)return location.reload();await transport?.stop();stopped=true;$('runbtn').textContent='Restart session';message='Stopped. Restart begins a new session.';});
-addEventListener('keydown',e=>{if(typing(e))return;if(e.key==='Escape')scene?.deselect();else if(e.key==='ArrowRight')scene?.nextBoard(1);else if(e.key==='ArrowLeft')scene?.nextBoard(-1);else if(e.key.toLowerCase()==='t')safe(()=>scene?.cycleTheme());else if(e.key.toLowerCase()==='h')heat();});
+const L=()=>scene?.LEGENDS;
+function lensInfo(text){const n=$('lensInfo');n.textContent=text||'';n.hidden=!text;}
+function pressed(id,on){$(id).setAttribute('aria-pressed',String(on));}
+const terrain=()=>safe(async()=>{const on=!scene.lensState.terrain;await scene.setTerrain(on);pressed('terrainbtn',on);lensInfo(on?'Terrain · '+L().terrain[scene.lensState.mode]:'');});
+const terrainMode=()=>safe(async()=>{if(!scene.lensState.terrain)await scene.setTerrain(true);pressed('terrainbtn',true);const m=await scene.cycleTerrainMode();lensInfo('Terrain · '+L().terrain[m]);});
+const concepts=()=>safe(async()=>{const id=await scene.cycleConcept();pressed('conceptbtn',!!id);const d=id&&L().concepts.concepts[id];lensInfo(id?`Concept · ${d.title} (${d.label}): ${d.definition}`:'');});
+const inspector=()=>safe(async()=>{const on=!scene.lensState.inspect;pressed('inspectbtn',on);if(on)lensInfo('Inspector · click a square or use arrows/WASD on the focused board. '+L().inspector.geometricAttack);await scene.setInspect(on);if(!on)lensInfo('');});
+let held=null;
+function releaseHeld(){if(held!==null){transport?.releaseGame?.(held);held=null;$('linesbtn').setAttribute('aria-pressed','false');}}
+const lines=()=>safe(async()=>{
+  if(held!==null){scene.views[Number(held.slice(1))].lens.clearBranches();releaseHeld();lensInfo('Engine lines cleared; the game continues.');return;}
+  if(config.engine!=='wasm'||scene.selected===null)throw new Error('Select a board first; engine lines need the browser engine arena');
+  const id=`g${scene.selected}`,view=scene.views[scene.selected];held=id;$('linesbtn').setAttribute('aria-pressed','true');
+  const fen=transport.holdGame(id);lensInfo(`${id} paused so the position stays still · searching MultiPV 3 at depth 10…`);
+  for(let i=0;i<40&&view.lastFen!==fen;i++)await new Promise(r=>setTimeout(r,100));
+  if(view.lastFen!==fen){releaseHeld();throw new Error('The board had not caught up with its game; try again');}
+  try{const r=await transport.analyze(fen,{multipv:3,depth:10});const ok=await scene.showBranches(r);
+    lensInfo(ok?`Engine lines (${id} paused; press L again to resume) · `+scene.branchLabels.join(' | ')+' · '+L().branches.pv:'No legal verified lines came back for this position.');}
+  catch(e){releaseHeld();throw e;}});
+const skyline=()=>safe(async()=>{const on=!scene.lensState.skyline;await scene.setSkyline(on);pressed('skybtn',on);if(on){scene.deselect();scene.rig.skyline();}else scene.rig.overview();lensInfo(on?'Skyline · '+L().skyline.height+' '+L().skyline.scope:'');});
+$('terrainbtn').onclick=terrain;$('conceptbtn').onclick=concepts;$('inspectbtn').onclick=inspector;$('linesbtn').onclick=lines;$('skybtn').onclick=skyline;
+addEventListener('keydown',e=>{if(typing(e))return;
+  if(scene?.lensState.inspect&&!(e.key==='Escape'&&scene.views[scene.selected??0]?.lens.insp.square===null)){const handled=scene.inspectKey(e.key,e);handled.then(h=>{if(h)lensInfo(scene.lensState.readout)});
+    if(/^(Arrow(Up|Down|Left|Right)|[wasdWASD]|Escape)$/.test(e.key)&&!e.ctrlKey&&!e.metaKey&&!e.altKey){e.preventDefault();return;}}
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  const k=e.key.toLowerCase();if(k==='g'){e.shiftKey?terrainMode():terrain();return;}if(k==='c'){concepts();return;}if(k==='i'){inspector();return;}if(k==='l'){lines();return;}if(k==='k'){skyline();return;}
+  if(e.key==='Escape'){releaseHeld();scene?.deselect();}else if(e.key==='ArrowRight')scene?.nextBoard(1);else if(e.key==='ArrowLeft')scene?.nextBoard(-1);else if(e.key.toLowerCase()==='t')safe(()=>scene?.cycleTheme());else if(e.key.toLowerCase()==='h')heat();});
 
 function record(){const id=`g${scene?.selected??0}`,r=scene?.records.get(id);if(!r)throw new Error('Wait for a position or select a board');return r;}
 $('exportFen').onclick=()=>safe(async()=>{const r=record();if(navigator.clipboard&&isSecureContext)await navigator.clipboard.writeText(r.fen);else download(r.id+'.fen',r.fen+'\n','text/plain');message='Position FEN copied or downloaded.';});

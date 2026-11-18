@@ -1,6 +1,6 @@
 {
   "schema": "x3dchess.pinned-x3d-validation/1",
-  "created_utc": "2026-11-18T02:24:21.970931+00:00",
+  "created_utc": "2026-11-18T03:06:24.643427+00:00",
   "status": "pass",
   "input_cap_bytes": 8388608,
   "instrument": {
@@ -541,8 +541,8 @@
     },
     {
       "path": "viewer/scenes/grid.x3d",
-      "bytes": 12902,
-      "candidate_sha256": "e894fc96b15a1f84924c9db6d6e1fd92753e00b146fb059fb3d53d8eb2cc7faf",
+      "bytes": 13035,
+      "candidate_sha256": "4dd7e2b4817374c70044c385344c0a6430b261b4087ba99f02d3843914730afe",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -1077,8 +1077,8 @@
     },
     {
       "path": "examples/x3d/runtime-grid-01.x3d",
-      "bytes": 10503,
-      "candidate_sha256": "b61860927fe205267a31b539b28a1e021955fda87819aa37d18b321d4f6480be",
+      "bytes": 10636,
+      "candidate_sha256": "f0fe8117df3ed6fd6efa9dbc9d0e174c7de67fa615a899e09287cae95ca3d4b8",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -1144,8 +1144,8 @@
     },
     {
       "path": "examples/x3d/runtime-grid-20.x3d",
-      "bytes": 12653,
-      "candidate_sha256": "e3316532b05d131ed45317241ae3fdf1987858ca92b4dc3157c978b900ace4e0",
+      "bytes": 12786,
+      "candidate_sha256": "962c5ca5f0c84c653386369c598528facc96643357fe0a2104ce97c4b478dd45",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -1344,8 +1344,8 @@
     },
     {
       "path": "examples/x3d/runtime-grid-64.x3d",
-      "bytes": 17659,
-      "candidate_sha256": "7fcc57e1ba426f2ba212f1d8dd78758e2cf8f0f1935b502bafe352474845ba08",
+      "bytes": 17792,
+      "candidate_sha256": "898b9c72116943609dca3559148966227d6c204a32970ec0bc7153f2c7dec78d",
       "status": "pass",
       "xsd": {
         "status": "pass",
@@ -2242,5 +2242,5 @@
     "Parameterized model fidelity and exported visual semantics require separate application controls.",
     "This unsigned local report is not a formal Loom acceptance receipt or publisher authentication."
   ],
-  "report_sha256": "8ebd9b8673f90b3735bf8eb73bb45900a9f1fcc43136bc66378bde4b30f01ffa"
+  "report_sha256": "c3dee04773df5bc5a579d67201f7bec418988e97b5426445206b82423655e16e"
 }

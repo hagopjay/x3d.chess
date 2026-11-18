@@ -9,6 +9,9 @@ import { setPieceTheme } from "./pieces.js";
 import { gridLayout, gridSceneXml } from "./layout.js";
 import { RenderEventGate } from "./renderer-state.js";
 import { Chess } from "../vendor/chess.js";
+import { SkylineLayer, CONCEPT_IDS, LEGENDS, describeInspection } from "./lenses.js";
+import { validSquare } from "./board.js";
+import * as inspector from "./inspector.js";
 
 function moveExtra(ev) {
   const extra = { captured: !!ev.captured };
@@ -19,7 +22,7 @@ function moveExtra(ev) {
   return extra;
 }
 
-export async function createScene(browser, { boards = 20, cols = 5, pitch = 10, panelEl = null, onError = null, reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false } = {}) {
+export async function createScene(browser, { boards = 20, cols = 5, pitch = 10, panelEl = null, onError = null, onLens = null, reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false } = {}) {
   const layout = gridLayout({ boards, cols, pitch });
   const response = await fetch(new URL("../scenes/grid.x3d", import.meta.url));
   if (!response.ok) throw new Error("The local X3D board template is unavailable");
@@ -41,17 +44,38 @@ export async function createScene(browser, { boards = 20, cols = 5, pitch = 10, 
   const views = layout.origins.map((origin, i) => new BoardView(ctx, i, origin));
   const byId = new Map(views.map((v, i) => [`g${i}`, v])), gate = new RenderEventGate(boards);
   const records = new GameRecords(), panel = panelEl ? new GamePanel(panelEl, records) : null;
-  const rig = createCameraRig(browser, { boardOrigin: (i) => views[i].origin, ms: reducedMotion ? 1 : 900 });
+  const dist = Math.max(layout.width, layout.height) * 0.75;      // low oblique pose that frames the skyline plane (y = 4 +- 2.4) above the boards
+  const rig = createCameraRig(browser, { boardOrigin: (i) => views[i].origin, skylinePose: { p: [0, 4 + dist * 0.22, layout.height / 2 + dist * 0.85], o: [1, 0, 0, -0.30] }, ms: reducedMotion ? 1 : 900 });
   const ps = await createPhaseSpace(browser, layout.phaseOrigin, boards);
-  let selected = null, themeName = "neon", lastPanel = 0;
+  const sky = new SkylineLayer(browser, layout, boards);
+  const lensState = { terrain: false, mode: "count", concept: -1, inspect: false, skyline: false, readout: "" };
+  let selected = null, themeName = "neon", lastPanel = 0, fallbackSeq = 0;
+  const lastHit = new Array(boards).fill(null);
+  const squareAt = (p) => {                                    // TouchSensor hit point is board-local: files along +x, rank 1 at +z
+    const f = Math.floor(p.x + 4), r = 8 - Math.floor(p.z + 4);
+    return f >= 0 && f < 8 && r >= 1 && r <= 8 ? "abcdefgh"[f] + r : null;
+  };
+  const note = (text) => { lensState.readout = text; onLens?.(text); };
+  const inspectAt = async (i, square) => {
+    if (disposed || !validSquare(square)) return null;
+    const ins = await views[i].lens.inspect(square);
+    if (ins && !disposed && lensState.inspect && selected === i) note(describeInspection(ins));
+    return ins;
+  };
   const select = (i) => {
     if (disposed || !Number.isInteger(i) || i < 0 || i >= boards) return;
     selected = i; rig.board(i); panel?.show(i);
   };
-  const deselect = () => { selected = null; rig.overview(); panel?.hide(); };
+  const deselect = () => { selected = null; rig.overview(); panel?.hide(); if (lensState.inspect) { views.forEach((v) => v.lens.clearInspection()); note(""); } };
   const touchCallbacks = views.map((v, i) => {
     const key = `touch${i}`, field = v.proto.getField("touchTime");
-    field.addFieldCallback(key, () => select(i)); return { field, key };
+    const hit = v.proto.getField("hitPoint"), hitKey = `hit${i}`;
+    hit.addFieldCallback(hitKey, (p) => { lastHit[i] = p; });
+    field.addFieldCallback(key, () => {
+      const wasSelected = selected === i; select(i);
+      const sq = lensState.inspect && lastHit[i] ? squareAt(lastHit[i]) : null;
+      if (sq && (wasSelected || selected === i)) void inspectAt(i, sq);
+    }); return { field, key, hit, hitKey };
   });
   const setTheme = (name) => {
     if (!Object.hasOwn(THEMES, name)) return Promise.reject(new RangeError("Unknown chess theme"));
@@ -96,6 +120,31 @@ export async function createScene(browser, { boards = 20, cols = 5, pitch = 10, 
       views[index].studyRevision++;
       if (views[index].studyFx) views[index].studyFx.children = new X3D.MFNode();
     },
+    // ---- lenses (all optional, off by default) ----
+    lensState, sky, LEGENDS, CONCEPT_IDS,
+    setTerrain: async (on, mode = lensState.mode) => { lensState.terrain = Boolean(on); lensState.mode = mode; await Promise.all(views.map((v) => v.lens.setTerrain(on, mode))); },
+    cycleTerrainMode: async () => { const m = lensState.mode === "count" ? "material" : "count"; await Promise.all(views.map((v) => v.lens.setTerrain(lensState.terrain, m))); lensState.mode = m; return m; },
+    cycleConcept: async () => {                                   // none -> each concept alone -> none: one named relationship per picture
+      lensState.concept = lensState.concept + 1 >= CONCEPT_IDS.length ? -1 : lensState.concept + 1;
+      const sel = lensState.concept < 0 ? [] : [CONCEPT_IDS[lensState.concept]];
+      await Promise.all(views.map((v) => v.lens.setConcepts(sel))); return sel[0] ?? null;
+    },
+    setInspect: async (on) => {
+      lensState.inspect = Boolean(on);
+      if (!on) { views.forEach((v) => v.lens.clearInspection()); note(""); return; }
+      if (selected === null) select(0);
+      await inspectAt(selected, views[selected].lens.insp.square ?? inspector.NAV_START);
+    },
+    inspectKey: async (key, mods) => {
+      if (!lensState.inspect || selected === null) return false;
+      const r = inspector.navigate(views[selected].lens.insp.square, key, mods);
+      if (!r.handled) return false;
+      if (r.square) await inspectAt(selected, r.square); else { views[selected].lens.clearInspection(); note(""); }
+      return true;
+    },
+    showBranches: async (result) => (selected === null ? false : views[selected].lens.showBranches(result)),
+    get branchLabels() { return selected === null ? [] : views[selected].lens.branchLabels; },
+    setSkyline: async (on) => { lensState.skyline = Boolean(on); await sky.setVisible(on); await Promise.all(views.map((v) => v.lens.setRibbon(on))); },
     graphCount: () => views.filter((v) => v.evals.length).length,
     heatPainted: () => views.filter((v) => v.heat && v.heat.visible).length,
     misplaced() {
@@ -132,9 +181,12 @@ export async function createScene(browser, { boards = 20, cols = 5, pitch = 10, 
         if (ev.type === "snapshot_game" || ev.type === "move") {
           v.lastEval = Number.isFinite(ev.eval_cp) ? ev.eval_cp : null;
           v.setEval(v.lastEval);
-          if (accepted.snapshot) await v.reset(ev.fen);
+          const rec = { evaluation_kind: ev.evaluation_kind, eval_cp: ev.eval_cp ?? null, mate_in: ev.mate_in ?? null, score_bound: ev.score_bound ?? null, eval_fen: ev.eval_fen ?? null, eval_ply: ev.eval_ply ?? null };
+          sky.update(Number(ev.game_id.slice(1)), rec, ev.generation ?? 0, ev.seq ?? ++fallbackSeq);
+          if (accepted.snapshot) { await v.reset(ev.fen, ev.generation); v.lens.pushScore(rec); }
           else {
             stats.moves++; if (ev.tactics?.length) stats.tactics++; if (ev.critical) stats.critical++;
+            v.lens.pushScore(rec);
             const jobs = [v.apply(ev.fen), v.showMove(ev.uci, ev.tactics, moveExtra(ev))];
             if (v.lastEval != null) jobs.push(v.pushEval(v.lastEval));
             if (ev.captured && ev.uci && !reducedMotion) {
@@ -160,7 +212,8 @@ export async function createScene(browser, { boards = 20, cols = 5, pitch = 10, 
     dispose() {
       if (disposed) return;
       disposed = true; if (raf != null) cancelAnimationFrame(raf);
-      for (const { field, key } of touchCallbacks) field.removeFieldCallback?.(key);
+      for (const { field, key, hit, hitKey } of touchCallbacks) { field.removeFieldCallback?.(key); hit.removeFieldCallback?.(hitKey); }
+      sky.dispose();
       views.forEach((v) => v.dispose()); ps.dispose();
       burstCleanups.forEach((cleanup) => cleanup()); burstCleanups.clear(); anims.length = 0;
       panel?.hide();

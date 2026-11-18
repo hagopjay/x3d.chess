@@ -23,6 +23,17 @@ Recorded baseline environment: 4 vCPU Linux sandbox, Chromium (Playwright 1.63) 
 | Runtime theme switch + heatmap + wasm engine, 20 boards | 624 pieces = 624 scene nodes, 0 misplaced, 16 capture bursts, 0 console errors | `QUERY="?engine=wasm&pool=3&depth=10&heat=1" CYCLE=1 tools/smoke.mjs` |
 | Server tests | 5 passed (openings, phase space, fork detector, mate-in-1 through the pool, 8 boards on 2 engines) | `pytest server/tests` |
 
+## Lens overlays (18 Nov 2026)
+
+| What | Measured | Source |
+|---|---|---|
+| Terrain vs independent attack counts | 609 checks, both modes | `tools/terrain-test.mjs`, python-chess 1.11 |
+| Concept lens vs independent oracle | 50,112 checks over 327 positions | `tools/concepts-test.mjs`, `tools/concepts_gen.py` |
+| Inspector legal sets | 100 random positions x 64 squares agree | `tools/inspector-test.mjs`, `tools/inspector_expect.py` |
+| MultiPV branches, real engine | 3 FENs, MultiPV 3, depth 8: every PV verifies legally | `tools/branches-test.mjs`, vendored Stockfish 19 lite under Node |
+| Skyline | 3,360 checks, 1 to 64 boards | `tools/skyline-test.mjs` |
+| Native lens run, 8 boards, wasm depth 8 pool 2 | all five lenses exercised, 0 console errors, 0 misplaced pieces | `tools/lens-smoke.mjs`, Chromium 153 SwiftShader, `evidence/lens-smoke.json` |
+
 ## Known gaps (logged, not hidden)
 
 | Gap | Plan |

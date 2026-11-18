@@ -1,7 +1,7 @@
 {
   "schema": "x3dchess.runtime-fragments/1",
   "status": "generated",
-  "created_utc": "2026-11-18T02:24:19.179Z",
+  "created_utc": "2026-11-18T03:06:21.850Z",
   "tool_sha256": "a9815aa4283169fa3964bdf18d8f857442cffc81247b7cab7069cf744c2512ba",
   "source_sha256": {
     "viewer/js/pieces.js": "6fce8f6769f92f94ffa88602f2d3db1dd5b0510f8494a5f37f0bff11fea91d32",
@@ -101,25 +101,25 @@
     },
     {
       "file": "examples/x3d/runtime-grid-01.x3d",
-      "bytes": 10503,
-      "sha256": "b61860927fe205267a31b539b28a1e021955fda87819aa37d18b321d4f6480be",
-      "raw_runtime_sha256": "d7e884abd73e5a322a9ef4799dd621cf0b30d8ccb81947eba6283359ed9ba391",
+      "bytes": 10636,
+      "sha256": "f0fe8117df3ed6fd6efa9dbc9d0e174c7de67fa615a899e09287cae95ca3d4b8",
+      "raw_runtime_sha256": "c84d29f2df05aa6a29f046a89e65630cc5c9b37f7125634d45548665d889b1ff",
       "projection_losses": [],
       "scope": "Actual runtime grid builder for 1 boards; no live browser/SAI execution claimed."
     },
     {
       "file": "examples/x3d/runtime-grid-20.x3d",
-      "bytes": 12653,
-      "sha256": "e3316532b05d131ed45317241ae3fdf1987858ca92b4dc3157c978b900ace4e0",
-      "raw_runtime_sha256": "b4237d5c16a2261204862611adec65f3c4aaa121dd3f65f9dd79e8f1d5e62807",
+      "bytes": 12786,
+      "sha256": "962c5ca5f0c84c653386369c598528facc96643357fe0a2104ce97c4b478dd45",
+      "raw_runtime_sha256": "50517e5925b900a1a476f648b37b9a0f68addff7b79a652fdb944efde5c8d871",
       "projection_losses": [],
       "scope": "Actual runtime grid builder for 20 boards; no live browser/SAI execution claimed."
     },
     {
       "file": "examples/x3d/runtime-grid-64.x3d",
-      "bytes": 17659,
-      "sha256": "7fcc57e1ba426f2ba212f1d8dd78758e2cf8f0f1935b502bafe352474845ba08",
-      "raw_runtime_sha256": "3426ee9942ba5f2bb2ec07c5a6d2497763e7d3a3e97953d7c5616b083d582634",
+      "bytes": 17792,
+      "sha256": "898b9c72116943609dca3559148966227d6c204a32970ec0bc7153f2c7dec78d",
+      "raw_runtime_sha256": "6e33fb076c1082a6f2da46a535323d20d6c067258525fcfaae0f39aaac742e88",
       "projection_losses": [],
       "scope": "Actual runtime grid builder for 64 boards; no live browser/SAI execution claimed."
     }

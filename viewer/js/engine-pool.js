@@ -1,4 +1,5 @@
 // Bounded Stockfish UCI workers shared by all boards. No replay fallback.
+import { normalizeResult } from "./branches.js";
 const SF_URL = new URL("../vendor/stockfish/stockfish-19-lite-single.js", import.meta.url).href;
 const UCI_MOVE = /^[a-h][1-8][a-h][1-8][qrbn]?$/;
 const abortError = () => Object.assign(new Error("Engine pool stopped"), { name: "AbortError" });
@@ -139,6 +140,40 @@ export class WasmEnginePool {
         score_bound: sign < 0 && bound && bound !== "exact" ? (bound === "lowerbound" ? "upperbound" : "lowerbound") : bound };
     } catch (error) { if (error.name !== "AbortError") this._fail(error); throw error; }
     finally { worker.lineHook = null; this._release(worker); }
+  }
+  /** Bounded MultiPV analysis of one position (no game history). Leases a worker like search(), runs at full
+   * strength, then restores MultiPV 1 and forces a ucinewgame before that worker's next game search.
+   * Returns normalizeResult(...) (White-POV scores bound to fenSearched) plus {request, engine, nodes}.
+   * Callers must still verify PVs (branches.verifyResult) and drop results for a changed board (acceptResult).
+   */
+  async analyze(fen, { multipv = 3, depth = 8, movetime = null } = {}) {
+    fen = positionFen(fen); integer(multipv, 1, 5, "MultiPV"); integer(depth, 1, 30, "Search depth");
+    if (movetime !== null) integer(movetime, 10, 30000, "Move time");
+    const worker = await this._lease(), t0 = performance.now(), best = new Map();
+    let nodes = 0, touched = false;
+    try {
+      if (this.closed) throw this.failure;
+      worker.lineHook = (line) => {
+        if (!line.startsWith("info ") || !/\bscore /.test(line) || !/ pv /.test(line)) return;
+        const k = Number((/\bmultipv (\d+)/.exec(line) || [0, 1])[1]), d = Number((/\bdepth (\d+)/.exec(line) || [0, 0])[1]);
+        const n = /\bnodes (\d+)/.exec(line); if (n && Number.isSafeInteger(+n[1])) nodes = Math.max(nodes, +n[1]);
+        if (!best.has(k) || d >= best.get(k).d) best.set(k, { d, line });
+      };
+      touched = true;
+      worker.send("setoption name Skill Level value 20"); worker.send(`setoption name MultiPV value ${multipv}`);
+      worker.send("ucinewgame"); worker.gameKey = null;
+      await worker.command("isready", /^readyok$/, this.initTimeoutMs);
+      worker.send(`position fen ${fen}`);
+      await worker.command(`go depth ${depth}${movetime !== null ? ` movetime ${movetime}` : ""}`, /^bestmove(?:\s|$)/, this.searchTimeoutMs);
+      this.searches++; this.nodes += nodes; this.busyMs += performance.now() - t0;
+      const result = normalizeResult({ fenSearched: fen, lines: [...best.values()].map((b) => b.line) });
+      return { ...result, request: { multipv, depth, movetime }, engine: worker.engineName || null, nodes };
+    } catch (error) { if (error.name !== "AbortError") this._fail(error); throw error; }
+    finally {
+      worker.lineHook = null;
+      if (touched && !worker.failure && !this.closed) { try { worker.send("setoption name MultiPV value 1"); } catch (_) { /* fail() already recorded */ } }
+      this._release(worker);
+    }
   }
   terminate(reason = abortError()) {
     if (this.closed) return;

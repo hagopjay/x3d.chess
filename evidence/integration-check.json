@@ -1,7 +1,7 @@
 {
   "schema": "x3dchess.integration-check/1",
   "status": "pass",
-  "started_utc": "2026-11-18T02:24:16.956Z",
+  "started_utc": "2026-11-18T03:05:19.226Z",
   "environment": {
     "node": "v22.23.5",
     "platform": "linux",
@@ -28,10 +28,10 @@
       ],
       "cwd": ".",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:17.036Z",
+      "started_utc": "2026-11-18T03:05:19.317Z",
       "exit_code": 0,
       "signal": null,
-      "elapsed_ms": 1109.221,
+      "elapsed_ms": 893.668,
       "stdout": {
         "bytes": 249,
         "sha256": "446cbcbcc9ef26751493b3bd41eb8629e71b141c1ffce3b9c6e8c11af63c56c5",
@@ -47,12 +47,12 @@
       "id": "study-producer-identity",
       "kind": "internal",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:18.146Z",
+      "started_utc": "2026-11-18T03:05:20.211Z",
       "result": {
         "producer_sha256": "66cfc3d5ae554f7d33d8269592c8bef5b4fa9a42431f29436cb7449756d1b63b",
         "catalog_sha256": "a8ecab1cc0632945397e14c8eb6d4c162aa8fa690fd6c61f53952525a4ee27a9"
       },
-      "elapsed_ms": 1.525
+      "elapsed_ms": 2.371
     },
     {
       "id": "analysis",
@@ -63,10 +63,10 @@
       ],
       "cwd": ".",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:18.148Z",
+      "started_utc": "2026-11-18T03:05:20.214Z",
       "exit_code": 0,
       "signal": null,
-      "elapsed_ms": 86.275,
+      "elapsed_ms": 76.536,
       "stdout": {
         "bytes": 138,
         "sha256": "7b6fc95fb0039e13aec8e36d9c91efcd82fd15794490a2763d1506ce8e215524",
@@ -87,10 +87,10 @@
       ],
       "cwd": ".",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:18.234Z",
+      "started_utc": "2026-11-18T03:05:20.291Z",
       "exit_code": 0,
       "signal": null,
-      "elapsed_ms": 80.174,
+      "elapsed_ms": 95.61,
       "stdout": {
         "bytes": 940,
         "sha256": "49007ad43ed5c0588a1eb6a50e42d3859f6329ee0e2e33f08ff42032c9d02746",
@@ -111,14 +111,14 @@
       ],
       "cwd": ".",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:18.315Z",
+      "started_utc": "2026-11-18T03:05:20.386Z",
       "exit_code": 0,
       "signal": null,
-      "elapsed_ms": 199.27,
+      "elapsed_ms": 1021.441,
       "stdout": {
-        "bytes": 4037,
-        "sha256": "5dfe0dc2f8a25a60b50e48d88e61553afbe8a9b100f391aa077f2aa06d263d91",
-        "tail": "TAP version 13\n# Subtest: immediate UCI replies cannot race waiter registration; scores and bounds become White-positive\nok 1 - immediate UCI replies cannot race waiter registration; scores and bounds become White-positive\n  ---\n  duration_ms: 4.004199\n  type: 'test'\n  ...\n# Subtest: position commands retain repetition history and reset only when a worker changes games\nok 2 - position commands retain repetition history and reset only when a worker changes games\n  ---\n  duration_ms: 2.272271\n  type: 'test'\n  ...\n# Subtest: bounded queue rejects excess work; stop rejects active and queued work without leaking leases\nok 3 - bounded queue rejects excess work; stop rejects active and queued work without leaking leases\n  ---\n  duration_ms: 3.583765\n  type: 'test'\n  ...\n# Subtest: worker errors reject active and queued requests and expose a failed pool\nok 4 - worker errors reject active and queued requests and expose a failed pool\n  ---\n  duration_ms: 1.007557\n  type: 'test'\n  ...\n# Subtest: initialization and search timeouts settle instead of hanging or recycling a desynchronized worker\nok 5 - initialization and search timeouts settle instead of hanging or recycling a desynchronized worker\n  ---\n  duration_ms: 30.356007\n  type: 'test'\n  ...\n# Subtest: stop during initialization rejects its pending handshake\nok 6 - stop during initialization rejects its pending handshake\n  ---\n  duration_ms: 0.446632\n  type: 'test'\n  ...\n# Subtest: missing score stays null, UCI no-move tokens are normalized, malformed bestmove fails\nok 7 - missing score stays null, UCI no-move tokens are normalized, malformed bestmove fails\n  ---\n  duration_ms: 0.699763\n  type: 'test'\n  ...\n# Subtest: invalid options and newline command injection are rejected before engine work\nok 8 - invalid options and newline command injection are rejected before engine work\n  ---\n  duration_ms: 0.905438\n  type: 'test'\n  ...\n# Subtest: WASM move is legal, carries generation/seq, and binds its score to the pre-move FEN and ply\nok 9 - WASM move is legal, carries generation/seq, and binds its score to the pre-move FEN and ply\n  ---\n  duration_ms: 7.058733\n  type: 'test'\n  ...\n# Subtest: WASM no-move response for a live position is an error, never a fabricated drawn game\nok 10 - WASM no-move response for a live position is an error, never a fabricated drawn game\n  ---\n  duration_ms: 2.596719\n  type: 'test'\n  ...\n# Subtest: concurrent starts create only the surviving worker pool\nok 11 - concurrent starts create only the surviving worker pool\n  ---\n  duration_ms: 3.474739\n  type: 'test'\n  ...\n# Subtest: replay stop cancels pending board staggering; cap completion is identified and generations restart\nok 12 - replay stop cancels pending board staggering; cap completion is identified and generations restart\n  ---\n  duration_ms: 56.681532\n  type: 'test'\n  ...\n# Subtest: draw policy identifies retained repetition history and checkmate takes precedence over the move cap\nok 13 - draw policy identifies retained repetition history and checkmate takes precedence over the move cap\n  ---\n  duration_ms: 2.298391\n  type: 'test'\n  ...\n# Subtest: mandatory seventy-five move and fivefold results take precedence over the spectator claim policy\nok 14 - mandatory seventy-five move and fivefold results take precedence over the spectator claim policy\n  ---\n  duration_ms: 4.076831\n  type: 'test'\n  ...\n# Subtest: browser current-position draw policy intentionally waits for prospective repetition and fifty-move claims\nok 15 - browser current-position draw policy intentionally waits for prospective repetition and fifty-move claims\n  ---\n  duration_ms: 6.335457\n  type: 'test'\n  ...\n# Subtest: SSE reports retry/reconnect, rejects malformed data, and ignores old callbacks after restart/stop\nok 16 - SSE reports retry/reconnect, rejects malformed data, and ignores old callbacks after restart/stop\n  ---\n  duration_ms: 1.370188\n  type: 'test'\n  ...\n1..16\n# tests 16\n# suites 0\n# pass 16\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 135.967725\n"
+        "bytes": 4260,
+        "sha256": "e5f30b4fc561c2fc4957c832edb82bad1b238518f4a4d87a79b02c10ec1746f7",
+        "tail": "TAP version 13\n# Subtest: immediate UCI replies cannot race waiter registration; scores and bounds become White-positive\nok 1 - immediate UCI replies cannot race waiter registration; scores and bounds become White-positive\n  ---\n  duration_ms: 4.841174\n  type: 'test'\n  ...\n# Subtest: position commands retain repetition history and reset only when a worker changes games\nok 2 - position commands retain repetition history and reset only when a worker changes games\n  ---\n  duration_ms: 2.414385\n  type: 'test'\n  ...\n# Subtest: bounded queue rejects excess work; stop rejects active and queued work without leaking leases\nok 3 - bounded queue rejects excess work; stop rejects active and queued work without leaking leases\n  ---\n  duration_ms: 3.992217\n  type: 'test'\n  ...\n# Subtest: worker errors reject active and queued requests and expose a failed pool\nok 4 - worker errors reject active and queued requests and expose a failed pool\n  ---\n  duration_ms: 1.179342\n  type: 'test'\n  ...\n# Subtest: initialization and search timeouts settle instead of hanging or recycling a desynchronized worker\nok 5 - initialization and search timeouts settle instead of hanging or recycling a desynchronized worker\n  ---\n  duration_ms: 30.244494\n  type: 'test'\n  ...\n# Subtest: stop during initialization rejects its pending handshake\nok 6 - stop during initialization rejects its pending handshake\n  ---\n  duration_ms: 0.364575\n  type: 'test'\n  ...\n# Subtest: missing score stays null, UCI no-move tokens are normalized, malformed bestmove fails\nok 7 - missing score stays null, UCI no-move tokens are normalized, malformed bestmove fails\n  ---\n  duration_ms: 0.781816\n  type: 'test'\n  ...\n# Subtest: invalid options and newline command injection are rejected before engine work\nok 8 - invalid options and newline command injection are rejected before engine work\n  ---\n  duration_ms: 0.879458\n  type: 'test'\n  ...\n# Subtest: holdGame freezes a game at its current FEN until released, then play resumes\nok 9 - holdGame freezes a game at its current FEN until released, then play resumes\n  ---\n  duration_ms: 813.794644\n  type: 'test'\n  ...\n# Subtest: WASM move is legal, carries generation/seq, and binds its score to the pre-move FEN and ply\nok 10 - WASM move is legal, carries generation/seq, and binds its score to the pre-move FEN and ply\n  ---\n  duration_ms: 5.294515\n  type: 'test'\n  ...\n# Subtest: WASM no-move response for a live position is an error, never a fabricated drawn game\nok 11 - WASM no-move response for a live position is an error, never a fabricated drawn game\n  ---\n  duration_ms: 2.40172\n  type: 'test'\n  ...\n# Subtest: concurrent starts create only the surviving worker pool\nok 12 - concurrent starts create only the surviving worker pool\n  ---\n  duration_ms: 3.95243\n  type: 'test'\n  ...\n# Subtest: replay stop cancels pending board staggering; cap completion is identified and generations restart\nok 13 - replay stop cancels pending board staggering; cap completion is identified and generations restart\n  ---\n  duration_ms: 57.69175\n  type: 'test'\n  ...\n# Subtest: draw policy identifies retained repetition history and checkmate takes precedence over the move cap\nok 14 - draw policy identifies retained repetition history and checkmate takes precedence over the move cap\n  ---\n  duration_ms: 2.365824\n  type: 'test'\n  ...\n# Subtest: mandatory seventy-five move and fivefold results take precedence over the spectator claim policy\nok 15 - mandatory seventy-five move and fivefold results take precedence over the spectator claim policy\n  ---\n  duration_ms: 5.921154\n  type: 'test'\n  ...\n# Subtest: browser current-position draw policy intentionally waits for prospective repetition and fifty-move claims\nok 16 - browser current-position draw policy intentionally waits for prospective repetition and fifty-move claims\n  ---\n  duration_ms: 8.297989\n  type: 'test'\n  ...\n# Subtest: SSE reports retry/reconnect, rejects malformed data, and ignores old callbacks after restart/stop\nok 17 - SSE reports retry/reconnect, rejects malformed data, and ignores old callbacks after restart/stop\n  ---\n  duration_ms: 0.781965\n  type: 'test'\n  ...\n1..17\n# tests 17\n# suites 0\n# pass 17\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 953.847519\n"
       },
       "stderr": {
         "bytes": 0,
@@ -135,10 +135,10 @@
       ],
       "cwd": ".",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:18.514Z",
+      "started_utc": "2026-11-18T03:05:21.408Z",
       "exit_code": 0,
       "signal": null,
-      "elapsed_ms": 177.538,
+      "elapsed_ms": 167.605,
       "stdout": {
         "bytes": 282,
         "sha256": "5be79d84f72e5051c97abd2f1f168c29f37f0de75ef5499fc87a3237c0367649",
@@ -159,10 +159,10 @@
       ],
       "cwd": ".",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:18.692Z",
+      "started_utc": "2026-11-18T03:05:21.576Z",
       "exit_code": 0,
       "signal": null,
-      "elapsed_ms": 35.389,
+      "elapsed_ms": 37.372,
       "stdout": {
         "bytes": 162,
         "sha256": "2b815c38eab7aee6c7b84a943c7ae4fe373c55e0b23b9967f73d820f09a8f056",
@@ -183,10 +183,10 @@
       ],
       "cwd": ".",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:18.727Z",
+      "started_utc": "2026-11-18T03:05:21.613Z",
       "exit_code": 0,
       "signal": null,
-      "elapsed_ms": 57.533,
+      "elapsed_ms": 75.036,
       "stdout": {
         "bytes": 140,
         "sha256": "a639cb2041cf0e1679f86efb453b2b78372c8b7378231d70f35d1a51ad87106b",
@@ -207,14 +207,134 @@
       ],
       "cwd": ".",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:18.785Z",
+      "started_utc": "2026-11-18T03:05:21.689Z",
       "exit_code": 0,
       "signal": null,
-      "elapsed_ms": 345.888,
+      "elapsed_ms": 335.173,
       "stdout": {
         "bytes": 305,
         "sha256": "54a18ba4c264d33be789ec91f7ff2f42c9b50a771f0b2760dfe409ec6535f216",
         "tail": "{\"schema\":\"x3dchess.analysis-parity-result/2\",\"producerIdentitiesChecked\":5,\"node\":\"22.23.5\",\"fixtureSha256\":\"f808a05a499498b112bb5b08172bd76cac0c0db414d41df03a4798f7da7bb255\",\"positions\":635,\"tacticMotifs\":425,\"criticalSteps\":1178,\"criticalFlagged\":651,\"mismatches\":{\"phase\":0,\"tactics\":0,\"critical\":0}}\n"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tail": ""
+      }
+    },
+    {
+      "id": "terrain",
+      "kind": "command",
+      "argv": [
+        "/opt/node22/bin/node",
+        "tools/terrain-test.mjs"
+      ],
+      "cwd": ".",
+      "status": "pass",
+      "started_utc": "2026-11-18T03:05:22.024Z",
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 6019.678,
+      "stdout": {
+        "bytes": 162,
+        "sha256": "29882b97dc4fe8f19e5952bd8c724f0e917f78f38ed44293dadf98215e898900",
+        "tail": "{\"status\":\"pass\",\"test\":\"terrain\",\"checks\":609,\"xsd\":\"pass\",\"semantic\":\"pass\",\"scope\":\"static attack-count / attacker-value terrain geometry; no browser pixels\"}\n"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tail": ""
+      }
+    },
+    {
+      "id": "branches",
+      "kind": "command",
+      "argv": [
+        "/opt/node22/bin/node",
+        "tools/branches-test.mjs"
+      ],
+      "cwd": ".",
+      "status": "pass",
+      "started_utc": "2026-11-18T03:05:28.044Z",
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 7662.411,
+      "stdout": {
+        "bytes": 969,
+        "sha256": "0e0af7029c69418e77c163e600ac8ee6903d038c6c9a52a52fadbd5e8eac2531",
+        "tail": "ok - parseInfoLine known lines, defaults, mate kind and malformed rejection\nok - verifyLine legal lines, castling/promotion, truncation point, wrong side, malformed, superfluous promotion\nok - normalizeResult flips side-to-move scores and bounds, keeps mate/bound/null distinct, rejects bad input\nok - acceptResult drops results for another FEN, side to move or older revision\nok - branchGeometry matches hand-derived coordinates, bounds plies, omits corrupted lines\nok - branchesXml empty and populated documents pass the pinned X3D validator; SAI writes and blanking; corrupted XML fails\nok - pool.analyze is bounded, validated, serialized, restores MultiPV 1, forces ucinewgame, rejects after terminate\nok - real Stockfish WASM, 4 FENs x multipv 3 depth 8: PVs legal (chess.js and python-chess), distinct first moves, signs match hand judgment, mate kind +1/-1 kept\nok - stale FEN dropped and corrupted engine PV excluded on real results\nPASS 9 branches test groups\n"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tail": ""
+      }
+    },
+    {
+      "id": "inspector",
+      "kind": "command",
+      "argv": [
+        "/opt/node22/bin/node",
+        "tools/inspector-test.mjs"
+      ],
+      "cwd": ".",
+      "status": "pass",
+      "started_utc": "2026-11-18T03:05:35.706Z",
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 14659.85,
+      "stdout": {
+        "bytes": 296,
+        "sha256": "1c79f23af78af01d21ca9772b3d13fb7dac86e9339d5f87bd2ecb5a9a423fd9b",
+        "tail": "random coverage: {\"ep\":21,\"castle\":21,\"promotion\":92,\"check\":20,\"pinned\":12,\"illegalAttack\":698,\"kingTarget\":4080}\n{\"status\":\"pass\",\"tests\":35,\"scope\":\"inspector relations vs hand-derived answers, python-chess fixed-seed positions, generated X3D vs pinned validator; no browser/X_ITE execution\"}\n"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tail": ""
+      }
+    },
+    {
+      "id": "concepts",
+      "kind": "command",
+      "argv": [
+        "/opt/node22/bin/node",
+        "tools/concepts-test.mjs"
+      ],
+      "cwd": ".",
+      "status": "pass",
+      "started_utc": "2026-11-18T03:05:50.366Z",
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 26309.028,
+      "stdout": {
+        "bytes": 1067,
+        "sha256": "bdec0dad5c9c03796999cbfa7f8237c1c8acb664e8dcc2cf65718ef95f0b28be",
+        "tail": "PASS fixtures: 327 positions (300 random + 27 classic), 0 disagreements; coverage {\"hangingPos\":291,\"seePos\":298,\"seeNeg\":267,\"seeNull\":327,\"isolated\":370,\"doubled\":150,\"passed\":232,\"backward\":160,\"phalanx\":348,\"supported\":412,\"outposts\":36,\"open\":190,\"halfOpen\":280,\"rookOpen\":91,\"rookHalf\":127,\"zone\":413,\"pair\":252,\"legalLtPseudo\":192} deep SEE in first 120 randoms: 121\nPASS regeneration: python-chess oracle reproduces the fixture file byte-for-byte\nPASS hand-verified: 25 classic positions with literal reasoning-derived expectations\nPASS negative controls: 19 mutated fixtures detected, malformed FEN/square/selection/report/prefix refused\nPASS geometry + X3D: 9 fragments validated by the pinned XSD/semantic instrument, 3 corrupted fragments rejected\nPASS review additions: flag/pennant bounds, buffer/selection validation, clear path, async integration notes, 1507 colour-flip + file-mirror symmetry positions\n{\"status\":\"pass\",\"checks\":50112,\"positions\":327,\"oracle\":\"python-chess 1.11.2 (attackers_mask, attacks_mask, legal_moves, pawn attack bitboards)\"}\n"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tail": ""
+      }
+    },
+    {
+      "id": "skyline",
+      "kind": "command",
+      "argv": [
+        "/opt/node22/bin/node",
+        "tools/skyline-test.mjs"
+      ],
+      "cwd": ".",
+      "status": "pass",
+      "started_utc": "2026-11-18T03:06:16.675Z",
+      "exit_code": 0,
+      "signal": null,
+      "elapsed_ms": 5116.633,
+      "stdout": {
+        "bytes": 161,
+        "sha256": "3e15ce9805c5a8d3a9b32fbdce3fe85829a9cecd877daa0afcff1222702ea980",
+        "tail": "{\"status\":\"pass\",\"test\":\"skyline\",\"checks\":3360,\"validated_documents\":7,\"scope\":\"pure layout/score/ribbon logic and XML syntax; no browser pixels, no live SAI\"}\n"
       },
       "stderr": {
         "bytes": 0,
@@ -231,10 +351,10 @@
       ],
       "cwd": ".",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:19.131Z",
+      "started_utc": "2026-11-18T03:06:21.792Z",
       "exit_code": 0,
       "signal": null,
-      "elapsed_ms": 54.27,
+      "elapsed_ms": 65.625,
       "stdout": {
         "bytes": 37,
         "sha256": "f11b36c64c22ff0c58db4dfa02484ae8f1d257a0bf2b293a5ba63f379ab815a0",
@@ -255,10 +375,10 @@
       ],
       "cwd": ".",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:19.185Z",
+      "started_utc": "2026-11-18T03:06:21.858Z",
       "exit_code": 0,
       "signal": null,
-      "elapsed_ms": 2833.475,
+      "elapsed_ms": 2842.781,
       "stdout": {
         "bytes": 150,
         "sha256": "9c0fbecffeb9762e9e0d59180b39d0b90412616dff9b56307e10c9457e5d92f8",
@@ -279,10 +399,10 @@
       ],
       "cwd": ".",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:22.019Z",
+      "started_utc": "2026-11-18T03:06:24.701Z",
       "exit_code": 0,
       "signal": null,
-      "elapsed_ms": 351.314,
+      "elapsed_ms": 418.595,
       "stdout": {
         "bytes": 123,
         "sha256": "ccfa6dec10cc898a0d29197c2256139a7b08fb0d78ad24f62c979217dd4411c6",
@@ -304,14 +424,14 @@
       ],
       "cwd": ".",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:22.371Z",
+      "started_utc": "2026-11-18T03:06:25.121Z",
       "exit_code": 0,
       "signal": null,
-      "elapsed_ms": 300.261,
+      "elapsed_ms": 284.001,
       "stdout": {
         "bytes": 2007,
-        "sha256": "f2f2c2bf691312698b84a04a3bd13cfe75dff819ba44072da135b5f1f6a9fcbd",
-        "tail": "{\"schema\":\"x3dchess.transport-engine-check/1\",\"status\":\"pass\",\"created_utc\":\"2026-11-18T02:24:22.407Z\",\"environment\":{\"node\":\"v22.23.5\",\"platform\":\"linux\",\"arch\":\"x64\"},\"scope\":\"Executed vendored Stockfish JS/WASM under Node through the actual UCI pool. Browser Worker/WASM fetch, renderer pixels, strength and hardware performance are not established.\",\"cases\":[{\"id\":\"white-mate-in-one\",\"fen\":\"7k/5Q2/6K1/8/8/8/8/8 w - - 0 1\",\"result\":{\"uci\":\"f7g7\",\"cp\":null,\"mate\":1,\"depth\":8,\"nodes\":210,\"score_pov\":\"white\",\"eval_fen\":\"7k/5Q2/6K1/8/8/8/8/8 w - - 0 1\",\"score_bound\":\"exact\"},\"legal\":true,\"resulting_checkmate\":true,\"resulting_fen\":\"7k/6Q1/6K1/8/8/8/8/8 b - - 1 1\"},{\"id\":\"black-mate-in-one\",\"fen\":\"8/8/8/8/8/6k1/5q2/7K b - - 0 1\",\"result\":{\"uci\":\"f2e1\",\"cp\":null,\"mate\":-1,\"depth\":8,\"nodes\":210,\"score_pov\":\"white\",\"eval_fen\":\"8/8/8/8/8/6k1/5q2/7K b - - 0 1\",\"score_bound\":\"exact\"},\"legal\":true,\"resulting_checkmate\":true,\"resulting_fen\":\"8/8/8/8/8/6k1/8/4q2K w - - 1 2\"},{\"id\":\"history-position\",\"fen\":\"rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2\",\"history\":[\"e2e4\",\"e7e5\",\"g1f3\"],\"result\":{\"uci\":\"b8c6\",\"cp\":31,\"mate\":null,\"depth\":5,\"nodes\":1645,\"score_pov\":\"white\",\"eval_fen\":\"rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2\",\"score_bound\":\"exact\"},\"legal\":true,\"resulting_fen\":\"r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3\"}],\"engine_names\":[\"Stockfish 19 Lite WASM\"],\"searches\":3,\"nodes\":2065,\"source_sha256\":{\"viewer/js/engine-pool.js\":\"2480b82349ead4b5f13bc2faeb0010586d50396b9d4dd7777823f0864436141c\",\"viewer/vendor/chess.js\":\"76c7c34f0e2e9ab076521a5d6fe786a9cce537bb1b6f29d32a9c9970b5b232d2\",\"viewer/vendor/stockfish/stockfish-19-lite-single.js\":\"ccb130d7ff29408531c47d859a49f91d59d4f482d05a53eb1a3231a4f624c91a\",\"viewer/vendor/stockfish/stockfish-19-lite-single.wasm\":\"ee4f115bdb2d32cadf96cada104a05b5ec257d7ad6f57582190b49bc71f096de\",\"tools/transport-engine-smoke.mjs\":\"17a896bf2a2a2b2f479b2b6ac623255258ebc191d2bcead4e801db28d3474f5c\"}}\n"
+        "sha256": "aeef41bac9dfb0cc03a5a2038889bcaaa81dce6f578ef366c7e665a1601f8564",
+        "tail": "{\"schema\":\"x3dchess.transport-engine-check/1\",\"status\":\"pass\",\"created_utc\":\"2026-11-18T03:06:25.160Z\",\"environment\":{\"node\":\"v22.23.5\",\"platform\":\"linux\",\"arch\":\"x64\"},\"scope\":\"Executed vendored Stockfish JS/WASM under Node through the actual UCI pool. Browser Worker/WASM fetch, renderer pixels, strength and hardware performance are not established.\",\"cases\":[{\"id\":\"black-mate-in-one\",\"fen\":\"8/8/8/8/8/6k1/5q2/7K b - - 0 1\",\"result\":{\"uci\":\"f2e1\",\"cp\":null,\"mate\":-1,\"depth\":8,\"nodes\":210,\"score_pov\":\"white\",\"eval_fen\":\"8/8/8/8/8/6k1/5q2/7K b - - 0 1\",\"score_bound\":\"exact\"},\"legal\":true,\"resulting_checkmate\":true,\"resulting_fen\":\"8/8/8/8/8/6k1/8/4q2K w - - 1 2\"},{\"id\":\"white-mate-in-one\",\"fen\":\"7k/5Q2/6K1/8/8/8/8/8 w - - 0 1\",\"result\":{\"uci\":\"f7g7\",\"cp\":null,\"mate\":1,\"depth\":8,\"nodes\":210,\"score_pov\":\"white\",\"eval_fen\":\"7k/5Q2/6K1/8/8/8/8/8 w - - 0 1\",\"score_bound\":\"exact\"},\"legal\":true,\"resulting_checkmate\":true,\"resulting_fen\":\"7k/6Q1/6K1/8/8/8/8/8 b - - 1 1\"},{\"id\":\"history-position\",\"fen\":\"rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2\",\"history\":[\"e2e4\",\"e7e5\",\"g1f3\"],\"result\":{\"uci\":\"b8c6\",\"cp\":31,\"mate\":null,\"depth\":5,\"nodes\":1645,\"score_pov\":\"white\",\"eval_fen\":\"rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2\",\"score_bound\":\"exact\"},\"legal\":true,\"resulting_fen\":\"r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3\"}],\"engine_names\":[\"Stockfish 19 Lite WASM\"],\"searches\":3,\"nodes\":2065,\"source_sha256\":{\"viewer/js/engine-pool.js\":\"89de6dbe3a4f370be336fbabe6fb9abe8017a075d4292bda196ebca23888b167\",\"viewer/vendor/chess.js\":\"76c7c34f0e2e9ab076521a5d6fe786a9cce537bb1b6f29d32a9c9970b5b232d2\",\"viewer/vendor/stockfish/stockfish-19-lite-single.js\":\"ccb130d7ff29408531c47d859a49f91d59d4f482d05a53eb1a3231a4f624c91a\",\"viewer/vendor/stockfish/stockfish-19-lite-single.wasm\":\"ee4f115bdb2d32cadf96cada104a05b5ec257d7ad6f57582190b49bc71f096de\",\"tools/transport-engine-smoke.mjs\":\"17a896bf2a2a2b2f479b2b6ac623255258ebc191d2bcead4e801db28d3474f5c\"}}\n"
       },
       "stderr": {
         "bytes": 0,
@@ -333,19 +453,19 @@
         "--strict-config",
         "--strict-markers",
         "--junitxml",
-        "/tmp/x3d-chess-check-JK0I4d/python-tests.xml",
+        "/tmp/x3d-chess-check-Kduitq/python-tests.xml",
         "server/tests"
       ],
       "cwd": ".",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:22.671Z",
+      "started_utc": "2026-11-18T03:06:25.405Z",
       "exit_code": 0,
       "signal": null,
-      "elapsed_ms": 2072.136,
+      "elapsed_ms": 2095.419,
       "stdout": {
         "bytes": 99,
-        "sha256": "7de551367b3f711f6b0fafe31a88b1512f08efa5584a7bf4a3e7ca90d9030164",
-        "tail": "...................................                                      [100%]\n35 passed in 1.51s\n"
+        "sha256": "e6857dc795855f301a356d814e14d2dcc3c429b83a88ad090753ca21b16990cf",
+        "tail": "...................................                                      [100%]\n35 passed in 1.56s\n"
       },
       "stderr": {
         "bytes": 0,
@@ -357,15 +477,15 @@
       "id": "python-tests-no-skips",
       "kind": "internal",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:24.744Z",
+      "started_utc": "2026-11-18T03:06:27.501Z",
       "result": {
         "tests": 35,
         "failures": 0,
         "errors": 0,
         "skipped": 0,
-        "junit_sha256": "b27f8913e6ce6149a8db8096e7b697943dce8eef1f05bdca5ce332c10a1e420d"
+        "junit_sha256": "b590e4cf9b5d5287d12f23d94b773ba1aae5a09d6910abb3fc2980a9ed4f8b89"
       },
-      "elapsed_ms": 1.636
+      "elapsed_ms": 1.09
     },
     {
       "id": "python-tests-optimized",
@@ -382,19 +502,19 @@
         "--strict-config",
         "--strict-markers",
         "--junitxml",
-        "/tmp/x3d-chess-check-JK0I4d/python-tests-optimized.xml",
+        "/tmp/x3d-chess-check-Kduitq/python-tests-optimized.xml",
         "server/tests"
       ],
       "cwd": ".",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:24.746Z",
+      "started_utc": "2026-11-18T03:06:27.502Z",
       "exit_code": 0,
       "signal": null,
-      "elapsed_ms": 2786.511,
+      "elapsed_ms": 2562.089,
       "stdout": {
         "bytes": 661,
-        "sha256": "6ac51c1fb6a394f467b064743e85456d0ab845f8c7f576af9da713375e48fba8",
-        "tail": "...................................                                      [100%]\n=============================== warnings summary ===============================\n../../../tmp/chessvenv/lib/python3.13/site-packages/_pytest/config/__init__.py:1508\n  /tmp/chessvenv/lib/python3.13/site-packages/_pytest/config/__init__.py:1508: PytestConfigWarning: assertions not in test modules or plugins will be ignored because assert statements are not executed by the underlying Python interpreter (are you using python -O?)\n  \n    self._warn_about_missing_assertion(mode)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n35 passed, 1 warning in 1.84s\n"
+        "sha256": "8a7336acd5311f5d0a1c4ed1335d8967d0556471c3cbceec6ef326e703f2a1d2",
+        "tail": "...................................                                      [100%]\n=============================== warnings summary ===============================\n../../../tmp/chessvenv/lib/python3.13/site-packages/_pytest/config/__init__.py:1508\n  /tmp/chessvenv/lib/python3.13/site-packages/_pytest/config/__init__.py:1508: PytestConfigWarning: assertions not in test modules or plugins will be ignored because assert statements are not executed by the underlying Python interpreter (are you using python -O?)\n  \n    self._warn_about_missing_assertion(mode)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n35 passed, 1 warning in 1.69s\n"
       },
       "stderr": {
         "bytes": 0,
@@ -406,21 +526,21 @@
       "id": "python-tests-optimized-no-skips",
       "kind": "internal",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:27.533Z",
+      "started_utc": "2026-11-18T03:06:30.064Z",
       "result": {
         "tests": 35,
         "failures": 0,
         "errors": 0,
         "skipped": 0,
-        "junit_sha256": "1dd2713ab08ba7d78693fe6346e05d0fbd8ae922378f469d024fdf2a9cd610b5"
+        "junit_sha256": "2a82c71832431650b61f3dd296ab637b6d0658526ad0e2289007b822c3b871ac"
       },
-      "elapsed_ms": 1.088
+      "elapsed_ms": 0.622
     },
     {
       "id": "child-receipt-integrity",
       "kind": "internal",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:27.534Z",
+      "started_utc": "2026-11-18T03:06:30.065Z",
       "result": {
         "x3d_documents": 19,
         "runtime_fixtures": 10,
@@ -428,68 +548,73 @@
         "real_engine_controls": 5,
         "real_pool_controls": 3
       },
-      "elapsed_ms": 13.871
+      "elapsed_ms": 13.831
     },
     {
       "id": "source-stability",
       "kind": "internal",
       "status": "pass",
-      "started_utc": "2026-11-18T02:24:27.615Z",
+      "started_utc": "2026-11-18T03:06:30.142Z",
       "result": {
-        "files": 190,
-        "inventory_sha256": "ea9e56142e6721840bec6beb77ba8a0a82e960391a6cc0aed628573b3f79c750"
+        "files": 211,
+        "inventory_sha256": "17012477f7858af9f25f572e8b75fe7f7b7a8a3b51c10691269e76c91c57ff1e"
       },
-      "elapsed_ms": 0.299
+      "elapsed_ms": 0.306
     }
   ],
   "receipts": {
     "evidence/runtime-fragments.json": {
       "schema": "x3dchess.runtime-fragments/1",
       "status": "generated",
-      "sha256": "bb3399b4a6acec522a539d3ca1d1381bffc186bce2705f3b17880e6958f6f000"
+      "sha256": "df825139a169d1b3455a125fbc843a6852dece1e333acad7d9359e062fdee5d5"
     },
     "evidence/x3d-validation.json": {
       "schema": "x3dchess.pinned-x3d-validation/1",
       "status": "pass",
-      "sha256": "5491ff78f9c51baf0532dd55e2e1dc281f8c9db8ad3919c9c4b574e2c0c861bc"
+      "sha256": "4d4e8ca0aa696b202154f07461d7f1579a03bfb921603f5313c63a5118e3da31"
     },
     "evidence/runtime-check.json": {
       "schema": "x3dchess.runtime-check/1",
       "status": "pass",
-      "sha256": "182fb64ad8a422fc0d0ce4c89dbb79825941fd01bd0c1b6080e0e1416ca96591"
+      "sha256": "8272212e64016d8b63b2696930c2a48418d24547eb72839571c9466eefb74a55"
     },
     "evidence/transport-engine-check.json": {
       "schema": "x3dchess.transport-engine-check/1",
       "status": "pass",
-      "sha256": "f3a35b7156d36e7ee200253dc060232667ac94d5a5c1f6fe4caefa6e3f14a8d7"
+      "sha256": "436a6f6ee9f9d99f5e1d56a4454e50ea216e921c6a5ee39e96dc3afee4b5e061"
     }
   },
   "scope": "Local rules, lifecycle, saved-witness agreement, actual generated XML, full pinned XSD/implemented semantics, and Node-executed vendored WASM. Does not establish native X_ITE/Worker rendering, GPU performance, engine strength, or publisher authentication.",
   "sources_before": {
     "files_sha256": {
-      ".github/workflows/ci.yml": "b196534ac8b5638409f7270835160bdb7708ae80c76f452c1ee790e25845ec3a",
-      ".github/workflows/pages.yml": "799b52bda6428cbd24aeccb12a7277d4ae4df30d0ef1299587ad7bb17f2a4338",
+      ".github/workflows/ci.yml": "f026b1817d0554f015ed2cea7d7aaafcd068ad3377c1c5aaa0dc8b35437d6046",
+      ".github/workflows/pages.yml": "3d49065ef78bf14f7c9e1f434b43e436a0ce49afc62eea704bd7bf0fa83eba44",
       ".gitignore": "a4e2d1c9fd93cd261d2c7cbfda3d7dcb4bf7d8acb561309a0cd4ef378e94fec7",
       "docs/ANALYSIS-FIDELITY.md": "a6c3174ca5d6c2486a561cafd461d28b72fc96182dbc010256b0482b50f68a80",
       "docs/ARCHITECTURE.md": "c55b413d7fdf6a9b90aada268397b31a8324c0f24321774b7c28d2ba3849f792",
       "docs/assets/chess-preview.png": "89fb3f68a5ab3300690a134b7e1bc11a151d0d4da7314c26ea48d02d373087bd",
+      "docs/assets/lens-concept-first.png": "7fcbe1366b7f8057db613476d0c765fa89ad957a09b3c892cdf28d335bf4807e",
+      "docs/assets/lens-inspector.png": "320fa86ead947bb16ecf648d8b5960deda1e9600da7779177985495cc844397c",
+      "docs/assets/lens-lines.png": "483881bb8195a3a6192d9fbd4cd4454ff1b5c942ea7fabbc01e026b49706e90f",
+      "docs/assets/lens-skyline.png": "0c193ffd5623390fd6bbcee589aa1a22b5a2b152653bfc4a5a2dd25ddfbee1bd",
+      "docs/assets/lens-terrain.png": "fc62f5cf7e89edb6dbeb4e11d0cb5b4a121b1e71a929fac63c89f81d872a59fd",
       "docs/ATTRIBUTION.md": "fb06a7129d1c4b545747cd7981efb655403c7cc08659afd2f07c3ab1422ed868",
       "docs/CHESS-REVIEW.md": "f411a79a2703bcd303d52240fcb9274b7e927c64ed63b431cb9d6a85ce971e0a",
       "docs/IMPLEMENTATION-REVIEW.md": "0b1eea4d02e0416852a30149da64c1111c059775c8cc7777218e647fc9095e7d",
       "docs/INTEGRATION-ATLAS.md": "3b00927c69db30e3fa8ee003b64b06dc644a13953898edf3f1f2f1a8ad6c8e36",
+      "docs/LENSES.md": "b5c9d50bc9e4858b8213953717661045f188e524321a1175626be87dc28bcc20",
       "docs/ONTOLOGY.json": "1e729a3f8cf6a7d4d67b225643d72ee05c672476b575bc8c35f496ef9f2176bd",
       "docs/PLAN.md": "dd431df8430070680d9b41c76b667baeaed79dc9c756b65591ad074d4bf5ba5b",
       "docs/PORT-MAP.md": "34c1305e0d1cd767792b30d0b2a0cd8777ac4f4caa4ade2f7bded0a2d8ba68e0",
       "docs/PROTOCOL.md": "9789eab3b8895adc0fb2eed083cc7780380bd8c5e6375d03d28b60b0119e5e84",
       "docs/RENDERER-CONTRACT.md": "4f7b39ada27505104075265c2015cb620ce7ea98217e698b6a43b5f2eccb29f3",
-      "docs/RESULTS.md": "478593b82f2ee76c13669850e1d029b169954462173b8aff3679693a7e96206e",
+      "docs/RESULTS.md": "d94ee4a48368e6a4d52331da7f4dc5ca8218f19646e72d5473331b390a2ed483",
       "docs/RUNTIME-VALIDATION.md": "fbed16899f8c4281a682339b1e545b2e4994da6445956ce54a0684aecc3bad98",
       "docs/SERVER-REVIEW.md": "e70323da7ab5d82a4efac09afa13ab0a2227990966a2ba75b40f02bdc412b7a6",
       "docs/X3D-MAPPING.md": "847375b5d791a394f4b7343116dea12a15df579ae909e2802b9b39ec466f8847",
       "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
       "package.json": "b10f30c9864ce758026f022d2ee648b08414bdd571d8efc69bd915916c6e03f9",
-      "PR.md": "13d08faa6cb109291c610de08ab76ae73e55080772dbee5df769859eae5b7180",
-      "README.md": "a1183c1cae88c1fc4355d3cdc2630cdf507bd731bc153df2475e24ca701f28b0",
+      "README.md": "63b6adb7107dcce1f9461d3cf765c338920e20cd1b0cfb64f2db7f4b17818a1f",
       "run_chess.py": "5e6a51568c3637c581c04848bb15e3f84d1af61d7731d6ea773a78a0a0b0e76f",
       "server/requirements-dev.txt": "d1f7a9a74d4999930cf88eba1fefc834281a91cbd10efb799ba3f72767e9c5b9",
       "server/requirements.txt": "0de600804e83d191dab1b2b6cb382cbe63beac1ea6503fbe2dd44c20ff650629",
@@ -511,24 +636,34 @@
       "server/x3dchess_server/protocol.py": "e6d238d657257a1934dd266784bfaf2c975c7615e087a5aac7cbbda69309df83",
       "server/x3dchess_server/server.py": "5b871e8ccff9bf1e315cc2796021814fb9ae8bd96dcc954e1f6198411088c803",
       "tools/analysis.test.mjs": "627214fd09ec3953bb0b1c0def855bccdbc5815167a03602938f7b940a868844",
+      "tools/branches-test.mjs": "04531fa2c07342a3d6bed75cc41426fefde82de0a188d1788c36832560f74677",
       "tools/build_studies.py": "66cfc3d5ae554f7d33d8269592c8bef5b4fa9a42431f29436cb7449756d1b63b",
       "tools/check-runtime.mjs": "204ccde4a55a0140bcf06e1f290adc0822f9947ef284035c1b1d0ecd06043ff5",
-      "tools/check.mjs": "942dc65759f860dc31fd2d17fcfa3597f9bbd3db77955cb4d43ef0a0edcfc645",
+      "tools/check.mjs": "ef6b9cdec313bf2f8b045682d430dba6cf9f5d4ace688096cecbc66c626f621c",
+      "tools/concepts_fixtures.json": "e6530d875d529d0f69b1e0020354bb313998826386ad65a4d0bf0af0db596e9a",
+      "tools/concepts_gen.py": "46412d27a9fa09480c5d48c649af06d66dd11170cc9aa23b3356aacb7bd8bf93",
+      "tools/concepts-test.mjs": "d526d67403b6dffcdaa6e3ac08037af26034021618268713acea92f89a3f393d",
       "tools/export-test.mjs": "d5ecfd47d555a14b363b80a493584a8153bf394be3a26fb274e11039370d6621",
       "tools/gen_board.py": "ee1b0e4c96978ea071675a4ef96e52fef04f037abaa8b4f7f64546fc538e20e7",
-      "tools/gen_grid.py": "85e74bef5b9542be6b083177af201fac779d77991c15fa7cd41be62b1c930db9",
+      "tools/gen_grid.py": "a783de6befe55accfb04483c5f2015c2b76f758af1a76d810508a04fcccba207",
+      "tools/inspector_expect.py": "c68c6f19f15a2e4f93c0813afe5ff277fceda0d47a9e037af52f6286381a5b75",
+      "tools/inspector-expect.json": "137f4c9c9f4c030239436168a37daf1dab19961363a7d9c227e34867652b3427",
+      "tools/inspector-test.mjs": "a7c4a999ba1ca1b6acfd814675099eec538c635e39257f5462c8c626867997e6",
+      "tools/lens-smoke.mjs": "ff56ddc50a65dc4b7777cb5ddeedfba5d1aae2628081d53c83b3a73c65dfac8a",
       "tools/panel-test.mjs": "8a42a08bb833d0f8ad433b50c61aa76bf3e406db6ee9c73655f0bbda59afe9ca",
       "tools/parity_gen.py": "3f3b4b0b7aa8046650d463ec44a01ed14a56bcbe9ff91af8cd5fbe5488a12212",
       "tools/parity.mjs": "0138f89b7a34a60448d3acc7d8751b0135bddb0535365d5fe89a90e4fedc28ee",
       "tools/render_preview.py": "8d4d1780799cfe50a848fefb364ce34075fdbd5ee5ba3c5af6db7eb33524deb0",
-      "tools/renderer-tests.mjs": "8f73c3c8ec2d9cccfe474cdc9ffb0a01406f3f734c914dc9a6c4f3a6dd65f603",
+      "tools/renderer-tests.mjs": "617fd691e5ddab4fbf7ba525b9fc66e03721ea5f1c7726ff6e3c69c6511e49ad",
       "tools/requirements-validation.txt": "48e906ee6535eb12551f372e60f96ec372e3b6fb89a2ced5186538ad75ff62aa",
       "tools/runtime-fragments.mjs": "a9815aa4283169fa3964bdf18d8f857442cffc81247b7cab7069cf744c2512ba",
+      "tools/skyline-test.mjs": "8d7074db2cc86b5976daa0e777c1aca41b01fc116bd2de05481042fe40d09d20",
       "tools/smoke.mjs": "cce6c8a3d8d6214320d1fad8868b9e5c21d4938fed666728a3671ee77322d9c4",
       "tools/study-test.mjs": "aa5add2db78a42eb0c72b49e8e01967f8eff33d3bab3fb1deabb0eaba9e2040b",
+      "tools/terrain-test.mjs": "3a919974681dbb23c2cd33e868428ebffe1290ec4e4efd8f9aed696ecde0819a",
       "tools/transport-engine-smoke.mjs": "17a896bf2a2a2b2f479b2b6ac623255258ebc191d2bcead4e801db28d3474f5c",
       "tools/transport-review.md": "9a33670bcb6f12757b3caa73ecf87bd48bcf7b240bb4ba6a551ce05d1aad75e1",
-      "tools/transport-tests.mjs": "8eef4dee06f68241fa4cdc4232cbf5629f24de6998066f75bb2314bdc1896e54",
+      "tools/transport-tests.mjs": "0345433efdf76a708c60408a5e4ca1fd86fd4db8b953b4f900ff155909b7059a",
       "tools/validate_x3d.py": "44c89939b001b258d1b05095c87b793adbda2d08f1554341e01d7bf7a092e780",
       "tools/validate.sh": "1e4c7e8e3474ba7b34bb1a0c359e4f5d30d8f61626d1abac8f53679f5a09fe37",
       "vendor/x3d_mcp/LICENSE": "d44b2af6013aee7eed3775190b1d15f9594cd70bafc2ce87e393747222271649",
@@ -555,16 +690,20 @@
       "viewer/data/studies.json": "a8ecab1cc0632945397e14c8eb6d4c162aa8fa690fd6c61f53952525a4ee27a9",
       "viewer/data/studies.manifest.json": "cb9c28231e493bd02f8fda1458027e3814d13e30fcd788c320f35cf5f86c17ab",
       "viewer/guide.html": "65d91848e33975c6a0411276b430efe0477b3a03b767d3d799f3e211a6e24b11",
-      "viewer/index.html": "4d40cae2e44955ab8ba3a42c80069833449eb1d1d2b928342e960c610714d605",
+      "viewer/index.html": "871bc096604c7ee04245309b26cf8e5ab3dd521808d55fe32905347c04dcc690",
       "viewer/js/analysis.js": "e51cae12825ce5b2221f8268d1dfef1b9fab9cccf1bf3dddace0091f7ef7d9ee",
-      "viewer/js/board.js": "cc14a540bfddb7d0d6a6ef0666e4d7ed160d0b284e57892f2b29143e15a47f4d",
-      "viewer/js/camera.js": "4ec78ffbe6df64f7660376e75e3419c3dbeee8788305fb1cb1c4eaf04021b579",
+      "viewer/js/board.js": "edaf7cddf9a83cfbf3cd693080fcf7cf65303782b62ad46d9abc2cc74ab32301",
+      "viewer/js/branches.js": "fa5f0baaee3c31a492800cb990e29ba75936613a166a52c2e6241dd4dd9fe51d",
+      "viewer/js/camera.js": "bc61fa6df0d0cdba0c092084f3335242c25e334a346f57a159bb84217c5e05a5",
+      "viewer/js/concepts.js": "c43c93d0e1d4f5799dfe1225041c6dedfb08096b719099347d05fa22f380e7b4",
       "viewer/js/config.js": "9508d1071e7ae5e54012149c211d6c8e25074b5f9d75af2d3ce3d3d90f25eec0",
-      "viewer/js/engine-pool.js": "2480b82349ead4b5f13bc2faeb0010586d50396b9d4dd7777823f0864436141c",
+      "viewer/js/engine-pool.js": "89de6dbe3a4f370be336fbabe6fb9abe8017a075d4292bda196ebca23888b167",
       "viewer/js/export.js": "0e100b68be81a4bd2a08738ed98cac8f780a39a90d85b5982e4d4bcfc6744084",
       "viewer/js/fx.js": "831cab1cfe448a679d18e00f57aa730000d12d2c7646339e0762865e28bade70",
+      "viewer/js/inspector.js": "47cfafc168a2475117a38c6b3ad56ce6e78772136c6e24fd41f0aca4b5e84b30",
       "viewer/js/layout.js": "88ba20bea584bf69a0bfd5cc861d70d07fa7eb034d97cfbb040504fac3b99540",
-      "viewer/js/main.js": "5c81fc9a3b4eb9f8dd48f02e2975614e5d0d7de6532842d53bed9ee23bbd186a",
+      "viewer/js/lenses.js": "c8d013ca0ace298f8d288e4b1b9a270077ebd34b42904e4d99583e9c693b2f78",
+      "viewer/js/main.js": "ca6c1cbd6c5b4d7b0aa8b8f3ef1af06ca69c6e2de5764f49fe098cdd07a67cd4",
       "viewer/js/openings.js": "c67abda249422db0cfd8e9765e70ab4ed8a86fc8aa84068351cabf051dbb9b1d",
       "viewer/js/overlays.js": "70938dcfe7496a153c82dc5d91ba55c1c821d3772aad365ab08d2defdf27bd33",
       "viewer/js/panel.js": "d327a110743a88bd52f6865af24b0acd7a2f8cb762708331b60d701dd958e334",
@@ -574,15 +713,17 @@
       "viewer/js/renderer-state.js": "7128ed3de6a4b7be25527e7f0f5639abf24c1f8141b2775bb97126dec1a8cf60",
       "viewer/js/replay.js": "ce4361e6e8490bd2761a7fb097ff2a4ba76dc999cf252c0bc3c95955b1a8d84c",
       "viewer/js/rng.js": "6c67cc25e4859bf126c337b027831551490b61fe92c13e0e6bf3bb7055fb2890",
-      "viewer/js/scene.js": "7b51acde34d0061dd596af695d258d46c7af1440fafbc9728ed866aaec5efea6",
+      "viewer/js/scene.js": "178d0eeb8cdc284460ccc2d9a1242f24cfc8e092d09ab98e72b55dd09e1f55fb",
+      "viewer/js/skyline.js": "5c67aa65c9a0915ae3e2d958c02468c53ef8225e7dbd060fb1604aee4fe62dcf",
       "viewer/js/sse-transport.js": "0a26ff430855e89c601dd4c7f6be709d3133aa6386de20a4be3e963433db6cb9",
       "viewer/js/study.js": "af0ae4d46c4a77e29f592c004100337417f0d43f8a5b0390d936209f47275632",
+      "viewer/js/terrain.js": "6675e72cd56ab2f0411fde0a7393f66251d1fc447ff41eac659177cc82cd1d09",
       "viewer/js/themes.js": "bdc36b23d3233ec96cc8e85bcf2d12421407d6c22e868adaa719f8e8141e4f8a",
       "viewer/js/transport.js": "dabe0174034a33e8c4be2ae1f5970d653e2acc4e500ab7bc67a7b7ad31b91a53",
-      "viewer/js/wasm-transport.js": "b1703cd51efaffb64cb3eb1c079a4fb35b04d5e67e09472885297db35cad2ad7",
+      "viewer/js/wasm-transport.js": "7db87bff552b93e3605141715c0fbb1154d759fb3fe404aa2dfaa381d9afb76c",
       "viewer/scenes/board.x3d": "b009867d05069dc5343945d337d53b2a976bcb607201fcca5fa9e27b43f409fc",
-      "viewer/scenes/grid.x3d": "e894fc96b15a1f84924c9db6d6e1fd92753e00b146fb059fb3d53d8eb2cc7faf",
-      "viewer/style.css": "66ddbb58408b2ce66aad94c88a14aeb244351de1f56f6b9a1332de4120402be4",
+      "viewer/scenes/grid.x3d": "4dd7e2b4817374c70044c385344c0a6430b261b4087ba99f02d3843914730afe",
+      "viewer/style.css": "4fd3ba11a3bb07721fa191dd89debb0b72a65c74ef9d761a7cfb17ff2e89b56c",
       "viewer/vendor/chess.js": "76c7c34f0e2e9ab076521a5d6fe786a9cce537bb1b6f29d32a9c9970b5b232d2",
       "viewer/vendor/chess.js.LICENSE": "0b3a3c2b4432a26bb18f9d06f5bba4de015bcc980306b7db28b06025495e2186",
       "viewer/vendor/DEPENDENCIES.json": "215ec461fe971e129546c2ce42cf5316b156387ab4c2d0bbdaf384eb9406ad61",
@@ -658,34 +799,39 @@
       "viewer/vendor/x_ite/x_ite.css": "d558761f28bc93109db3c11be0f771fed20d4460286fb42cec649a26dd557539",
       "viewer/vendor/x_ite/x_ite.min.js": "b861aee7eb416d813290982aa8ba419543174671ed575bfd5ac97ad47d4c1522"
     },
-    "inventory_sha256": "ea9e56142e6721840bec6beb77ba8a0a82e960391a6cc0aed628573b3f79c750",
+    "inventory_sha256": "17012477f7858af9f25f572e8b75fe7f7b7a8a3b51c10691269e76c91c57ff1e",
     "scope": "Root files and viewer/server/tools/vendor/docs/.github trees, excluding caches and installed packages. Generated examples and evidence are inventoried separately to avoid receipt recursion."
   },
   "sources_after": {
     "files_sha256": {
-      ".github/workflows/ci.yml": "b196534ac8b5638409f7270835160bdb7708ae80c76f452c1ee790e25845ec3a",
-      ".github/workflows/pages.yml": "799b52bda6428cbd24aeccb12a7277d4ae4df30d0ef1299587ad7bb17f2a4338",
+      ".github/workflows/ci.yml": "f026b1817d0554f015ed2cea7d7aaafcd068ad3377c1c5aaa0dc8b35437d6046",
+      ".github/workflows/pages.yml": "3d49065ef78bf14f7c9e1f434b43e436a0ce49afc62eea704bd7bf0fa83eba44",
       ".gitignore": "a4e2d1c9fd93cd261d2c7cbfda3d7dcb4bf7d8acb561309a0cd4ef378e94fec7",
       "docs/ANALYSIS-FIDELITY.md": "a6c3174ca5d6c2486a561cafd461d28b72fc96182dbc010256b0482b50f68a80",
       "docs/ARCHITECTURE.md": "c55b413d7fdf6a9b90aada268397b31a8324c0f24321774b7c28d2ba3849f792",
       "docs/assets/chess-preview.png": "89fb3f68a5ab3300690a134b7e1bc11a151d0d4da7314c26ea48d02d373087bd",
+      "docs/assets/lens-concept-first.png": "7fcbe1366b7f8057db613476d0c765fa89ad957a09b3c892cdf28d335bf4807e",
+      "docs/assets/lens-inspector.png": "320fa86ead947bb16ecf648d8b5960deda1e9600da7779177985495cc844397c",
+      "docs/assets/lens-lines.png": "483881bb8195a3a6192d9fbd4cd4454ff1b5c942ea7fabbc01e026b49706e90f",
+      "docs/assets/lens-skyline.png": "0c193ffd5623390fd6bbcee589aa1a22b5a2b152653bfc4a5a2dd25ddfbee1bd",
+      "docs/assets/lens-terrain.png": "fc62f5cf7e89edb6dbeb4e11d0cb5b4a121b1e71a929fac63c89f81d872a59fd",
       "docs/ATTRIBUTION.md": "fb06a7129d1c4b545747cd7981efb655403c7cc08659afd2f07c3ab1422ed868",
       "docs/CHESS-REVIEW.md": "f411a79a2703bcd303d52240fcb9274b7e927c64ed63b431cb9d6a85ce971e0a",
       "docs/IMPLEMENTATION-REVIEW.md": "0b1eea4d02e0416852a30149da64c1111c059775c8cc7777218e647fc9095e7d",
       "docs/INTEGRATION-ATLAS.md": "3b00927c69db30e3fa8ee003b64b06dc644a13953898edf3f1f2f1a8ad6c8e36",
+      "docs/LENSES.md": "b5c9d50bc9e4858b8213953717661045f188e524321a1175626be87dc28bcc20",
       "docs/ONTOLOGY.json": "1e729a3f8cf6a7d4d67b225643d72ee05c672476b575bc8c35f496ef9f2176bd",
       "docs/PLAN.md": "dd431df8430070680d9b41c76b667baeaed79dc9c756b65591ad074d4bf5ba5b",
       "docs/PORT-MAP.md": "34c1305e0d1cd767792b30d0b2a0cd8777ac4f4caa4ade2f7bded0a2d8ba68e0",
       "docs/PROTOCOL.md": "9789eab3b8895adc0fb2eed083cc7780380bd8c5e6375d03d28b60b0119e5e84",
       "docs/RENDERER-CONTRACT.md": "4f7b39ada27505104075265c2015cb620ce7ea98217e698b6a43b5f2eccb29f3",
-      "docs/RESULTS.md": "478593b82f2ee76c13669850e1d029b169954462173b8aff3679693a7e96206e",
+      "docs/RESULTS.md": "d94ee4a48368e6a4d52331da7f4dc5ca8218f19646e72d5473331b390a2ed483",
       "docs/RUNTIME-VALIDATION.md": "fbed16899f8c4281a682339b1e545b2e4994da6445956ce54a0684aecc3bad98",
       "docs/SERVER-REVIEW.md": "e70323da7ab5d82a4efac09afa13ab0a2227990966a2ba75b40f02bdc412b7a6",
       "docs/X3D-MAPPING.md": "847375b5d791a394f4b7343116dea12a15df579ae909e2802b9b39ec466f8847",
       "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
       "package.json": "b10f30c9864ce758026f022d2ee648b08414bdd571d8efc69bd915916c6e03f9",
-      "PR.md": "13d08faa6cb109291c610de08ab76ae73e55080772dbee5df769859eae5b7180",
-      "README.md": "a1183c1cae88c1fc4355d3cdc2630cdf507bd731bc153df2475e24ca701f28b0",
+      "README.md": "63b6adb7107dcce1f9461d3cf765c338920e20cd1b0cfb64f2db7f4b17818a1f",
       "run_chess.py": "5e6a51568c3637c581c04848bb15e3f84d1af61d7731d6ea773a78a0a0b0e76f",
       "server/requirements-dev.txt": "d1f7a9a74d4999930cf88eba1fefc834281a91cbd10efb799ba3f72767e9c5b9",
       "server/requirements.txt": "0de600804e83d191dab1b2b6cb382cbe63beac1ea6503fbe2dd44c20ff650629",
@@ -707,24 +853,34 @@
       "server/x3dchess_server/protocol.py": "e6d238d657257a1934dd266784bfaf2c975c7615e087a5aac7cbbda69309df83",
       "server/x3dchess_server/server.py": "5b871e8ccff9bf1e315cc2796021814fb9ae8bd96dcc954e1f6198411088c803",
       "tools/analysis.test.mjs": "627214fd09ec3953bb0b1c0def855bccdbc5815167a03602938f7b940a868844",
+      "tools/branches-test.mjs": "04531fa2c07342a3d6bed75cc41426fefde82de0a188d1788c36832560f74677",
       "tools/build_studies.py": "66cfc3d5ae554f7d33d8269592c8bef5b4fa9a42431f29436cb7449756d1b63b",
       "tools/check-runtime.mjs": "204ccde4a55a0140bcf06e1f290adc0822f9947ef284035c1b1d0ecd06043ff5",
-      "tools/check.mjs": "942dc65759f860dc31fd2d17fcfa3597f9bbd3db77955cb4d43ef0a0edcfc645",
+      "tools/check.mjs": "ef6b9cdec313bf2f8b045682d430dba6cf9f5d4ace688096cecbc66c626f621c",
+      "tools/concepts_fixtures.json": "e6530d875d529d0f69b1e0020354bb313998826386ad65a4d0bf0af0db596e9a",
+      "tools/concepts_gen.py": "46412d27a9fa09480c5d48c649af06d66dd11170cc9aa23b3356aacb7bd8bf93",
+      "tools/concepts-test.mjs": "d526d67403b6dffcdaa6e3ac08037af26034021618268713acea92f89a3f393d",
       "tools/export-test.mjs": "d5ecfd47d555a14b363b80a493584a8153bf394be3a26fb274e11039370d6621",
       "tools/gen_board.py": "ee1b0e4c96978ea071675a4ef96e52fef04f037abaa8b4f7f64546fc538e20e7",
-      "tools/gen_grid.py": "85e74bef5b9542be6b083177af201fac779d77991c15fa7cd41be62b1c930db9",
+      "tools/gen_grid.py": "a783de6befe55accfb04483c5f2015c2b76f758af1a76d810508a04fcccba207",
+      "tools/inspector_expect.py": "c68c6f19f15a2e4f93c0813afe5ff277fceda0d47a9e037af52f6286381a5b75",
+      "tools/inspector-expect.json": "137f4c9c9f4c030239436168a37daf1dab19961363a7d9c227e34867652b3427",
+      "tools/inspector-test.mjs": "a7c4a999ba1ca1b6acfd814675099eec538c635e39257f5462c8c626867997e6",
+      "tools/lens-smoke.mjs": "ff56ddc50a65dc4b7777cb5ddeedfba5d1aae2628081d53c83b3a73c65dfac8a",
       "tools/panel-test.mjs": "8a42a08bb833d0f8ad433b50c61aa76bf3e406db6ee9c73655f0bbda59afe9ca",
       "tools/parity_gen.py": "3f3b4b0b7aa8046650d463ec44a01ed14a56bcbe9ff91af8cd5fbe5488a12212",
       "tools/parity.mjs": "0138f89b7a34a60448d3acc7d8751b0135bddb0535365d5fe89a90e4fedc28ee",
       "tools/render_preview.py": "8d4d1780799cfe50a848fefb364ce34075fdbd5ee5ba3c5af6db7eb33524deb0",
-      "tools/renderer-tests.mjs": "8f73c3c8ec2d9cccfe474cdc9ffb0a01406f3f734c914dc9a6c4f3a6dd65f603",
+      "tools/renderer-tests.mjs": "617fd691e5ddab4fbf7ba525b9fc66e03721ea5f1c7726ff6e3c69c6511e49ad",
       "tools/requirements-validation.txt": "48e906ee6535eb12551f372e60f96ec372e3b6fb89a2ced5186538ad75ff62aa",
       "tools/runtime-fragments.mjs": "a9815aa4283169fa3964bdf18d8f857442cffc81247b7cab7069cf744c2512ba",
+      "tools/skyline-test.mjs": "8d7074db2cc86b5976daa0e777c1aca41b01fc116bd2de05481042fe40d09d20",
       "tools/smoke.mjs": "cce6c8a3d8d6214320d1fad8868b9e5c21d4938fed666728a3671ee77322d9c4",
       "tools/study-test.mjs": "aa5add2db78a42eb0c72b49e8e01967f8eff33d3bab3fb1deabb0eaba9e2040b",
+      "tools/terrain-test.mjs": "3a919974681dbb23c2cd33e868428ebffe1290ec4e4efd8f9aed696ecde0819a",
       "tools/transport-engine-smoke.mjs": "17a896bf2a2a2b2f479b2b6ac623255258ebc191d2bcead4e801db28d3474f5c",
       "tools/transport-review.md": "9a33670bcb6f12757b3caa73ecf87bd48bcf7b240bb4ba6a551ce05d1aad75e1",
-      "tools/transport-tests.mjs": "8eef4dee06f68241fa4cdc4232cbf5629f24de6998066f75bb2314bdc1896e54",
+      "tools/transport-tests.mjs": "0345433efdf76a708c60408a5e4ca1fd86fd4db8b953b4f900ff155909b7059a",
       "tools/validate_x3d.py": "44c89939b001b258d1b05095c87b793adbda2d08f1554341e01d7bf7a092e780",
       "tools/validate.sh": "1e4c7e8e3474ba7b34bb1a0c359e4f5d30d8f61626d1abac8f53679f5a09fe37",
       "vendor/x3d_mcp/LICENSE": "d44b2af6013aee7eed3775190b1d15f9594cd70bafc2ce87e393747222271649",
@@ -751,16 +907,20 @@
       "viewer/data/studies.json": "a8ecab1cc0632945397e14c8eb6d4c162aa8fa690fd6c61f53952525a4ee27a9",
       "viewer/data/studies.manifest.json": "cb9c28231e493bd02f8fda1458027e3814d13e30fcd788c320f35cf5f86c17ab",
       "viewer/guide.html": "65d91848e33975c6a0411276b430efe0477b3a03b767d3d799f3e211a6e24b11",
-      "viewer/index.html": "4d40cae2e44955ab8ba3a42c80069833449eb1d1d2b928342e960c610714d605",
+      "viewer/index.html": "871bc096604c7ee04245309b26cf8e5ab3dd521808d55fe32905347c04dcc690",
       "viewer/js/analysis.js": "e51cae12825ce5b2221f8268d1dfef1b9fab9cccf1bf3dddace0091f7ef7d9ee",
-      "viewer/js/board.js": "cc14a540bfddb7d0d6a6ef0666e4d7ed160d0b284e57892f2b29143e15a47f4d",
-      "viewer/js/camera.js": "4ec78ffbe6df64f7660376e75e3419c3dbeee8788305fb1cb1c4eaf04021b579",
+      "viewer/js/board.js": "edaf7cddf9a83cfbf3cd693080fcf7cf65303782b62ad46d9abc2cc74ab32301",
+      "viewer/js/branches.js": "fa5f0baaee3c31a492800cb990e29ba75936613a166a52c2e6241dd4dd9fe51d",
+      "viewer/js/camera.js": "bc61fa6df0d0cdba0c092084f3335242c25e334a346f57a159bb84217c5e05a5",
+      "viewer/js/concepts.js": "c43c93d0e1d4f5799dfe1225041c6dedfb08096b719099347d05fa22f380e7b4",
       "viewer/js/config.js": "9508d1071e7ae5e54012149c211d6c8e25074b5f9d75af2d3ce3d3d90f25eec0",
-      "viewer/js/engine-pool.js": "2480b82349ead4b5f13bc2faeb0010586d50396b9d4dd7777823f0864436141c",
+      "viewer/js/engine-pool.js": "89de6dbe3a4f370be336fbabe6fb9abe8017a075d4292bda196ebca23888b167",
       "viewer/js/export.js": "0e100b68be81a4bd2a08738ed98cac8f780a39a90d85b5982e4d4bcfc6744084",
       "viewer/js/fx.js": "831cab1cfe448a679d18e00f57aa730000d12d2c7646339e0762865e28bade70",
+      "viewer/js/inspector.js": "47cfafc168a2475117a38c6b3ad56ce6e78772136c6e24fd41f0aca4b5e84b30",
       "viewer/js/layout.js": "88ba20bea584bf69a0bfd5cc861d70d07fa7eb034d97cfbb040504fac3b99540",
-      "viewer/js/main.js": "5c81fc9a3b4eb9f8dd48f02e2975614e5d0d7de6532842d53bed9ee23bbd186a",
+      "viewer/js/lenses.js": "c8d013ca0ace298f8d288e4b1b9a270077ebd34b42904e4d99583e9c693b2f78",
+      "viewer/js/main.js": "ca6c1cbd6c5b4d7b0aa8b8f3ef1af06ca69c6e2de5764f49fe098cdd07a67cd4",
       "viewer/js/openings.js": "c67abda249422db0cfd8e9765e70ab4ed8a86fc8aa84068351cabf051dbb9b1d",
       "viewer/js/overlays.js": "70938dcfe7496a153c82dc5d91ba55c1c821d3772aad365ab08d2defdf27bd33",
       "viewer/js/panel.js": "d327a110743a88bd52f6865af24b0acd7a2f8cb762708331b60d701dd958e334",
@@ -770,15 +930,17 @@
       "viewer/js/renderer-state.js": "7128ed3de6a4b7be25527e7f0f5639abf24c1f8141b2775bb97126dec1a8cf60",
       "viewer/js/replay.js": "ce4361e6e8490bd2761a7fb097ff2a4ba76dc999cf252c0bc3c95955b1a8d84c",
       "viewer/js/rng.js": "6c67cc25e4859bf126c337b027831551490b61fe92c13e0e6bf3bb7055fb2890",
-      "viewer/js/scene.js": "7b51acde34d0061dd596af695d258d46c7af1440fafbc9728ed866aaec5efea6",
+      "viewer/js/scene.js": "178d0eeb8cdc284460ccc2d9a1242f24cfc8e092d09ab98e72b55dd09e1f55fb",
+      "viewer/js/skyline.js": "5c67aa65c9a0915ae3e2d958c02468c53ef8225e7dbd060fb1604aee4fe62dcf",
       "viewer/js/sse-transport.js": "0a26ff430855e89c601dd4c7f6be709d3133aa6386de20a4be3e963433db6cb9",
       "viewer/js/study.js": "af0ae4d46c4a77e29f592c004100337417f0d43f8a5b0390d936209f47275632",
+      "viewer/js/terrain.js": "6675e72cd56ab2f0411fde0a7393f66251d1fc447ff41eac659177cc82cd1d09",
       "viewer/js/themes.js": "bdc36b23d3233ec96cc8e85bcf2d12421407d6c22e868adaa719f8e8141e4f8a",
       "viewer/js/transport.js": "dabe0174034a33e8c4be2ae1f5970d653e2acc4e500ab7bc67a7b7ad31b91a53",
-      "viewer/js/wasm-transport.js": "b1703cd51efaffb64cb3eb1c079a4fb35b04d5e67e09472885297db35cad2ad7",
+      "viewer/js/wasm-transport.js": "7db87bff552b93e3605141715c0fbb1154d759fb3fe404aa2dfaa381d9afb76c",
       "viewer/scenes/board.x3d": "b009867d05069dc5343945d337d53b2a976bcb607201fcca5fa9e27b43f409fc",
-      "viewer/scenes/grid.x3d": "e894fc96b15a1f84924c9db6d6e1fd92753e00b146fb059fb3d53d8eb2cc7faf",
-      "viewer/style.css": "66ddbb58408b2ce66aad94c88a14aeb244351de1f56f6b9a1332de4120402be4",
+      "viewer/scenes/grid.x3d": "4dd7e2b4817374c70044c385344c0a6430b261b4087ba99f02d3843914730afe",
+      "viewer/style.css": "4fd3ba11a3bb07721fa191dd89debb0b72a65c74ef9d761a7cfb17ff2e89b56c",
       "viewer/vendor/chess.js": "76c7c34f0e2e9ab076521a5d6fe786a9cce537bb1b6f29d32a9c9970b5b232d2",
       "viewer/vendor/chess.js.LICENSE": "0b3a3c2b4432a26bb18f9d06f5bba4de015bcc980306b7db28b06025495e2186",
       "viewer/vendor/DEPENDENCIES.json": "215ec461fe971e129546c2ce42cf5316b156387ab4c2d0bbdaf384eb9406ad61",
@@ -854,7 +1016,7 @@
       "viewer/vendor/x_ite/x_ite.css": "d558761f28bc93109db3c11be0f771fed20d4460286fb42cec649a26dd557539",
       "viewer/vendor/x_ite/x_ite.min.js": "b861aee7eb416d813290982aa8ba419543174671ed575bfd5ac97ad47d4c1522"
     },
-    "inventory_sha256": "ea9e56142e6721840bec6beb77ba8a0a82e960391a6cc0aed628573b3f79c750",
+    "inventory_sha256": "17012477f7858af9f25f572e8b75fe7f7b7a8a3b51c10691269e76c91c57ff1e",
     "scope": "Root files and viewer/server/tools/vendor/docs/.github trees, excluding caches and installed packages. Generated examples and evidence are inventoried separately to avoid receipt recursion."
   },
   "native_browser": {
@@ -865,7 +1027,7 @@
     "included_in_aggregate": false,
     "note": "Historical independent receipt; this aggregate does not launch a browser. not_run does not count as native success."
   },
-  "finished_utc": "2026-11-18T02:24:27.618Z",
-  "tool_sha256": "942dc65759f860dc31fd2d17fcfa3597f9bbd3db77955cb4d43ef0a0edcfc645",
-  "report_sha256": "a4b87b230940f5ea14497419e386a9b231617dbc00434eb5151b0e9fd5fc2204"
+  "finished_utc": "2026-11-18T03:06:30.144Z",
+  "tool_sha256": "ef6b9cdec313bf2f8b045682d430dba6cf9f5d4ace688096cecbc66c626f621c",
+  "report_sha256": "5a9b6649c2eab3f09cfc1a17159d7ede3bc84b60839822f15f0f04edea76d307"
 }
