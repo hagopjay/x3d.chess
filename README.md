@@ -2,17 +2,20 @@
 
 Multi-board AI-vs-AI chess spectator, ported to **X3D**. Many Stockfish games at once, rendered as one X3D scene and driven through the X3D Scene Access Interface (SAI).
 
-> Status: **scaffold** (phase 0). Boards, eval bar and a placeholder piece render and validate; the engine pool, protocol and analysis ports are specified but not built. See [docs/PLAN.md](docs/PLAN.md).
+> Status: **phases 1-3a done**: 20-board X3D grid, real Stockfish games in the browser (WASM) or from a Python server, tactic lines, last-move highlights and a 3D phase-space view. Measured results and the known-gaps table are in [docs/RESULTS.md](docs/RESULTS.md); next steps in [docs/PLAN.md](docs/PLAN.md).
 
 Ported from the owner's *chess-spectator* backup (Python/aiohttp/python-chess/Stockfish backend, React/Canvas/D3 frontend; about 9.5k lines, counted from the uploaded zip).
 
-## What works today (phase 0)
+## What works today
 
-| Check | Result | Source |
-|---|---|---|
-| `viewer/scenes/board.x3d` (64 squares + eval bar + 1 piece) | validates | `tools/validate.sh`: xmllint against the official Web3D X3D 4.0 XSD |
-| Viewer loads, all 64 `sq_*` nodes resolve through SAI, 0 console errors | pass | `tools/smoke.mjs`: headless Chromium (Playwright 1.63) + SwiftShader, X_ITE 16.6.1 |
-| Server answers `/health`, `/api/games`, `/events` | pass | aiohttp smoke call |
+| Capability | Where |
+|---|---|
+| 20 boards (5x4, configurable), 32 pieces each, move animation, eval bar and eval-tinted boards | `viewer/` (X_ITE, SAI) |
+| Three interchangeable transports: `replay` (no engine), `wasm` (Stockfish 19 in Web Workers), `sse` (Python server) | `?engine=replay|wasm|sse` |
+| One shared engine pool serving all boards (20 boards on 3 engines tested) | `server/x3dchess_server/pool.py`, `viewer/js/engine-pool.js` |
+| Tactic lines, last-move highlight, 3D phase space with trails (server mode) | `viewer/js/fx.js`, `phasespace.js` |
+| Analysis ported from the original: tactics, critical moments, phase space, convergence | `server/x3dchess_server/analysis/` |
+| XSD gate, headless-Chromium smoke, pytest | `tools/`, `server/tests/` |
 
 ## Layout
 
@@ -20,15 +23,21 @@ Ported from the owner's *chess-spectator* backup (Python/aiohttp/python-chess/St
 docs/        ARCHITECTURE, PROTOCOL, X3D-MAPPING, PORT-MAP, PLAN, ATTRIBUTION
 server/      x3dchess_server: protocol types, EnginePool (stub), aiohttp SSE app
 viewer/      index.html, js/ (SAI wrapper, Transport contract), scenes/board.x3d
-tools/       gen_board.py (scene generator), validate.sh (XSD gate), smoke.mjs (Chromium)
+tools/       gen_grid.py, gen_board.py (scene generators), validate.sh (XSD gate), smoke.mjs (Chromium)
 ```
 
 ## Quick start
 
 ```bash
-python3 tools/gen_board.py && tools/validate.sh          # generate + XSD gate
-python3 -m http.server -d viewer 8000                    # open http://localhost:8000
-pip install -r server/requirements.txt && python server/x3dchess_server/server.py
+python3 tools/gen_grid.py && tools/validate.sh                      # generate scenes + XSD gate
+python3 -m http.server -d viewer 8000                               # no server needed:
+#   http://localhost:8000/?engine=wasm&boards=20&depth=12              Stockfish in the browser
+#   http://localhost:8000/?engine=replay                               engine-free demo
+
+# PC server (native Stockfish): the viewer then uses ?engine=sse
+pip install -r server/requirements.txt
+cd server && python -m x3dchess_server.server --engine C:\\path\\stockfish.exe --boards 20 --pool 4 --depth 14
+#   http://localhost:8000/?engine=sse&server=http://127.0.0.1:8080/events
 ```
 
 ## Decisions (owner, 18 Nov 2026)

@@ -31,3 +31,7 @@ Line counts from the uploaded zip (`wc -l`). "Keep" = ported as-is; "Rework" = r
 | `ConvergenceChart.tsx` | 395 | HUD polylines | Rework |
 | `MoveList.tsx`, `StatusBar.tsx`, `GameModal.tsx` | 134, 184, 169 | HTML overlay + fly-to viewpoints | Rework |
 | stores (`game`, `theme`, `settings`, `criticalMoments`) | 172, 333, 132, 196 | plain JS modules | Keep logic |
+
+## Status
+
+Backend analysis modules (tactics, critical moments, phase space, convergence, draws, openings) are copied unchanged into `server/x3dchess_server/`. The game manager was reworked around the engine pool. Frontend: board, grid, eval bar/tint, last-move and tactic overlay, phase space are done; heatmap, eval graph, convergence chart, modal, themes and capture/check FX are open (see [RESULTS.md](RESULTS.md)).

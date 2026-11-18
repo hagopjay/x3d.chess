@@ -4,4 +4,3 @@ __pycache__/
 node_modules/
 *.log
 smoke*.png
-vendor/stockfish/
