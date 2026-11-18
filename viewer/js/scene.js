@@ -1,6 +1,17 @@
 // Scene controller: owns the BoardViews, the animation loop, and the event -> view dispatch.
-import { BoardView, sqPos } from "./board.js";
+import { BoardView, sqPos, fenPlacement } from "./board.js";
 import { createPhaseSpace } from "./phasespace.js";
+
+/** capture / check cues from an event: king square of the side to move when the move gave check. */
+function moveExtra(ev) {
+  const extra = { captured: !!ev.captured };
+  if (/[+#]$/.test(ev.san || "")) {
+    const king = fenPlacement(ev.fen);
+    const want = ev.fen.split(" ")[1] === "w" ? "K" : "k";
+    extra.checkSq = Object.keys(king).find((sq) => king[sq] === want);
+  }
+  return extra;
+}
 
 export async function createScene(browser, { boards = 20, cols = 5, pitch = 10 } = {}) {
   const rows = Math.ceil(boards / cols);
@@ -55,7 +66,7 @@ export async function createScene(browser, { boards = 20, cols = 5, pitch = 10 }
       const v = byId.get(ev.game_id);
       if (!v) return;
       if (ev.type === "snapshot_game" || ev.type === "move") {
-        if (ev.type === "move") { stats.moves++; if (ev.tactics?.length) stats.tactics++; if (ev.critical) stats.critical++; v.showMove(ev.uci, ev.tactics); }
+        if (ev.type === "move") { stats.moves++; if (ev.tactics?.length) stats.tactics++; if (ev.critical) stats.critical++; v.showMove(ev.uci, ev.tactics, moveExtra(ev)); }
         v.setEval(ev.eval_cp ?? 0);
         await v.apply(ev.fen);
       } else if (ev.type === "game_complete") { stats.complete++; ps.reset(ev.game_id); }

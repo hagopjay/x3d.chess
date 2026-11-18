@@ -17,9 +17,10 @@ const line = (from, tos, o, sev) => {
 };
 
 /** Returns an XML <Group> string for a move: from/to squares plus up to 3 tactic lines. */
-export function moveFxXml(uci, tactics, origin) {
+export function moveFxXml(uci, tactics, origin, extra = {}) {
   let xml = "";
-  if (uci) xml += hl(uci.slice(0, 2), origin, "1 0.9 0.2") + hl(uci.slice(2, 4), origin, "1 0.9 0.2");
+  if (uci) xml += hl(uci.slice(0, 2), origin, "1 0.9 0.2") + hl(uci.slice(2, 4), origin, extra.captured ? "1 0.35 0.1" : "1 0.9 0.2");
+  if (extra.checkSq) xml += hl(extra.checkSq, origin, "1 0 0.15");
   for (const t of (tactics || []).slice(0, 3)) xml += line(t.piece_square, t.target_squares, origin, t.severity);
   return `<Group>${xml}</Group>`;
 }

@@ -54,9 +54,9 @@ export class BoardView {
     this.group.children = new X3D.MFNode(...keep);
   }
   /** Last-move highlight + tactic lines; replaced by the next move, so nothing accumulates. */
-  async showMove(uci, tactics) {
+  async showMove(uci, tactics, extra) {
     this.fxBusy = (this.fxBusy || Promise.resolve()).then(async () => {
-      const s = await this.ctx.browser.createX3DFromString(`<X3D profile='Interchange' version='4.0'><Scene>${moveFxXml(uci, tactics, this.origin)}</Scene></X3D>`);
+      const s = await this.ctx.browser.createX3DFromString(`<X3D profile='Interchange' version='4.0'><Scene>${moveFxXml(uci, tactics, this.origin, extra)}</Scene></X3D>`);
       if (!this.fx) { this.fx = (await this.ctx.browser.createX3DFromString("<X3D profile='Interchange' version='4.0'><Scene><Group/></Scene></X3D>")).rootNodes[0]; this.ctx.browser.currentScene.addRootNode(this.fx); }
       this.fx.children = new X3D.MFNode(...s.rootNodes[0].children);
     });
