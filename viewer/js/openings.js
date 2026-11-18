@@ -1,18 +1,26 @@
-// Opening book, ported 1:1 from chess-spectator backend/openings.py (10 openings, same FENs and weights).
-export const OPENINGS = [
-  { id: "italian", name: "Italian Game", weight: 1.0, fen: "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 0 3" },
-  { id: "ruy_lopez", name: "Ruy Lopez", weight: 1.2, fen: "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 0 3" },
-  { id: "sicilian", name: "Sicilian Defense", weight: 1.5, fen: "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1" },
-  { id: "french", name: "French Defense", weight: 0.9, fen: "rnbqkbnr/ppp2ppp/4p3/3p4/3PP3/8/PPP2PPP/RNBQKBNR w KQkq - 0 3" },
-  { id: "caro_kann", name: "Caro-Kann Defense", weight: 0.8, fen: "rnbqkbnr/pp1ppppp/2p5/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1" },
-  { id: "queens_gambit", name: "Queen's Gambit", weight: 1.1, fen: "rnbqkbnr/ppp1pppp/8/3p4/2PP4/8/PP2PPPP/RNBQKBNR b KQkq - 0 1" },
-  { id: "kings_indian", name: "King's Indian Defense", weight: 1.0, fen: "rnbqkb1r/pppppp1p/5np1/8/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 0 4" },
-  { id: "english", name: "English Opening", weight: 0.7, fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" },
-  { id: "reti", name: "Reti Opening", weight: 0.6, fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" },
-  { id: "scotch", name: "Scotch Game", weight: 0.8, fen: "r1bqkbnr/pppp1ppp/2n5/4p3/3PP3/5N2/PPP2PPP/RNBQKB1R b KQkq - 0 3" },
-];
+// Opening FENs derive from legal SAN prefixes. Python parity tests check every field.
+import { Chess } from "../vendor/chess.js";
 
-/** Weighted pick with a seeded rng (original used random.choices with the same weights). */
+function opening(id, name, weight, san) {
+  const moves = san.split(" "), chess = new Chess();
+  for (const move of moves) chess.move(move);
+  return Object.freeze({ id, name, weight, moves: Object.freeze(moves), fen: chess.fen() });
+}
+
+export const OPENINGS = Object.freeze([
+  opening("italian", "Italian Game", 1.0, "e4 e5 Nf3 Nc6 Bc4"),
+  opening("ruy_lopez", "Ruy Lopez", 1.2, "e4 e5 Nf3 Nc6 Bb5"),
+  opening("sicilian", "Sicilian Defense", 1.5, "e4 c5"),
+  opening("french", "French Defense", 0.9, "e4 e6 d4 d5 e5"),
+  opening("caro_kann", "Caro-Kann Defense", 0.8, "e4 c6"),
+  opening("queens_gambit", "Queen's Gambit", 1.1, "d4 d5 c4"),
+  opening("kings_indian", "King's Indian Defense", 1.0, "d4 Nf6 c4 g6 Nc3 Bg7 e4 d6"),
+  opening("english", "English Opening", 0.7, "c4"),
+  opening("reti", "Reti Opening", 0.6, "Nf3"),
+  opening("scotch", "Scotch Game", 0.8, "e4 e5 Nf3 Nc6 d4"),
+]);
+
+/** Weighted pick with a seeded RNG; the book preserves the existing weights. */
 export function pickOpening(rng) {
   const total = OPENINGS.reduce((a, o) => a + o.weight, 0);
   let r = rng() * total;

@@ -1,6 +1,12 @@
-# Measured results
+# Historical baseline measurements
 
-Every number names its source. Container: 4 vCPU Linux sandbox, Chromium (Playwright 1.63) with SwiftShader software GL, X_ITE 16.6.1, Stockfish 19 lite single-thread WASM (npm `stockfish` 19.0.1), Node 22. A real GPU and a native Stockfish will be faster; these are floors, not claims about the owner's PC.
+These figures predate the observatory review and study-room extension. They
+are retained as historical observations, not fresh validation of the changed
+revision. Current evidence and native-browser limits are described in
+[RUNTIME-VALIDATION.md](RUNTIME-VALIDATION.md). Comparisons with other hardware
+are hypotheses, not guaranteed performance floors.
+
+Recorded baseline environment: 4 vCPU Linux sandbox, Chromium (Playwright 1.63) with SwiftShader software GL, X_ITE 16.6.1, Stockfish 19 lite single-thread WASM (npm `stockfish` 19.0.1), Node 22. These numbers do not predict another machine's performance.
 
 | Check | Result | Source |
 |---|---|---|

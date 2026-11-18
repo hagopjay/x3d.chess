@@ -1,60 +1,55 @@
-// ReplayTransport: engine-free source of the exact same events the real transports emit (docs/PROTOCOL.md).
-// Games are seeded random-legal playouts biased towards captures/checks/promotions so they look alive.
-// eval_cp here is a MATERIAL PROXY (P=100 N=B=300 R=500 Q=900), NOT an engine score; phase 2 replaces it.
+// Seeded random-legal playouts: an explicit engine-free demonstration, not recorded Stockfish games.
 import { Chess } from "../vendor/chess.js";
-import { Transport } from "./transport.js";
+import { Transport, integerOption, terminalResult } from "./transport.js";
 import { mulberry32 } from "./rng.js";
 import { GameAnalysis } from "./analysis.js";
-
-const VAL = { p: 100, n: 300, b: 300, r: 500, q: 900, k: 0 };
-const PLY_CAP = 140;
-
+const VAL = { p: 100, n: 300, b: 300, r: 500, q: 900, k: 0 }, PLY_CAP = 140;
 export function materialCp(chess) {
-  let s = 0;
-  for (const row of chess.board()) for (const p of row) if (p) s += (p.color === "w" ? 1 : -1) * VAL[p.type];
-  return s;
+  let score = 0;
+  for (const row of chess.board()) for (const piece of row) if (piece) score += (piece.color === "w" ? 1 : -1) * VAL[piece.type];
+  return score;
 }
-
 export class ReplayTransport extends Transport {
-  /** config: {boards, seed, intervalMs} */
-  async start(config = {}) {
-    const { boards = 20, seed = 1, intervalMs = 700 } = config;
-    this.games = Array.from({ length: boards }, (_, i) => ({
-      id: `g${i}`, chess: new Chess(), rng: mulberry32(seed * 1000 + i), ply: 0, gen: 0, an: new GameAnalysis(),
-    }));
-    for (const g of this.games) this._emitSnapshotFor(g);
-    this.timer = setInterval(() => this.games.forEach((g, i) => setTimeout(() => this._step(g), (i * 37) % intervalMs)), intervalMs);
+  async start({ boards = 20, seed = 1, intervalMs = 700 } = {}) {
+    integerOption(boards, 1, 64, "Board count"); integerOption(intervalMs, 16, 60000, "Replay interval");
+    if (!Number.isSafeInteger(seed)) throw new TypeError("Seed must be a safe integer");
+    const request = ++this.startRequest; await this.stop({ silent: true, fromStart: true });
+    if (request !== this.startRequest) return;
+    const run = this.begin("replay");
+    this.games = Array.from({ length: boards }, (_, i) => ({ id: `g${i}`, chess: new Chess(),
+      rng: mulberry32(seed * 1000 + i), ply: 0, generation: 1, seq: 0, an: new GameAnalysis() }));
+    for (const game of this.games) { if (!this.active(run)) return; this._emitSnapshotFor(game); }
+    this.status("running", "REPLAY: seeded random legal moves; evaluation is a material proxy");
+    this.tasks = this.games.map(async (game, i) => {
+      if (!await this.delay(intervalMs + (i * 37) % intervalMs, run)) return;
+      while (this.active(run)) {
+        this._step(game);
+        if (!await this.delay(intervalMs, run)) return;
+      }
+    }).map((task) => task.catch((error) => { if (this.active(run)) { this.halt(); this.status("error", error.message); } }));
   }
-  async stop() { clearInterval(this.timer); }
-
-  _emitSnapshotFor(g) {
-    this.onEvent({ type: "snapshot_game", game_id: g.id, fen: g.chess.fen(), ply: g.ply, eval_cp: materialCp(g.chess) });
+  async stop({ silent = false, fromStart = false } = {}) { if (!fromStart) this.startRequest++; this.halt(); await Promise.all(this.tasks || []); this.tasks = []; if (!silent) this.status("stopped", "Replay stopped"); }
+  _emitSnapshotFor(game) {
+    this.gameEvent(game, { type: "snapshot_game", game_id: game.id, state: "playing", fen: game.chess.fen(), ply: game.ply,
+      eval_cp: materialCp(game.chess), eval_fen: game.chess.fen(), eval_ply: game.ply, evaluation_kind: "material_proxy" });
   }
-
-  _step(g) {
-    const c = g.chess;
-    const over = c.isGameOver() || g.ply >= PLY_CAP;
-    if (over) {
-      const reason = c.isCheckmate() ? "checkmate" : c.isStalemate() ? "stalemate" : c.isThreefoldRepetition() ? "threefold"
-        : c.isInsufficientMaterial() ? "insufficient_material" : c.isDrawByFiftyMoves?.() ? "fifty_move" : "replay_cap";
-      const result = c.isCheckmate() ? (c.turn() === "w" ? "0-1" : "1-0") : "1/2-1/2";
-      this.onEvent({ type: "game_complete", game_id: g.id, result, reason });
-      c.reset(); g.ply = 0; g.gen++; g.an.reset();
-      this._emitSnapshotFor(g);
-      return;
+  _step(game) {
+    const chess = game.chess, ending = terminalResult(chess, game.ply, PLY_CAP, "replay_cap");
+    if (ending) {
+      this.gameEvent(game, { type: "game_complete", game_id: game.id, ...ending });
+      chess.reset(); game.ply = 0; game.generation++; game.seq = 0; game.an.reset(); this._emitSnapshotFor(game); return;
     }
-    const moves = c.moves({ verbose: true });
+    const moves = chess.moves({ verbose: true });
     const weights = moves.map((m) => 1 + (m.captured ? 4 : 0) + (m.promotion ? 5 : 0) + (m.san.includes("+") ? 3 : 0));
-    let r = g.rng() * weights.reduce((a, b) => a + b, 0), pick = moves[0];
+    let r = game.rng() * weights.reduce((a, b) => a + b, 0), pick = moves[0];
     for (let i = 0; i < moves.length; i++) { r -= weights[i]; if (r <= 0) { pick = moves[i]; break; } }
-    c.move(pick);
-    g.ply++;
-    const cp = materialCp(c), an = g.an.onMove(c, g.ply, cp);
-    this.onEvent({
-      type: "move", game_id: g.id, ply: g.ply, san: pick.san, uci: pick.from + pick.to + (pick.promotion || ""),
-      fen: c.fen(), eval_cp: cp, mate_in: null, tactics: an.tactics, critical: an.critical,
-      flags: pick.flags, captured: pick.captured || null,
-    });
-    if (an.phase) this.onEvent({ type: "phase_space_update", game_id: g.id, ...an.phase });
+    chess.move(pick); game.ply++;
+    const cp = materialCp(chess), analysis = game.an.onMove(chess, game.ply, cp, { evalFen: chess.fen(), evalPly: game.ply });
+    this.gameEvent(game, { type: "move", game_id: game.id, state: "playing", ply: game.ply, san: pick.san,
+      uci: pick.from + pick.to + (pick.promotion || ""), fen: chess.fen(), eval_cp: cp, mate_in: null,
+      eval_fen: chess.fen(), eval_ply: game.ply, evaluation_kind: "material_proxy",
+      tactics: analysis.tactics, critical: analysis.critical, critical_for_ply: analysis.critical_for_ply ?? (analysis.critical ? game.ply : null),
+      flags: pick.flags, captured: pick.captured || null });
+    if (this.running && analysis.phase) this.gameEvent(game, { type: "phase_space_update", game_id: game.id, ...analysis.phase });
   }
 }

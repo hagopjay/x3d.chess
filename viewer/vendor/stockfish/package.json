@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "type": "commonjs",
+  "description": "Execution mode for the unchanged vendored Stockfish Emscripten loader when run by Node; browser workers do not consult this file."
+}

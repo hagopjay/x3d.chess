@@ -1,0 +1,158 @@
+{
+  "schema": "x3dchess.runtime-check/1",
+  "status": "pass",
+  "started_utc": "2026-11-18T02:24:22.055Z",
+  "finished_utc": "2026-11-18T02:24:22.357Z",
+  "node": "v22.23.5",
+  "tool_sha256": "204ccde4a55a0140bcf06e1f290adc0822f9947ef284035c1b1d0ecd06043ff5",
+  "xite": {
+    "version": "16.6.1",
+    "checked_files": 66,
+    "origin_sha256": "86763fbc51d8c1b6a32c3c48cbd13dcf68ce271a5e224921f4e646e2a8e143cb"
+  },
+  "engine": {
+    "id": "Stockfish 19 Lite WASM",
+    "js_sha256": "ccb130d7ff29408531c47d859a49f91d59d4f482d05a53eb1a3231a4f624c91a",
+    "wasm_sha256": "ee4f115bdb2d32cadf96cada104a05b5ec257d7ad6f57582190b49bc71f096de",
+    "execution": "vendored WebAssembly engine launched by Node UCI stdio"
+  },
+  "chessjs_sha256": "76c7c34f0e2e9ab076521a5d6fe786a9cce537bb1b6f29d32a9c9970b5b232d2",
+  "checks": [
+    {
+      "id": "initial-perft-1",
+      "expected": 20,
+      "observed": 20,
+      "status": "pass"
+    },
+    {
+      "id": "initial-perft-2",
+      "expected": 400,
+      "observed": 400,
+      "status": "pass"
+    },
+    {
+      "id": "known-mate-in-one",
+      "fen": "7k/5Q2/6K1/8/8/8/8/8 w - - 0 1",
+      "depth": 8,
+      "uci": "f7g7",
+      "score": {
+        "kind": "mate",
+        "value": 1,
+        "perspective": "side-to-move"
+      },
+      "elapsed_ms": 6.691186999999985,
+      "last_info": "info depth 8 seldepth 2 multipv 1 score mate 1 nodes 210 nps 35000 hashfull 0 time 6 pv f7g7",
+      "san": "Qg7#",
+      "independent_chessjs_checkmate": true,
+      "status": "pass"
+    },
+    {
+      "id": "terminal-no-move",
+      "fen": "7k/6Q1/5K2/8/8/8/8/8 b - - 0 1",
+      "depth": 2,
+      "uci": "(none)",
+      "score": {
+        "kind": "mate",
+        "value": 0,
+        "perspective": "side-to-move"
+      },
+      "elapsed_ms": 0.4297859999999787,
+      "last_info": "info depth 0 score mate 0",
+      "status": "pass"
+    },
+    {
+      "id": "real-engine-legal-trace",
+      "plies": 12,
+      "trace": [
+        {
+          "ply": 1,
+          "input_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "uci": "e2e3",
+          "san": "e3",
+          "output_fen": "rnbqkbnr/pppppppp/8/8/8/4P3/PPPP1PPP/RNBQKBNR b KQkq - 0 1"
+        },
+        {
+          "ply": 2,
+          "input_fen": "rnbqkbnr/pppppppp/8/8/8/4P3/PPPP1PPP/RNBQKBNR b KQkq - 0 1",
+          "uci": "g8f6",
+          "san": "Nf6",
+          "output_fen": "rnbqkb1r/pppppppp/5n2/8/8/4P3/PPPP1PPP/RNBQKBNR w KQkq - 1 2"
+        },
+        {
+          "ply": 3,
+          "input_fen": "rnbqkb1r/pppppppp/5n2/8/8/4P3/PPPP1PPP/RNBQKBNR w KQkq - 1 2",
+          "uci": "d2d4",
+          "san": "d4",
+          "output_fen": "rnbqkb1r/pppppppp/5n2/8/3P4/4P3/PPP2PPP/RNBQKBNR b KQkq - 0 2"
+        },
+        {
+          "ply": 4,
+          "input_fen": "rnbqkb1r/pppppppp/5n2/8/3P4/4P3/PPP2PPP/RNBQKBNR b KQkq - 0 2",
+          "uci": "e7e6",
+          "san": "e6",
+          "output_fen": "rnbqkb1r/pppp1ppp/4pn2/8/3P4/4P3/PPP2PPP/RNBQKBNR w KQkq - 0 3"
+        },
+        {
+          "ply": 5,
+          "input_fen": "rnbqkb1r/pppp1ppp/4pn2/8/3P4/4P3/PPP2PPP/RNBQKBNR w KQkq - 0 3",
+          "uci": "c2c4",
+          "san": "c4",
+          "output_fen": "rnbqkb1r/pppp1ppp/4pn2/8/2PP4/4P3/PP3PPP/RNBQKBNR b KQkq - 0 3"
+        },
+        {
+          "ply": 6,
+          "input_fen": "rnbqkb1r/pppp1ppp/4pn2/8/2PP4/4P3/PP3PPP/RNBQKBNR b KQkq - 0 3",
+          "uci": "c7c5",
+          "san": "c5",
+          "output_fen": "rnbqkb1r/pp1p1ppp/4pn2/2p5/2PP4/4P3/PP3PPP/RNBQKBNR w KQkq - 0 4"
+        },
+        {
+          "ply": 7,
+          "input_fen": "rnbqkb1r/pp1p1ppp/4pn2/2p5/2PP4/4P3/PP3PPP/RNBQKBNR w KQkq - 0 4",
+          "uci": "d4d5",
+          "san": "d5",
+          "output_fen": "rnbqkb1r/pp1p1ppp/4pn2/2pP4/2P5/4P3/PP3PPP/RNBQKBNR b KQkq - 0 4"
+        },
+        {
+          "ply": 8,
+          "input_fen": "rnbqkb1r/pp1p1ppp/4pn2/2pP4/2P5/4P3/PP3PPP/RNBQKBNR b KQkq - 0 4",
+          "uci": "g7g6",
+          "san": "g6",
+          "output_fen": "rnbqkb1r/pp1p1p1p/4pnp1/2pP4/2P5/4P3/PP3PPP/RNBQKBNR w KQkq - 0 5"
+        },
+        {
+          "ply": 9,
+          "input_fen": "rnbqkb1r/pp1p1p1p/4pnp1/2pP4/2P5/4P3/PP3PPP/RNBQKBNR w KQkq - 0 5",
+          "uci": "b1c3",
+          "san": "Nc3",
+          "output_fen": "rnbqkb1r/pp1p1p1p/4pnp1/2pP4/2P5/2N1P3/PP3PPP/R1BQKBNR b KQkq - 1 5"
+        },
+        {
+          "ply": 10,
+          "input_fen": "rnbqkb1r/pp1p1p1p/4pnp1/2pP4/2P5/2N1P3/PP3PPP/R1BQKBNR b KQkq - 1 5",
+          "uci": "f8g7",
+          "san": "Bg7",
+          "output_fen": "rnbqk2r/pp1p1pbp/4pnp1/2pP4/2P5/2N1P3/PP3PPP/R1BQKBNR w KQkq - 2 6"
+        },
+        {
+          "ply": 11,
+          "input_fen": "rnbqk2r/pp1p1pbp/4pnp1/2pP4/2P5/2N1P3/PP3PPP/R1BQKBNR w KQkq - 2 6",
+          "uci": "e3e4",
+          "san": "e4",
+          "output_fen": "rnbqk2r/pp1p1pbp/4pnp1/2pP4/2P1P3/2N5/PP3PPP/R1BQKBNR b KQkq - 0 6"
+        },
+        {
+          "ply": 12,
+          "input_fen": "rnbqk2r/pp1p1pbp/4pnp1/2pP4/2P1P3/2N5/PP3PPP/R1BQKBNR b KQkq - 0 6",
+          "uci": "d7d6",
+          "san": "d6",
+          "output_fen": "rnbqk2r/pp3pbp/3ppnp1/2pP4/2P1P3/2N5/PP3PPP/R1BQKBNR w KQkq - 0 7"
+        }
+      ],
+      "status": "pass",
+      "scope": "Twelve isolated FEN searches with legal move application; repetition/history transport is checked separately."
+    }
+  ],
+  "dependency_manifest_sha256": "215ec461fe971e129546c2ce42cf5316b156387ab4c2d0bbdaf384eb9406ad61",
+  "scope": "Actual WASM engine UCI/rules controls plus runtime-file identity. Does not execute browser workers, native X_ITE rendering, GPU timing, or claim game strength."
+}

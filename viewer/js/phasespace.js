@@ -11,7 +11,7 @@ export async function createPhaseSpace(browser, origin, n) {
   const label = (t, p) => `<Transform translation='${p}'><Billboard axisOfRotation='0 0 0'><Shape><Appearance><Material emissiveColor='0.8 0.9 1' diffuseColor='0 0 0'/></Appearance><Text string='"${t}"'><FontStyle size='0.45' justify='"MIDDLE" "MIDDLE"'/></Text></Shape></Billboard></Transform>`;
   const dots = Array.from({ length: n }, (_, i) => `<Transform DEF='ps_${i}'><Shape><Appearance><Material diffuseColor='${hue(i, n)}' emissiveColor='${hue(i, n)}'/></Appearance><Sphere radius='0.11'/></Shape></Transform>
     <Shape><Appearance><Material emissiveColor='${hue(i, n)}' diffuseColor='0 0 0'/></Appearance><IndexedLineSet DEF='trail_${i}' coordIndex='-1'><Coordinate DEF='trailc_${i}' point='0 0 0'/></IndexedLineSet></Shape>`).join("\n");
-  const xml = `<X3D profile='Interchange' version='4.0'><head><component name='Text' level='1'/></head><Scene><Transform translation='${origin.join(" ")}'>
+  const xml = `<X3D profile='Interchange' version='4.0'><head><component name='Text' level='1'/><component name='Navigation' level='2'/></head><Scene><Transform translation='${origin.join(" ")}'>
     <Shape><Appearance><Material emissiveColor='0.25 0.35 0.5' diffuseColor='0 0 0'/></Appearance>
       <IndexedLineSet coordIndex='0 1 2 3 0 -1 4 5 6 7 4 -1 0 4 -1 1 5 -1 2 6 -1 3 7 -1'><Coordinate point='${box}'/></IndexedLineSet></Shape>
     <Shape><Appearance><Material emissiveColor='1 1 1' diffuseColor='0 0 0'/></Appearance>
@@ -34,7 +34,15 @@ export async function createPhaseSpace(browser, origin, n) {
       get(`trailc_${i}`).point = new X3D.MFVec3f(...t.map((q) => new X3D.SFVec3f(...q)));
       get(`trail_${i}`).coordIndex = new X3D.MFInt32(...t.map((_, k) => k), -1);
     },
-    reset(gameId) { trails[+gameId.slice(1)].length = 0; },
+    reset(gameId) {
+      const i = +gameId.slice(1);
+      if (!Number.isInteger(i) || i < 0 || i >= n) return;
+      trails[i].length = 0;
+      get(`trailc_${i}`).point = new X3D.MFVec3f();
+      get(`trail_${i}`).coordIndex = new X3D.MFInt32(-1);
+      get(`ps_${i}`).translation = new X3D.SFVec3f(0, 0, 0);
+    },
+    dispose() { try { browser.currentScene.removeRootNode(root); } catch {} },
     points: () => trails.reduce((a, t) => a + t.length, 0),
   };
 }

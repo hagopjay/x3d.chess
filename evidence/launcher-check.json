@@ -1,0 +1,36 @@
+{
+  "schema": "x3dchess.local-http-check/1",
+  "status": "pass",
+  "tool_sha256": "5e6a51568c3637c581c04848bb15e3f84d1af61d7731d6ea773a78a0a0b0e76f",
+  "checks": [
+    {
+      "path": "index.html",
+      "bytes": 3621,
+      "sha256": "4d40cae2e44955ab8ba3a42c80069833449eb1d1d2b928342e960c610714d605",
+      "content_type": "text/html",
+      "status": "pass"
+    },
+    {
+      "path": "guide.html",
+      "bytes": 16113,
+      "sha256": "65d91848e33975c6a0411276b430efe0477b3a03b767d3d799f3e211a6e24b11",
+      "content_type": "text/html",
+      "status": "pass"
+    },
+    {
+      "path": "js/main.js",
+      "bytes": 8729,
+      "sha256": "5c81fc9a3b4eb9f8dd48f02e2975614e5d0d7de6532842d53bed9ee23bbd186a",
+      "content_type": "text/javascript",
+      "status": "pass"
+    },
+    {
+      "path": "vendor/stockfish/stockfish-19-lite-single.wasm",
+      "bytes": 1845971,
+      "sha256": "ee4f115bdb2d32cadf96cada104a05b5ec257d7ad6f57582190b49bc71f096de",
+      "content_type": "application/wasm",
+      "status": "pass"
+    }
+  ],
+  "scope": "Actual loopback HTTP asset responses and MIME types. Does not run a browser."
+}

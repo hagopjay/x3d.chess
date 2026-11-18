@@ -1,0 +1,5 @@
+<X3D profile='Interchange' version='4.0'><head><component name='ParticleSystems' level='2'/><meta name="title" content="Chess runtime writer: particles"/><meta name="x3dchess.snapshot" content="{&quot;scope&quot;:&quot;Captured actual capture-cue ParticleSystem; authored effect, not a physical simulation.&quot;}"/></head><Scene>
+      <Transform translation='0 0.3 0'><ParticleSystem geometryType='POINT' maxParticles='40' particleLifetime='0.55' lifetimeVariation='0.3' particleSize='0.12 0.12'>
+        <Appearance><Material emissiveColor='1 0.5 0.15' diffuseColor='1 0.5 0.15'/></Appearance>
+        <PointEmitter direction='0 1 0' speed='2.2' variation='1.2' mass='0.01'/>
+      </ParticleSystem></Transform></Scene></X3D>

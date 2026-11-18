@@ -1,0 +1,147 @@
+{
+  "schema": "x3dchess.blender-preview/1",
+  "status": "pass",
+  "created_utc": "2026-11-18T01:51:09.324574+00:00",
+  "source": "examples/x3d/en-passant-ray-rank-exposure.x3d",
+  "source_sha256": "d90da513bc5817a9c7d8e0a4075330ba72131b96e8c9934e7406135f15a2f4ac",
+  "source_study": {
+    "study": "en-passant-ray",
+    "variant": "rank-exposure",
+    "schema": "x3dchess.position/1",
+    "input_fen": "k7/8/8/r4pPK/8/8/8/8 w - f6 0 1",
+    "fen": "k7/8/8/r4pPK/8/8/8/8 w - - 0 1",
+    "turn": "w",
+    "representation": "Static model occupancy with authored appearance. Animation, engine workers and live evaluation history are not serialized.",
+    "theme": "classic",
+    "piece_count": 5
+  },
+  "blender_version": "5.2.4 LTS",
+  "blender_build": "cd5dc428cce1",
+  "binary_sha256": "9c12ad1b09401dcd3a8a5336279bca91455f15023aa0e5e4cb5cdb7b116a09f1",
+  "fork_repository": "https://github.com/hagopjay/x3d-blender-io",
+  "fork_commit": "044bea3ae33a991f816de15a307826b6d7f576ec",
+  "tool_sha256": "8d4d1780799cfe50a848fefb364ce34075fdbd5ee5ba3c5af6db7eb33524deb0",
+  "import_source_sha256": {
+    "__init__.py": "57c160f7407315d254c3161f842b6e04d095aac1e73270adcce034126bf26bf4",
+    "import_x3d.py": "fc972f9c3c1177844372152b11c6992cd3fff6a730cd1ea0ba599afb04e48f7f"
+  },
+  "imported_objects": 106,
+  "piece_occupancy": {
+    "status": "pass",
+    "pieces": 5,
+    "comparisons": [
+      {
+        "square": "a8",
+        "piece": "k",
+        "mesh_parts": 4,
+        "actual_bbox_center_xy_base_z": [
+          -3.5,
+          3.5,
+          0.04999997839331627
+        ],
+        "expected": [
+          -3.5,
+          3.5,
+          0.05
+        ],
+        "max_absolute_error": 2.160668373385466e-08
+      },
+      {
+        "square": "a5",
+        "piece": "r",
+        "mesh_parts": 3,
+        "actual_bbox_center_xy_base_z": [
+          -3.5,
+          0.5,
+          0.04999997839331627
+        ],
+        "expected": [
+          -3.5,
+          0.5,
+          0.05
+        ],
+        "max_absolute_error": 2.160668373385466e-08
+      },
+      {
+        "square": "f5",
+        "piece": "p",
+        "mesh_parts": 3,
+        "actual_bbox_center_xy_base_z": [
+          1.5,
+          0.5,
+          0.04999998211860657
+        ],
+        "expected": [
+          1.5,
+          0.5,
+          0.05
+        ],
+        "max_absolute_error": 1.7881393435392745e-08
+      },
+      {
+        "square": "g5",
+        "piece": "P",
+        "mesh_parts": 3,
+        "actual_bbox_center_xy_base_z": [
+          2.5,
+          0.5,
+          0.04999998211860657
+        ],
+        "expected": [
+          2.5,
+          0.5,
+          0.05
+        ],
+        "max_absolute_error": 1.7881393435392745e-08
+      },
+      {
+        "square": "h5",
+        "piece": "K",
+        "mesh_parts": 4,
+        "actual_bbox_center_xy_base_z": [
+          3.5,
+          0.5,
+          0.04999997839331627
+        ],
+        "expected": [
+          3.5,
+          0.5,
+          0.05
+        ],
+        "max_absolute_error": 2.160668373385466e-08
+      }
+    ],
+    "tolerance": 2e-05,
+    "scope": "Actual imported mesh world bounding-box centers in the board plane and base height; not full topology/material or chess-rule recertification."
+  },
+  "projection": {
+    "edge_segments_as_studio_tubes": 0,
+    "imported_curve_segments_given_bevel": 2,
+    "tube_radius": 0.025
+  },
+  "render": {
+    "engine": "Cycles",
+    "device": "CPU",
+    "threads": 2,
+    "samples": 24,
+    "width": 1280,
+    "height": 960,
+    "seed": 1801,
+    "elapsed_seconds": 46.177022404001036,
+    "view_transform": "Standard",
+    "look": "Medium High Contrast"
+  },
+  "image_sha256": "89fb3f68a5ab3300690a134b7e1bc11a151d0d4da7314c26ea48d02d373087bd",
+  "image_bytes": 1359208,
+  "scope": "Authored offline Blender studio still from actual portable X3D import. Not native X_ITE browser pixels, color parity, a GPU benchmark or a new engine analysis.",
+  "appearance_changes": [
+    "Imported lights/camera disabled for the studio view.",
+    "Principled roughness/metallic authored for presentation.",
+    "Imported edge-only relation geometry rendered as thin tubes from actual edge coordinates; existing relation curves receive the same radius.",
+    "Separate studio floor, camera and three area lights."
+  ],
+  "limitations": [
+    "The imported coordinate-label text appears as outline boxes in this studio still; typography fidelity has not passed.",
+    "The occupancy check covers the five actual imported pieces, not full topology/material/annotation equivalence."
+  ]
+}

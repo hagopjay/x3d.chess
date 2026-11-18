@@ -144,7 +144,9 @@ class PhaseSpaceAnalyzer:
         king_file = chess.square_file(king_square)
         direction = 1 if color == chess.WHITE else -1
 
-        shield_files = [max(0, king_file - 1), king_file, min(7, king_file + 1)]
+        # Only real neighboring files: an a/h-file king has two shield squares,
+        # not a duplicated edge square. This feature remains a heuristic.
+        shield_files = range(max(0, king_file - 1), min(7, king_file + 1) + 1)
         shield_rank = king_rank + direction
 
         PAWN_SHIELD_BONUS = 0.5
