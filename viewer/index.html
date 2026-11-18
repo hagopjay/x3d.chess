@@ -12,10 +12,16 @@
   #hud{position:fixed;left:12px;top:10px;pointer-events:none;opacity:.85}
   #views{z-index:10;position:fixed;right:12px;bottom:12px;display:flex;gap:6px}
   #views button{background:#0b1220;color:#9cf;border:1px solid #234;border-radius:6px;padding:6px 10px;cursor:pointer}
+  #panel{z-index:10;position:fixed;left:12px;top:44px;width:250px;max-height:70vh;overflow:auto;background:#0b1220e6;border:1px solid #234;border-radius:8px;padding:10px 12px;font-size:12px}
+  #panel h3{margin:0 0 6px;font-size:14px;color:#9cf} #panel small{color:#789;font-weight:400}
+  #panel .kv{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:2px 8px;margin-bottom:6px} #panel .kv span{color:#789}
+  #panel .moves{line-height:1.5;margin:6px 0} #panel .mn{color:#678} #panel .tac{color:#fb9;margin:4px 0} #panel .crit{font-size:11px}
+  #panel .res{margin-top:6px;color:#fd8} #panel .hint{margin-top:8px;color:#567}
 </style>
 </head>
 <body>
-<div id="views"><button data-vp="vp_overview">Boards</button><button data-vp="vp_phase">Phase space</button><button id="heatbtn" style="opacity:.55" title="key: h">Heatmap</button></div>
+<div id="views"><button data-vp="vp_overview">Boards</button><button data-vp="vp_phase">Phase space</button><button id="themebtn" title="key: t">Theme</button><button id="heatbtn" style="opacity:.55" title="key: h">Heatmap</button></div>
+<div id="panel" hidden></div>
 <div id="hud">x3d.chess scaffold &middot; <span id="status">loading&hellip;</span></div>
 <x3d-canvas id="canvas" src="scenes/grid.x3d" splashScreen="false"></x3d-canvas>
 <script type="module" src="js/main.js"></script>

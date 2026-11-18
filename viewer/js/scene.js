@@ -1,6 +1,11 @@
 // Scene controller: owns the BoardViews, the animation loop, and the event -> view dispatch.
 import { BoardView, sqPos, fenPlacement } from "./board.js";
 import { createPhaseSpace } from "./phasespace.js";
+import { createCameraRig } from "./camera.js";
+import { GameRecords, GamePanel } from "./panel.js";
+import { burst } from "./particles.js";
+import { THEMES, THEME_ORDER } from "./themes.js";
+import { setPieceTheme } from "./pieces.js";
 
 /** capture / check cues from an event: king square of the side to move when the move gave check. */
 function moveExtra(ev) {
@@ -13,7 +18,7 @@ function moveExtra(ev) {
   return extra;
 }
 
-export async function createScene(browser, { boards = 20, cols = 5, pitch = 10 } = {}) {
+export async function createScene(browser, { boards = 20, cols = 5, pitch = 10, panelEl = null } = {}) {
   const rows = Math.ceil(boards / cols);
   const anims = [];
   const removals = [];
@@ -33,7 +38,22 @@ export async function createScene(browser, { boards = 20, cols = 5, pitch = 10 }
   }
   const byId = new Map(views.map((v, i) => [`g${i}`, v]));
 
+  const records = new GameRecords();
+  const panel = panelEl ? new GamePanel(panelEl, records) : null;
+  const rig = createCameraRig(browser, { boardOrigin: (i) => views[i].origin });
+  let selected = null, themeName = "neon", lastPanel = 0;
+  const select = (i) => { selected = i; rig.board(i); panel?.show(i); };
+  const deselect = () => { selected = null; rig.overview(); panel?.hide(); };
+  views.forEach((v, i) => v.proto.getField("touchTime").addFieldCallback(`touch${i}`, () => select(i)));
+  const setTheme = async (name) => {
+    themeName = name; const t = THEMES[name]; ctx.theme = t; setPieceTheme(t);
+    browser.currentScene.getNamedNode("bg").skyColor = new X3D.MFColor(new X3D.SFColor(...t.bg.split(" ").map(Number)));
+    await Promise.all(views.map((v) => v.applyTheme(t)));
+    views.forEach((v) => v.lastEval != null && v.setEval(v.lastEval));
+  };
+
   const loop = (now) => {
+    rig.tick(now);
     for (let i = anims.length - 1; i >= 0; i--) {
       const a = anims[i], k = Math.min(1, (now - a.t0) / a.ms), e = k * k * (3 - 2 * k);
       a.node.translation = new X3D.SFVec3f(
@@ -46,10 +66,14 @@ export async function createScene(browser, { boards = 20, cols = 5, pitch = 10 }
   };
   requestAnimationFrame(loop);
 
-  const stats = { moves: 0, complete: 0, tactics: 0, critical: 0, phase: 0 };
+  const stats = { moves: 0, complete: 0, tactics: 0, critical: 0, phase: 0, bursts: 0 };
   const ps = await createPhaseSpace(browser, [cols * pitch / 2 + 7, 3.5, 0], boards);
   return {
-    views, stats, phase: ps,
+    views, stats, phase: ps, rig, records, panel,
+    select, deselect, get selected() { return selected; },
+    nextBoard: (d) => select(((selected ?? -1) + d + boards) % boards),
+    setTheme, get theme() { return themeName; },
+    cycleTheme: () => setTheme(THEME_ORDER[(THEME_ORDER.indexOf(themeName) + 1) % THEME_ORDER.length]),
     setHeat: (on) => Promise.all(views.map((v) => v.setHeat(on))),
     graphCount: () => views.filter((v) => v.evals?.length).length,
     heatPainted: () => views.filter((v) => v.heat && v.heat.visible).length,
@@ -68,9 +92,12 @@ export async function createScene(browser, { boards = 20, cols = 5, pitch = 10 }
     async onEvent(ev) {
       const v = byId.get(ev.game_id);
       if (!v) return;
+      records.onEvent(ev);
+      if (panel && selected !== null && ev.game_id === `g${selected}` && performance.now() - lastPanel > 250) { lastPanel = performance.now(); panel.render(); }
+      if (ev.type === "move" && ev.captured && ev.uci) { stats.bursts++; burst(browser, sqPos(ev.uci.slice(2, 4), v.origin), themeName === "ice" ? "0.2 0.4 1" : "1 0.5 0.15"); }
       if (ev.type === "snapshot_game" || ev.type === "move") {
         if (ev.type === "move") { stats.moves++; if (ev.tactics?.length) stats.tactics++; if (ev.critical) stats.critical++; v.showMove(ev.uci, ev.tactics, moveExtra(ev)); }
-        v.setEval(ev.eval_cp ?? 0);
+        v.lastEval = ev.eval_cp ?? 0; v.setEval(v.lastEval);
         if (ev.type === "move") v.pushEval(ev.eval_cp ?? 0); else v.resetEvals();
         await v.apply(ev.fen);
       } else if (ev.type === "game_complete") { stats.complete++; ps.reset(ev.game_id); }

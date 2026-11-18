@@ -10,7 +10,7 @@ const status = document.getElementById("status");
 
 const browser = X3D.getBrowser(canvas);
 await browser.loadComplete?.catch?.(() => {});
-const scene = await createScene(browser, { boards });
+const scene = await createScene(browser, { boards, panelEl: document.getElementById("panel") });
 const engine = q.get("engine") ?? "replay";             // replay | wasm | sse
 const Cls = { replay: ReplayTransport, wasm: WasmTransport, sse: SseTransport }[engine];
 const transport = new Cls((ev) => scene.onEvent(ev));
@@ -23,6 +23,13 @@ document.getElementById("heatbtn").onclick = toggleHeat;
 addEventListener("keydown", (e) => { if (e.key === "h") toggleHeat(); });
 setInterval(() => { status.textContent = `${boards} boards · ${scene.pieceCount()} pieces · ${scene.stats.moves} moves · ${engine}${engine === 'replay' ? ' (material proxy)' : ''}`; }, 500);
 
-for (const b of document.querySelectorAll("#views button")) {
-  b.onclick = () => { browser.currentScene.getNamedNode(b.dataset.vp).set_bind = true; };
-}
+document.querySelector("[data-vp=vp_overview]").onclick = () => scene.deselect();
+document.querySelector("[data-vp=vp_phase]").onclick = () => { scene.deselect(); scene.rig.phase(); };
+document.getElementById("themebtn").onclick = () => scene.cycleTheme();
+addEventListener("keydown", (e) => {
+  if (e.key === "Escape") scene.deselect();
+  else if (e.key === "ArrowRight") scene.nextBoard(1);
+  else if (e.key === "ArrowLeft") scene.nextBoard(-1);
+  else if (e.key === "t") scene.cycleTheme();
+});
+const th = q.get("theme"); if (th) scene.setTheme(th);

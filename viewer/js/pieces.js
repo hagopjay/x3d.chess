@@ -1,10 +1,13 @@
 // Piece geometry as X3D XML (primitives only; glb/Inline pieces can replace these later).
 // Each factory returns a <Transform> string; the caller sets translation through SAI.
-const COL = { w: "0.95 0.95 0.9", b: "0.15 0.12 0.2" };
-const EMI = { w: "0.12 0.4 0.5", b: "0.45 0.05 0.35" };   // neon rim: cyan vs magenta (original palette)
+import { THEMES } from "./themes.js";
+let th = THEMES.neon;                                    // neon rim: cyan vs magenta (original palette)
+export const setPieceTheme = (t) => { th = t; };
+const COL = { get w() { return th.w.c; }, get b() { return th.b.c; } };
+const EMI = { get w() { return th.w.e; }, get b() { return th.b.e; } };
 
 const shape = (geo, y, c) =>
-  `<Transform translation='0 ${y} 0'><Shape><Appearance><Material diffuseColor='${COL[c]}' emissiveColor='${EMI[c]}' specularColor='0.4 0.4 0.4' shininess='0.5'/></Appearance>${geo}</Shape></Transform>`;
+  `<Transform translation='0 ${y} 0'><Shape pointerEvents='false'><Appearance><Material diffuseColor='${COL[c]}' emissiveColor='${EMI[c]}' specularColor='0.4 0.4 0.4' shininess='0.5'/></Appearance>${geo}</Shape></Transform>`;
 const cyl = (r, h) => `<Cylinder radius='${r}' height='${h}'/>`;
 const cone = (r, h) => `<Cone bottomRadius='${r}' height='${h}'/>`;
 const sph = (r) => `<Sphere radius='${r}'/>`;
