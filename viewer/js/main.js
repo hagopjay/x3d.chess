@@ -11,7 +11,9 @@ const status = document.getElementById("status");
 const browser = X3D.getBrowser(canvas);
 await browser.loadComplete?.catch?.(() => {});
 const scene = await createScene(browser, { boards, panelEl: document.getElementById("panel") });
-const engine = q.get("engine") ?? "replay";             // replay | wasm | sse
+await scene.setTheme(q.get("theme") ?? "moss");        // default: the low-glare green; ?theme=neon|classic|ice|sage|mint
+const canWasm = typeof Worker !== "undefined" && typeof WebAssembly !== "undefined";
+const engine = q.get("engine") ?? (canWasm ? "wasm" : "replay");   // default: real Stockfish (WASM); replay | wasm | sse
 const Cls = { replay: ReplayTransport, wasm: WasmTransport, sse: SseTransport }[engine];
 const transport = new Cls((ev) => scene.onEvent(ev));
 await transport.start({ boards, seed, intervalMs: interval, depth: +(q.get("depth") ?? 12), poolSize: +(q.get("pool") || 0) || undefined, url: q.get("server") || undefined });
@@ -21,7 +23,7 @@ if (heatOn) scene.setHeat(true);
 const toggleHeat = () => { heatOn = !heatOn; scene.setHeat(heatOn); document.getElementById("heatbtn").style.opacity = heatOn ? 1 : 0.55; };
 document.getElementById("heatbtn").onclick = toggleHeat;
 addEventListener("keydown", (e) => { if (e.key === "h") toggleHeat(); });
-setInterval(() => { status.textContent = `${boards} boards · ${scene.pieceCount()} pieces · ${scene.stats.moves} moves · ${engine}${engine === 'replay' ? ' (material proxy)' : ''}`; }, 500);
+setInterval(() => { status.textContent = `${boards} boards · ${scene.pieceCount()} pieces · ${scene.stats.moves} moves · ${{ wasm: 'Stockfish 19 (WASM, in your browser)', sse: 'Stockfish 19 (server)', replay: 'REPLAY: no engine, material proxy' }[engine]}`; }, 500);
 
 document.querySelector("[data-vp=vp_overview]").onclick = () => scene.deselect();
 document.querySelector("[data-vp=vp_phase]").onclick = () => { scene.deselect(); scene.rig.phase(); };
@@ -32,4 +34,4 @@ addEventListener("keydown", (e) => {
   else if (e.key === "ArrowLeft") scene.nextBoard(-1);
   else if (e.key === "t") scene.cycleTheme();
 });
-const th = q.get("theme"); if (th) scene.setTheme(th);
+
