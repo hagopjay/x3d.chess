@@ -37,8 +37,14 @@ await page.waitForTimeout(1500);
 const misplaced = await page.evaluate(() => window.x3dchess.scene.misplaced());
 const kids = await page.evaluate(() => window.x3dchess.scene.childCount());
 const eng = await page.evaluate(() => window.x3dchess.transport.pool ? { searches: window.x3dchess.transport.pool.searches, nodes: window.x3dchess.transport.pool.nodes, workers: window.x3dchess.transport.pool.size, busyMs: Math.round(window.x3dchess.transport.pool.busyMs) } : null);
-const moves = await page.evaluate(() => window.x3dchess.scene.stats.moves);
+const st = await page.evaluate(() => ({ ...window.x3dchess.scene.stats, phasePoints: window.x3dchess.scene.phase.points() }));
+const moves = st.moves;
 await page.screenshot({ path: process.argv[2] || "smoke.png" });
-console.log(JSON.stringify({ pieces: n, sceneChildren: kids, misplaced, moves, engine: eng, errors }));
+if (process.env.PHASE_PNG) {
+  await page.click("button[data-vp=vp_phase]"); await page.waitForTimeout(2500);
+  await page.screenshot({ path: process.env.PHASE_PNG });
+}
+
+console.log(JSON.stringify({ pieces: n, sceneChildren: kids, misplaced, moves, stats: st, engine: eng, errors }));
 await browser.close(); srv.close();
 process.exit(n >= 300 && n === kids && misplaced === 0 && moves > 50 && errors.length === 0 ? 0 : 1);

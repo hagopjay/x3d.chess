@@ -10,9 +10,12 @@
   html,body{margin:0;height:100%;background:#05070d;color:#cfe;font:14px system-ui}
   x3d-canvas{display:block;width:100%;height:100vh}
   #hud{position:fixed;left:12px;top:10px;pointer-events:none;opacity:.85}
+  #views{z-index:10;position:fixed;right:12px;bottom:12px;display:flex;gap:6px}
+  #views button{background:#0b1220;color:#9cf;border:1px solid #234;border-radius:6px;padding:6px 10px;cursor:pointer}
 </style>
 </head>
 <body>
+<div id="views"><button data-vp="vp_overview">Boards</button><button data-vp="vp_phase">Phase space</button></div>
 <div id="hud">x3d.chess scaffold &middot; <span id="status">loading&hellip;</span></div>
 <x3d-canvas id="canvas" src="scenes/grid.x3d" splashScreen="false"></x3d-canvas>
 <script type="module" src="js/main.js"></script>

@@ -1,15 +1,18 @@
 // Scene controller: owns the BoardViews, the animation loop, and the event -> view dispatch.
 import { BoardView, sqPos } from "./board.js";
+import { createPhaseSpace } from "./phasespace.js";
 
-export function createScene(browser, { boards = 20, cols = 5, pitch = 10 } = {}) {
+export async function createScene(browser, { boards = 20, cols = 5, pitch = 10 } = {}) {
   const rows = Math.ceil(boards / cols);
   const anims = [];
   const removals = [];
   const ctx = {
     browser, removals,
     animate(node, to, ms = 380) {
-      const from = [...node.translation.getValue ? node.translation.getValue() : [node.translation.x, node.translation.y, node.translation.z]];
-      anims.push({ node, from, to, t0: performance.now(), ms });
+      const i = anims.findIndex((x) => x.node === node);
+      if (i >= 0) anims.splice(i, 1);                 // a newer move supersedes a running tween (start from current pose)
+      const p = node.translation;
+      anims.push({ node, from: [p.x, p.y, p.z], to, t0: performance.now(), ms });
     },
   };
   const views = [];
@@ -32,9 +35,10 @@ export function createScene(browser, { boards = 20, cols = 5, pitch = 10 } = {})
   };
   requestAnimationFrame(loop);
 
-  const stats = { moves: 0, complete: 0 };
+  const stats = { moves: 0, complete: 0, tactics: 0, critical: 0, phase: 0 };
+  const ps = await createPhaseSpace(browser, [cols * pitch / 2 + 7, 3.5, 0], boards);
   return {
-    views, stats,
+    views, stats, phase: ps,
     /** debug/test: count pieces whose node translation differs from their square (animations settled). */
     misplaced() {
       let bad = 0;
@@ -51,10 +55,11 @@ export function createScene(browser, { boards = 20, cols = 5, pitch = 10 } = {})
       const v = byId.get(ev.game_id);
       if (!v) return;
       if (ev.type === "snapshot_game" || ev.type === "move") {
-        if (ev.type === "move") stats.moves++;
+        if (ev.type === "move") { stats.moves++; if (ev.tactics?.length) stats.tactics++; if (ev.critical) stats.critical++; v.showMove(ev.uci, ev.tactics); }
         v.setEval(ev.eval_cp ?? 0);
         await v.apply(ev.fen);
-      } else if (ev.type === "game_complete") stats.complete++;
+      } else if (ev.type === "game_complete") { stats.complete++; ps.reset(ev.game_id); }
+      else if (ev.type === "phase_space_update") { stats.phase++; ps.update(ev); }
     },
   };
 }

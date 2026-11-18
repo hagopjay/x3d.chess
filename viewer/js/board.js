@@ -1,5 +1,6 @@
 // BoardView: one board in the grid. Keeps a square->node map and reconciles it with each FEN.
 import { pieceXml } from "./pieces.js";
+import { moveFxXml } from "./fx.js";
 
 const FILES = "abcdefgh";
 export const sqPos = (sq, origin) => [origin[0] + FILES.indexOf(sq[0]) - 3.5, 0.05, origin[2] + 3.5 - (Number(sq[1]) - 1)];
@@ -51,6 +52,15 @@ export class BoardView {
   _remove(entry) {
     const keep = [...this.group.children].filter((n) => n !== entry.node);
     this.group.children = new X3D.MFNode(...keep);
+  }
+  /** Last-move highlight + tactic lines; replaced by the next move, so nothing accumulates. */
+  async showMove(uci, tactics) {
+    this.fxBusy = (this.fxBusy || Promise.resolve()).then(async () => {
+      const s = await this.ctx.browser.createX3DFromString(`<X3D profile='Interchange' version='4.0'><Scene>${moveFxXml(uci, tactics, this.origin)}</Scene></X3D>`);
+      if (!this.fx) { this.fx = (await this.ctx.browser.createX3DFromString("<X3D profile='Interchange' version='4.0'><Scene><Group/></Scene></X3D>")).rootNodes[0]; this.ctx.browser.currentScene.addRootNode(this.fx); }
+      this.fx.children = new X3D.MFNode(...s.rootNodes[0].children);
+    });
+    return this.fxBusy;
   }
   childCount() { return this.group ? this.group.children.length : 0; }
 

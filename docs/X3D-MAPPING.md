@@ -1,6 +1,6 @@
 # Concept to X3D mapping
 
-Node names are a **stable contract** between scene and SAI layer.
+Node names are a **stable contract** between scene and SAI layer. Phase 1 change: squares live inside `PROTO ChessBoard`, so they are no longer individually named; each board is `board_<i>` with fields `tintDark`, `tintLight`, `evalScale`, and pieces are runtime nodes tracked per board by `viewer/js/board.js`. `board.x3d` (the phase 0 single board) keeps the `sq_*` names.
 
 | Chess Spectator (2D) | X3D (3D) | Names / nodes |
 |---|---|---|
@@ -22,4 +22,4 @@ Node names are a **stable contract** between scene and SAI layer.
 | Theme store | swap `Appearance` sets | |
 | Neon glow | emissive materials + bloom shader (X_ITE shader, later Babylon FX) | |
 
-First slice already built and validated: board, `sq_*` naming, `evalbar`, one `piece_e2`.
+Built and validated: PROTO board grid, runtime pieces, eval bar and tint, last-move highlight, tactic lines (`IndexedLineSet`), 3D phase space with trails, two named viewpoints (`vp_overview`, `vp_phase`).

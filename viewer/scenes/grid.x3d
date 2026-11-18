@@ -9,6 +9,7 @@
     <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
     <Background skyColor='0.02 0.03 0.06'/>
     <Viewpoint DEF='vp_overview' position='0 37.5 24.8' orientation='1 0 0 -1.05' description='Overview'/>
+    <Viewpoint DEF='vp_phase' position='32.0 5.5 13' orientation='1 0 0 -0.12' description='Phase space'/>
     <DirectionalLight direction='-0.3 -1 -0.5' intensity='0.85'/>
     <DirectionalLight direction='0.4 -0.6 0.7' intensity='0.35' color='0.6 0.7 1'/>
     <ProtoDeclare name='ChessBoard'>
