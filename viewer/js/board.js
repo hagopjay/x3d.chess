@@ -1,6 +1,7 @@
 // One board's pieces and overlays. New snapshots invalidate older async work.
 import { pieceXml } from "./pieces.js";
 import { moveFxXml, studyFxXml } from "./fx.js";
+import { BoardLens } from "./lenses.js";
 import { heatXml, heatColors, graphXml, graphPoints, GRAPH_LEN } from "./overlays.js";
 const FILES = "abcdefgh";
 export const validSquare = (sq) => typeof sq === "string" && /^[a-h][1-8]$/.test(sq);
@@ -35,6 +36,7 @@ export class BoardView {
     this.epoch = 0; this.fxRevision = 0; this.studyRevision = 0;
     this.heatOn = false; this.evals = []; this.disposed = false;
     this.lastEval = null; this.setEval(null);
+    this.lens = new BoardLens(this);
   }
   _current(epoch) { return !this.disposed && epoch === this.epoch; }
   _queue(job) { const pending = this.busy.catch(() => {}).then(job); this.busy = pending; return pending; }
@@ -51,9 +53,9 @@ export class BoardView {
     const epoch = this.epoch;
     return this._queue(() => this._current(epoch) && this._reconcile(fen, epoch));
   }
-  reset(fen) {
+  reset(fen, generation) {
     fenPlacement(fen); const epoch = ++this.epoch;
-    this.clearEffects(); this.resetEvals();
+    this.clearEffects(); this.resetEvals(); this.lastFen = null; this.lens.onReset(generation);
     for (const entry of this.nodes.values()) this.ctx.cancel?.(entry.node);
     return this._queue(async () => {
       if (!this._current(epoch)) return;
@@ -147,7 +149,8 @@ export class BoardView {
   childCount() { return this.group ? this.group.children.length : 0; }
   async _reconcile(fen, epoch = this.epoch) {
     if (!this._current(epoch)) return;
-    this.lastFen = fen; if (this.heatOn && this.heat) this._paintHeat(fen);
+    const changed = this.lastFen !== fen; this.lastFen = fen; if (this.heatOn && this.heat) this._paintHeat(fen);
+    if (changed) this.lens.onPlacement(fen);
     const next = fenPlacement(fen), vacated = [];
     for (const [sq, entry] of this.nodes) {
       if (next[sq] === entry.ch) continue;
@@ -201,9 +204,9 @@ export class BoardView {
     this.proto.tintDark = new X3D.SFColor(r, g, b);
     this.proto.tintLight = new X3D.SFColor(r * 1.3, g * 1.3, b * 1.3);
   }
-  settled() { return Promise.all([this.busy, this.fxBusy, this.heatPromise, this.graphPromise, this.studyPending]); }
+  settled() { return Promise.all([this.busy, this.fxBusy, this.heatPromise, this.graphPromise, this.studyPending, this.lens.settled()]); }
   dispose() {
-    this.disposed = true; this.epoch++; this.clearEffects();
+    this.disposed = true; this.epoch++; this.clearEffects(); this.lens.dispose();
     for (const entry of this.nodes.values()) this.ctx.cancel?.(entry.node);
     for (const root of [this.group, this.fx, this.studyFx, this.heat, this.graphScene?.rootNodes[0]]) if (root) {
       try { this.ctx.browser.currentScene.removeRootNode(root); } catch {}

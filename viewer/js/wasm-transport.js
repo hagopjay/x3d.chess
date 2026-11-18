@@ -40,6 +40,22 @@ export class WasmTransport extends Transport {
     await Promise.all(this.tasks || []); this.tasks = [];
     if (!silent) this.status("stopped", "Stockfish workers stopped");
   }
+  /** Bounded MultiPV analysis through the running pool; see WasmEnginePool.analyze. Does not touch game state. */
+  analyze(fen, options) {
+    if (!this.pool || this.pool.state !== "running") return Promise.reject(new Error("Engine pool is not running"));
+    return this.pool.analyze(fen, options);
+  }
+  /** Pause one game before its next move is applied, so a board can be analyzed in a stable position. Returns the held FEN. */
+  holdGame(id) {
+    const game = this.games?.find((g) => g.id === id);
+    if (!game) throw new RangeError("Unknown game");
+    if (!game.hold) { let release; game.hold = { promise: new Promise((r) => { release = r; }), release }; }
+    return game.chess.fen();
+  }
+  releaseGame(id) {
+    const game = this.games?.find((g) => g.id === id);
+    if (game?.hold) { const { release } = game.hold; game.hold = null; release(); }
+  }
   _newGame(game) {
     game.opening = pickOpening(game.rng); game.initialFen = new Chess().fen();
     game.chess = new Chess(); game.moves = [];
@@ -64,6 +80,7 @@ export class WasmTransport extends Transport {
       const score = await this.pool.search(before, { depth: this.cfg.depth, skill: game.skill,
         initialFen: game.initialFen, moves: game.moves, gameKey: `${game.id}:${game.generation}` });
       if (!this.active(run)) return;
+      while (game.hold) { await game.hold.promise; if (!this.active(run)) return; }   // paused for analysis: the searched move is applied only after release
       if (game.chess !== chess || chess.fen() !== before) throw new Error("Board changed during its Stockfish search");
       if (!score.uci) throw new Error("Stockfish returned no move for a non-terminal position");
       const move = chess.move({ from: score.uci.slice(0, 2), to: score.uci.slice(2, 4), promotion: score.uci[4] });

@@ -3,7 +3,7 @@
 const ease = (k) => k * k * (3 - 2 * k);
 const lerp = (a, b, t) => a + (b - a) * t;
 
-export function createCameraRig(browser, { boardOrigin, ms = 900 }) {
+export function createCameraRig(browser, { boardOrigin, skylinePose = null, ms = 900 }) {
   const sc = browser.currentScene;
   const vp = sc.getNamedNode("vp_focus");
   const pose = (name) => { const n = sc.getNamedNode(name); return { p: [n.position.x, n.position.y, n.position.z], o: [n.orientation.x, n.orientation.y, n.orientation.z, n.orientation.angle] }; };
@@ -29,6 +29,7 @@ export function createCameraRig(browser, { boardOrigin, ms = 900 }) {
     pose: () => structuredClone(cur),
     overview: () => flyTo(poses.overview, "overview"),
     phase: () => flyTo(poses.phase, "phase"),
+    skyline: () => skylinePose && flyTo(skylinePose, "skyline"),
     board: (i) => flyTo(boardPose(i), `board_${i}`),
   };
 }

@@ -16,11 +16,12 @@
         <field accessType='inputOutput' type='SFColor' name='darkColor' value='0.18 0.2 0.3'/>
         <field accessType='inputOutput' type='SFColor' name='lightColor' value='0.55 0.6 0.72'/>
         <field accessType='outputOnly' type='SFTime' name='touchTime'/>
+        <field accessType='outputOnly' type='SFVec3f' name='hitPoint'/>
       </ProtoInterface>
       <ProtoBody>
         <Transform>
           <IS><connect nodeField='translation' protoField='translation'/></IS>
-          <TouchSensor DEF='touch'><IS><connect nodeField='touchTime' protoField='touchTime'/></IS></TouchSensor>
+          <TouchSensor DEF='touch'><IS><connect nodeField='touchTime' protoField='touchTime'/><connect nodeField='hitPoint_changed' protoField='hitPoint'/></IS></TouchSensor>
           <Shape><Appearance DEF='appD'><Material diffuseColor='0.18 0.2 0.3'><IS><connect nodeField='diffuseColor' protoField='darkColor'/><connect nodeField='emissiveColor' protoField='tintDark'/></IS></Material></Appearance><Box size='0.001 0.001 0.001'/></Shape>
           <Shape><Appearance DEF='appL'><Material diffuseColor='0.55 0.6 0.72'><IS><connect nodeField='diffuseColor' protoField='lightColor'/><connect nodeField='emissiveColor' protoField='tintLight'/></IS></Material></Appearance><Box size='0.001 0.001 0.001'/></Shape>
         <Transform translation='-3.5 0 3.5'><Shape><Appearance USE='appD'/><Box size='1 0.1 1'/></Shape></Transform>

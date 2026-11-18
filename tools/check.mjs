@@ -115,7 +115,9 @@ try{
   // Parity is intentionally not regenerated: stale Python/JS producer hashes fail.
   const suites=[['analysis','tools/analysis.test.mjs'],['renderer','tools/renderer-tests.mjs'],
     ['transport','tools/transport-tests.mjs'],['study','tools/study-test.mjs'],
-    ['panel','tools/panel-test.mjs'],['export','tools/export-test.mjs'],['parity','tools/parity.mjs']];
+    ['panel','tools/panel-test.mjs'],['export','tools/export-test.mjs'],['parity','tools/parity.mjs'],
+    ['terrain','tools/terrain-test.mjs'],['branches','tools/branches-test.mjs'],['inspector','tools/inspector-test.mjs'],
+    ['concepts','tools/concepts-test.mjs'],['skyline','tools/skyline-test.mjs']];
   for(const [id,file] of suites)await command(id,process.execPath,[file]);
   await command('runtime-fragments',process.execPath,['tools/runtime-fragments.mjs']);
   // This is the same adapter as tools/validate.sh, using the selected interpreter.

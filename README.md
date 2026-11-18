@@ -54,6 +54,13 @@ boards; T cycles themes; H toggles attack balance. Form controls retain normal
 keyboard behavior. Reduced motion is respected. The study room has explicit
 reset, undo and counterfactual controls.
 
+## Lenses: 3D evaluation and advanced concepts
+
+Five opt-in overlays (terrain `G`, concepts `C`, inspector `I`, engine lines `L`, skyline `K`) turn the arena into a place to ask why. Each carries its own legend and a test against an independent oracle. See [docs/LENSES.md](docs/LENSES.md).
+
+![Verified MultiPV engine lines on a held board](docs/assets/lens-lines.png)
+![Tournament skyline of engine scores](docs/assets/lens-skyline.png)
+
 ## Four ways to see a rule
 
 | Experiment | Intervention | Insight |

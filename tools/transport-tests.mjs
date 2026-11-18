@@ -110,6 +110,18 @@ class LegalPool {
   }
   terminate() { this.closed = true; }
 }
+test('holdGame freezes a game at its current FEN until released, then play resumes', async () => {
+  const events = [], pool = new LegalPool(), transport = new WasmTransport(e => events.push(e), { poolFactory: () => pool });
+  await transport.start({ boards: 1, seed: 1 }); await until(() => events.some(e => e.type === 'move'));
+  const held = transport.holdGame('g0'); const before = events.filter(e => e.type === 'move').length;
+  await new Promise(r => setTimeout(r, 400));
+  const frozen = events.filter(e => e.type === 'move').length;
+  assert(frozen - before <= 1, 'at most the in-flight move may land after the hold');
+  const fen = transport.games[0].chess.fen(); await new Promise(r => setTimeout(r, 400));
+  assert.equal(transport.games[0].chess.fen(), fen, 'a held game must not advance'); assert.equal(events.filter(e => e.type === 'move').length, frozen);
+  assert.throws(() => transport.holdGame('g9'), /Unknown game/);
+  transport.releaseGame('g0'); await until(() => events.filter(e => e.type === 'move').length > frozen); await transport.stop();
+});
 test('WASM move is legal, carries generation/seq, and binds its score to the pre-move FEN and ply', async () => {
   const events = [], pool = new LegalPool(), transport = new WasmTransport(e => events.push(e), { poolFactory: () => pool });
   await transport.start({ boards: 1, seed: 1 }); await until(() => events.some(e => e.type === 'move')); await transport.stop();
