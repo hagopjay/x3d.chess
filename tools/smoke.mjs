@@ -31,6 +31,15 @@ const query = process.env.QUERY || "";
 await page.goto(`http://localhost:${port}/${query}`);
 await page.waitForFunction(() => window.x3dchess, null, { timeout: 30000 });
 await page.waitForTimeout(Number(process.env.WAIT_MS || 8000));
+if (process.env.CYCLE) { await page.evaluate(() => window.x3dchess.scene.cycleTheme()); await page.waitForTimeout(3000); }   // runtime theme switch: pieces rebuilt
+let focus = null;
+if (process.env.CLICK) {                                   // real mouse click on a board: TouchSensor -> fly-to -> panel
+  const [cx, cy] = process.env.CLICK.split(",").map(Number);
+  await page.mouse.click(cx, cy); await page.waitForTimeout(3500);
+  focus = await page.evaluate(() => ({ selected: window.x3dchess.scene.selected, rig: window.x3dchess.scene.rig.name, flying: window.x3dchess.scene.rig.flying,
+    panelVisible: !document.getElementById("panel").hidden, panelText: document.getElementById("panel").innerText.slice(0, 80) }));
+  if (process.env.FOCUS_PNG) await page.screenshot({ path: process.env.FOCUS_PNG });
+}
 await page.evaluate(async () => { await window.x3dchess.transport.stop(); await new Promise(r => setTimeout(r, 300)); await window.x3dchess.scene.settled(); });
 const n = await page.evaluate(() => window.x3dchess.scene.pieceCount());
 await page.waitForTimeout(1500);
@@ -45,6 +54,6 @@ if (process.env.PHASE_PNG) {
   await page.screenshot({ path: process.env.PHASE_PNG });
 }
 
-console.log(JSON.stringify({ pieces: n, sceneChildren: kids, misplaced, moves, stats: st, engine: eng, errors }));
+console.log(JSON.stringify({ pieces: n, sceneChildren: kids, misplaced, moves, focus, theme: await page.evaluate(() => window.x3dchess.scene.theme), stats: st, engine: eng, errors }));
 await browser.close(); srv.close();
 process.exit(n >= 300 && n === kids && misplaced === 0 && moves > 50 && errors.length === 0 ? 0 : 1);

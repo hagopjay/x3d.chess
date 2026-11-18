@@ -117,13 +117,25 @@ export class BoardView {
     }
   }
 
+  /** Theme switch: recolour the board proto, then rebuild this board's pieces with the new palette. */
+  applyTheme(t) {
+    this.proto.darkColor = new X3D.SFColor(...t.dark.split(" ").map(Number));
+    this.proto.lightColor = new X3D.SFColor(...t.light.split(" ").map(Number));
+    this.busy = this.busy.then(async () => {
+      if (this.group) this.group.children = new X3D.MFNode();
+      this.nodes.clear();
+      if (this.lastFen) await this._reconcile(this.lastFen);
+    });
+    return this.busy;
+  }
+
   /** eval in centipawns, white-positive. Bar length and board tint follow the original EvalTinter idea. */
   setEval(cp) {
     const p = Math.max(-8, Math.min(8, cp / 100));
     const k = 0.5 + p / 16;
     this.proto.evalScale = new X3D.SFVec3f(1, 1, Math.max(0.05, k));
-    const t = Math.min(1, Math.abs(p) / 4);
-    const [r, g, b] = p >= 0 ? [0.02, 0.03 + 0.15 * t, 0.07 + 0.2 * t] : [0.07 + 0.2 * t, 0.02, 0.07 + 0.1 * t];
+    const t = Math.min(1, Math.abs(p) / 4) * (this.ctx.theme?.tint ?? 1);
+    const [r, g, b] = p >= 0 ? [0.02 * (t > 0), 0.03 * (t > 0) + 0.15 * t, 0.07 * (t > 0) + 0.2 * t] : [0.07 * (t > 0) + 0.2 * t, 0.02 * (t > 0), 0.07 * (t > 0) + 0.1 * t];
     this.proto.tintDark = new X3D.SFColor(r, g, b);
     this.proto.tintLight = new X3D.SFColor(r * 1.3, g * 1.3, b * 1.3);
   }

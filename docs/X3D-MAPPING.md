@@ -22,4 +22,6 @@ Node names are a **stable contract** between scene and SAI layer. Phase 1 change
 | Theme store | swap `Appearance` sets | |
 | Neon glow | emissive materials + bloom shader (X_ITE shader, later Babylon FX) | |
 
+Phase 4: `PROTO ChessBoard` gained `darkColor`, `lightColor` (themes) and `touchTime` (an outputOnly SFTime from a `TouchSensor`, so a click on any board is an X3D event); named `Background bg`, `NavigationInfo nav` (TELEPORT) and `Viewpoint vp_focus`, which `camera.js` drives for fly-to. Overlays and pieces set `pointerEvents='false'` so clicks reach the board's TouchSensor.
+
 Built and validated: PROTO board grid, runtime pieces, eval bar and tint, last-move highlight, tactic lines (`IndexedLineSet`), 3D phase space with trails, two named viewpoints (`vp_overview`, `vp_phase`).

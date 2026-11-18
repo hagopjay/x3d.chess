@@ -2,7 +2,7 @@
 
 Multi-board AI-vs-AI chess spectator, ported to **X3D**. Many Stockfish games at once, rendered as one X3D scene and driven through the X3D Scene Access Interface (SAI).
 
-> Status: **phases 1-3b done**: 20-board X3D grid, real Stockfish games in the browser (WASM) or from a Python server, tactic lines, last-move highlights and a 3D phase-space view. Measured results and the known-gaps table are in [docs/RESULTS.md](docs/RESULTS.md); next steps in [docs/PLAN.md](docs/PLAN.md).
+> Status: **phases 1-4 done**: 20-board X3D grid, real Stockfish games in the browser (WASM) or from a Python server, tactic lines, last-move highlights and a 3D phase-space view. Measured results and the known-gaps table are in [docs/RESULTS.md](docs/RESULTS.md); next steps in [docs/PLAN.md](docs/PLAN.md).
 
 Ported from the owner's *chess-spectator* backup (Python/aiohttp/python-chess/Stockfish backend, React/Canvas/D3 frontend; about 9.5k lines, counted from the uploaded zip).
 
@@ -16,6 +16,7 @@ Ported from the owner's *chess-spectator* backup (Python/aiohttp/python-chess/St
 | Tactic lines, last-move highlight, 3D phase space with trails (server mode) | `viewer/js/fx.js`, `phasespace.js` |
 | Analysis ported from the original: tactics, critical moments, phase space, convergence (Python), plus JS twins of the first three for browser-only mode, parity-tested | `server/x3dchess_server/analysis/`, `viewer/js/analysis.js`, `tools/parity.mjs` |
 | Capture and check cues, last-move highlight, tactic lines | `viewer/js/fx.js` |
+| Click a board to fly to it (TouchSensor, eased camera), game panel with move list and eval sparkline, arrows and Esc; themes (`t`, `?theme=neon|classic|ice`); capture bursts (`ParticleSystem`) | `viewer/js/camera.js`, `panel.js`, `themes.js`, `particles.js` |
 | Pressure heatmap (toggle `h` or the button, `?heat=1`) and per-board eval graph | `viewer/js/overlays.js` |
 | XSD gate, headless-Chromium smoke, pytest | `tools/`, `server/tests/` |
 

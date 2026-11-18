@@ -14,7 +14,7 @@ export function heatXml(o) {
     idx.push(`${i} ${i + 1} ${i + 2} ${i + 3} -1`);
   }
   // r=0 is rank 1 (bottom, +z): faces are ordered a1..h1, a2..h2 ... = square index order
-  return `<X3D profile='Interchange' version='4.0'><head><component name='Rendering' level='4'/></head><Scene><Shape visible='false' DEF='heat'><Appearance/>
+  return `<X3D profile='Interchange' version='4.0'><head><component name='Rendering' level='4'/></head><Scene><Shape pointerEvents='false' visible='false' DEF='heat'><Appearance/>
     <IndexedFaceSet coordIndex='${idx.join(" ")}' colorPerVertex='false' solid='false'><Coordinate point='${pts.join(", ")}'/>
     <ColorRGBA color='${new Array(64).fill("0 0 0 0").join(", ")}'/></IndexedFaceSet></Shape></Scene></X3D>`;
 }
@@ -30,8 +30,8 @@ export function heatColors(fen) {
 export function graphXml(o) {
   const x0 = o[0] - 4, y = 0.06, z = o[2] + 5.0;
   return `<X3D profile='Interchange' version='4.0'><Scene><Group DEF='graph'>
-    <Shape><Appearance><Material emissiveColor='0.25 0.3 0.4' diffuseColor='0 0 0'/></Appearance><IndexedLineSet coordIndex='0 1 -1'><Coordinate point='${x0} ${y} ${z}, ${x0 + 8} ${y} ${z}'/></IndexedLineSet></Shape>
-    <Shape><Appearance><Material emissiveColor='0.4 1 0.7' diffuseColor='0 0 0'/></Appearance><IndexedLineSet DEF='graphline' coordIndex='-1'><Coordinate DEF='graphc' point='0 0 0'/></IndexedLineSet></Shape>
+    <Shape pointerEvents='false'><Appearance><Material emissiveColor='0.25 0.3 0.4' diffuseColor='0 0 0'/></Appearance><IndexedLineSet coordIndex='0 1 -1'><Coordinate point='${x0} ${y} ${z}, ${x0 + 8} ${y} ${z}'/></IndexedLineSet></Shape>
+    <Shape pointerEvents='false'><Appearance><Material emissiveColor='0.4 1 0.7' diffuseColor='0 0 0'/></Appearance><IndexedLineSet DEF='graphline' coordIndex='-1'><Coordinate DEF='graphc' point='0 0 0'/></IndexedLineSet></Shape>
   </Group></Scene></X3D>`;
 }
 
