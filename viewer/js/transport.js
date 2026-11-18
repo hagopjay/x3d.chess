@@ -9,7 +9,8 @@ export function terminalResult(chess, ply, cap, capReason) {
   const mate = chess.isCheckmate();
   const repeated = chess.isThreefoldRepetition();
   let fivefold = false;
-  if (repeated) {
+  if (repeated && typeof chess.repetitionCount === "function") fivefold = chess.repetitionCount() >= 5;   // Chess960: rights-aware count
+  else if (repeated) {
     const position = (fen) => fen.split(" ").slice(0, 4).join(" "), key = position(chess.fen());
     fivefold = 1 + chess.history({ verbose: true }).filter((move) => position(move.before) === key).length >= 5;
   }

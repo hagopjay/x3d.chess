@@ -21,10 +21,10 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: "22" }
       - run: npm install --no-save playwright@1.63.0 && npx playwright install --with-deps chromium
-      - name: native smoke (replay 20 boards, wasm 4 boards, study)
+      - name: native smoke (replay 20 boards, wasm 4 boards, study, Chess960 replay and wasm)
         run: |
           set -e
-          for q in "?engine=replay&boards=20" "?engine=wasm&boards=4&depth=8&pool=2" "?engine=study"; do
+          for q in "?engine=replay&boards=20" "?engine=wasm&boards=4&depth=8&pool=2" "?engine=study" "?engine=replay&variant=960&boards=8" "?engine=wasm&variant=960&boards=4&depth=6&pool=2"; do
             QUERY="$q" WAIT_MS=12000 SMOKE_RECEIPT=/tmp/smoke.json CHROMIUM_EXECUTABLE_PATH=$(node -e "console.log(require('playwright').chromium.executablePath())") node tools/smoke.mjs
             grep -q '"status": *"pass"' /tmp/smoke.json
           done

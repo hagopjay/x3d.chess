@@ -1,7 +1,7 @@
 {
   "schema": "x3dchess.runtime-fragments/1",
   "status": "generated",
-  "created_utc": "2026-11-18T04:11:19.709Z",
+  "created_utc": "2026-11-18T04:32:37.898Z",
   "tool_sha256": "a9815aa4283169fa3964bdf18d8f857442cffc81247b7cab7069cf744c2512ba",
   "source_sha256": {
     "viewer/js/pieces.js": "bbd5de3442e2df6ce544ac3ce669d9e9344f26dd7c15bcffccf5c60e78caa2a4",

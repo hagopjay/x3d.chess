@@ -11,7 +11,7 @@ function positionFen(value) {
   if (typeof value !== "string" || /[\r\n]/.test(value)) throw new TypeError("Expected one FEN line");
   const fields = value.trim().split(/\s+/);
   if (fields.length !== 6 || !/^[prnbqkPRNBQK1-8/]+$/.test(fields[0]) || !/^[wb]$/.test(fields[1]) ||
-      !/^(?:-|K?Q?k?q?)$/.test(fields[2]) || !/^(?:-|[a-h][36])$/.test(fields[3]) ||
+      !/^(?:-|K?Q?k?q?|[A-Ha-h]{1,4})$/.test(fields[2]) || !/^(?:-|[a-h][36])$/.test(fields[3]) ||
       !/^\d+$/.test(fields[4]) || !/^[1-9]\d*$/.test(fields[5])) throw new TypeError("Malformed FEN command");
   return fields.join(" ");
 }
@@ -106,7 +106,7 @@ export class WasmEnginePool {
   /** Scores describe the supplied pre-move position, from White's point of view.
    * initialFen + moves preserves repetition history after the seeded opening.
    */
-  async search(fen, { depth = 12, skill = 20, initialFen = fen, moves = [], gameKey = "analysis" } = {}) {
+  async search(fen, { depth = 12, skill = 20, initialFen = fen, moves = [], gameKey = "analysis", chess960 = false } = {}) {
     fen = positionFen(fen); initialFen = positionFen(initialFen);
     integer(depth, 1, 30, "Search depth"); integer(skill, 0, 20, "Skill level");
     if (!Array.isArray(moves) || moves.length > 512 || moves.some((m) => typeof m !== "string" || !UCI_MOVE.test(m))) throw new TypeError("Invalid UCI move history");
@@ -126,6 +126,7 @@ export class WasmEnginePool {
         if (!info || next.depth >= info.depth) info = next;
       };
       worker.send(`setoption name Skill Level value ${skill}`);
+      worker.send(`setoption name UCI_Chess960 value ${chess960 ? "true" : "false"}`);
       if (worker.gameKey !== gameKey) { worker.send("ucinewgame"); worker.gameKey = gameKey; }
       await worker.command("isready", /^readyok$/, this.initTimeoutMs);
       worker.send(`position fen ${initialFen}${history.length ? " moves " + history.join(" ") : ""}`);
@@ -146,7 +147,7 @@ export class WasmEnginePool {
    * Returns normalizeResult(...) (White-POV scores bound to fenSearched) plus {request, engine, nodes}.
    * Callers must still verify PVs (branches.verifyResult) and drop results for a changed board (acceptResult).
    */
-  async analyze(fen, { multipv = 3, depth = 8, movetime = null } = {}) {
+  async analyze(fen, { multipv = 3, depth = 8, movetime = null, chess960 = false } = {}) {
     fen = positionFen(fen); integer(multipv, 1, 5, "MultiPV"); integer(depth, 1, 30, "Search depth");
     if (movetime !== null) integer(movetime, 10, 30000, "Move time");
     const worker = await this._lease(), t0 = performance.now(), best = new Map();
@@ -161,6 +162,7 @@ export class WasmEnginePool {
       };
       touched = true;
       worker.send("setoption name Skill Level value 20"); worker.send(`setoption name MultiPV value ${multipv}`);
+      worker.send(`setoption name UCI_Chess960 value ${chess960 ? "true" : "false"}`);
       worker.send("ucinewgame"); worker.gameKey = null;
       await worker.command("isready", /^readyok$/, this.initTimeoutMs);
       worker.send(`position fen ${fen}`);

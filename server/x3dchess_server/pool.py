@@ -90,7 +90,7 @@ class EnginePool:
         if not self._started or self._closing:
             raise RuntimeError("pool is not running")
         if not isinstance(board, chess.Board) or not board.is_valid():
-            raise ValueError("search requires a valid standard chess position")
+            raise ValueError("search requires a valid chess or Chess960 position")
         position = board.copy(stack=True)
         task = asyncio.current_task()
         self._tasks.add(task)
@@ -123,7 +123,7 @@ class EnginePool:
             nodes = max(0, int(info.get("nodes", 0)))
             self.nodes += nodes
             healthy = True
-            return {"uci": res.move.uci() if res.move else None,
+            return {"uci": position.uci(res.move) if res.move else None,
                     "cp": w.score() if w is not None and not w.is_mate() else None,
                     "mate": w.mate() if w is not None and w.is_mate() else None,
                     "mate_cp": (1500 if w > chess.engine.Cp(0) else -1500) if w is not None and w.is_mate() else None,

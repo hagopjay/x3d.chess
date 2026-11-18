@@ -71,6 +71,8 @@ reset, undo and counterfactual controls.
 
 Five opt-in overlays (terrain `G`, concepts `C`, inspector `I`, engine lines `L`, skyline `K`) turn the arena into a place to ask why. Each carries its own legend and a test against an independent oracle. See [docs/LENSES.md](docs/LENSES.md).
 
+**Chess960 (Fischer Random):** header RULES selector, `?variant=960[&pos=0-959]`, or `--variant 960` on the server. 960 castling is implemented here (chess.js has none) and checked ply-by-ply against python-chess. See [docs/CHESS960.md](docs/CHESS960.md).
+
 ![Verified MultiPV engine lines on a held board](docs/assets/lens-lines.png)
 ![Tournament skyline of engine scores](docs/assets/lens-skyline.png)
 

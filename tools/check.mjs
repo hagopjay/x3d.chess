@@ -117,7 +117,8 @@ try{
     ['transport','tools/transport-tests.mjs'],['study','tools/study-test.mjs'],
     ['pieces','tools/pieces-test.mjs'],['position-report','tools/position-report-test.mjs'],['analysis-desk','tools/analysis-desk-test.mjs'],['panel','tools/panel-test.mjs'],['export','tools/export-test.mjs'],['parity','tools/parity.mjs'],
     ['terrain','tools/terrain-test.mjs'],['branches','tools/branches-test.mjs'],['inspector','tools/inspector-test.mjs'],
-    ['concepts','tools/concepts-test.mjs'],['skyline','tools/skyline-test.mjs']];
+    ['concepts','tools/concepts-test.mjs'],['skyline','tools/skyline-test.mjs'],
+    ['chess960','tools/chess960-test.mjs'],['chess960-engine','tools/chess960-engine-test.mjs']];
   for(const [id,file] of suites)await command(id,process.execPath,[file]);
   await command('runtime-fragments',process.execPath,['tools/runtime-fragments.mjs']);
   // This is the same adapter as tools/validate.sh, using the selected interpreter.
