@@ -37,7 +37,7 @@ await page.waitForTimeout(1500);
 const misplaced = await page.evaluate(() => window.x3dchess.scene.misplaced());
 const kids = await page.evaluate(() => window.x3dchess.scene.childCount());
 const eng = await page.evaluate(() => window.x3dchess.transport.pool ? { searches: window.x3dchess.transport.pool.searches, nodes: window.x3dchess.transport.pool.nodes, workers: window.x3dchess.transport.pool.size, busyMs: Math.round(window.x3dchess.transport.pool.busyMs) } : null);
-const st = await page.evaluate(() => ({ ...window.x3dchess.scene.stats, phasePoints: window.x3dchess.scene.phase.points() }));
+const st = await page.evaluate(() => ({ graphs: window.x3dchess.scene.graphCount(), heat: window.x3dchess.scene.heatPainted(), ...window.x3dchess.scene.stats, phasePoints: window.x3dchess.scene.phase.points() }));
 const moves = st.moves;
 await page.screenshot({ path: process.argv[2] || "smoke.png" });
 if (process.env.PHASE_PNG) {
